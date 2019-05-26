@@ -7,7 +7,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.glide.slider.library.Animations.DescriptionAnimation;
 import com.glide.slider.library.SliderLayout;
 import com.glide.slider.library.SliderTypes.BaseSliderView;
-import com.glide.slider.library.SliderTypes.TextSliderView;
+import com.glide.slider.library.SliderTypes.DefaultSliderView;
 import com.glide.slider.library.Tricks.ViewPagerEx;
 
 import java.util.ArrayList;
@@ -34,13 +34,13 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions
-                .centerCrop();
+                .fitCenter();
         //.diskCacheStrategy(DiskCacheStrategy.NONE)
         //.placeholder(R.drawable.placeholder)
         //.error(R.drawable.placeholder);
 
         for (int i = 0; i < listUrl.size(); i++) {
-            TextSliderView sliderView = new TextSliderView(this);
+            DefaultSliderView sliderView = new DefaultSliderView(this);
             // if you want show image only / without description text use DefaultSliderView instead
 
             // initialize SliderLayout

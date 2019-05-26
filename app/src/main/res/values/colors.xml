@@ -5,4 +5,9 @@
     <color name="colorAccent">#CC0267</color>
 
     <color name="bg_main">#FFE7FF</color>
+
+    <color name="glide_slider_background_color">@color/bg_main</color>
+    <color name="glide_slider_indicator_color">#FFFFFF</color>
+    <color name="glide_slider_description_color">#FFFFFF</color>
+    <color name="glide_slider_description_background_color">#77000000</color>
 </resources>
