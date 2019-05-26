@@ -1,7 +1,8 @@
 package th.ac.dusit.dbizcom.chainattourism;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.glide.slider.library.Animations.DescriptionAnimation;
@@ -12,7 +13,9 @@ import com.glide.slider.library.Tricks.ViewPagerEx;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
+public class MainActivity extends BaseActivity implements
+        BaseSliderView.OnSliderClickListener,
+        ViewPagerEx.OnPageChangeListener, View.OnClickListener {
 
     private SliderLayout mSlider;
 
@@ -21,32 +24,30 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setupImageSlider();
+        findViewById(R.id.place_layout).setOnClickListener(this);
+        findViewById(R.id.temple_layout).setOnClickListener(this);
+        findViewById(R.id.restaurant_layout).setOnClickListener(this);
+        findViewById(R.id.otop_layout).setOnClickListener(this);
+    }
+
+    private void setupImageSlider() {
         mSlider = findViewById(R.id.slider);
 
         ArrayList<String> listUrl = new ArrayList<>();
-        //ArrayList<String> listName = new ArrayList<>();
-
         listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/hero01.png");
-        //listName.add("JPG - Github");
-
         listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/hero02.png");
-        //listName.add("PNG - Android Studio");
 
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions
-                .fitCenter();
+        RequestOptions requestOptions = new RequestOptions().fitCenter();
+
         //.diskCacheStrategy(DiskCacheStrategy.NONE)
         //.placeholder(R.drawable.placeholder)
         //.error(R.drawable.placeholder);
 
         for (int i = 0; i < listUrl.size(); i++) {
             DefaultSliderView sliderView = new DefaultSliderView(this);
-            // if you want show image only / without description text use DefaultSliderView instead
-
-            // initialize SliderLayout
             sliderView
                     .image(listUrl.get(i))
-                    //.description(listName.get(i))
                     .setRequestOption(requestOptions)
                     //.setBackgroundColor(Color.WHITE)
                     .setProgressBarVisible(true)
@@ -72,6 +73,22 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
     protected void onStop() {
         mSlider.stopAutoCycle();
         super.onStop();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.place_layout:
+                Intent intent = new Intent(MainActivity.this, PlaceActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.temple_layout:
+                break;
+            case R.id.restaurant_layout:
+                break;
+            case R.id.otop_layout:
+                break;
+        }
     }
 
     @Override
