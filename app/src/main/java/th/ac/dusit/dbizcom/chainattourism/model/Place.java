@@ -4,6 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class Place {
 
+    public enum PlaceType {
+        TOUR,
+        TEMPLE,
+        RESTAURANT,
+        OTOP
+    }
+
     @SerializedName("id")
     public final int id;
     @SerializedName("name")

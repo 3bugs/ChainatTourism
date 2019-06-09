@@ -13,6 +13,10 @@ import com.glide.slider.library.Tricks.ViewPagerEx;
 
 import java.util.ArrayList;
 
+import th.ac.dusit.dbizcom.chainattourism.model.Place;
+
+import static th.ac.dusit.dbizcom.chainattourism.PlaceActivity.KEY_PLACE_TYPE;
+
 public class MainActivity extends BaseActivity implements
         BaseSliderView.OnSliderClickListener,
         ViewPagerEx.OnPageChangeListener, View.OnClickListener {
@@ -35,8 +39,9 @@ public class MainActivity extends BaseActivity implements
         mSlider = findViewById(R.id.slider);
 
         ArrayList<String> listUrl = new ArrayList<>();
-        listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/hero01.png");
-        listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/hero02.png");
+        listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/โฆษณา.png");
+        listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/สวนนก.png");
+        listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/สวนส้มโอ.png");
 
         RequestOptions requestOptions = new RequestOptions().fitCenter();
 
@@ -77,18 +82,26 @@ public class MainActivity extends BaseActivity implements
 
     @Override
     public void onClick(View view) {
+        Place.PlaceType placeType = null;
+
         switch (view.getId()) {
             case R.id.place_layout:
-                Intent intent = new Intent(MainActivity.this, PlaceActivity.class);
-                startActivity(intent);
+                placeType = Place.PlaceType.TOUR;
                 break;
             case R.id.temple_layout:
+                placeType = Place.PlaceType.TEMPLE;
                 break;
             case R.id.restaurant_layout:
+                placeType = Place.PlaceType.RESTAURANT;
                 break;
             case R.id.otop_layout:
+                placeType = Place.PlaceType.OTOP;
                 break;
         }
+
+        Intent intent = new Intent(MainActivity.this, PlaceActivity.class);
+        intent.putExtra(KEY_PLACE_TYPE, placeType);
+        startActivity(intent);
     }
 
     @Override

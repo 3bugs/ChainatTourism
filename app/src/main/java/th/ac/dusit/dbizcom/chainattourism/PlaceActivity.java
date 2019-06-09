@@ -1,5 +1,6 @@
 package th.ac.dusit.dbizcom.chainattourism;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import java.util.Locale;
@@ -11,15 +12,21 @@ import th.ac.dusit.dbizcom.chainattourism.model.Place;
 public class PlaceActivity extends BaseActivity implements
         PlaceListFragment.PlaceListFragmentListener {
 
+    static final String KEY_PLACE_TYPE = "place_type";
     private static final String TAG_PLACE_LIST_FRAGMENT = "place_list_fragment";
+
+    private Place.PlaceType mPlaceType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place);
 
+        Intent intent = getIntent();
+        mPlaceType = (Place.PlaceType) intent.getSerializableExtra(KEY_PLACE_TYPE);
+
         loadFragment(
-                new PlaceListFragment(),
+                PlaceListFragment.newInstance(mPlaceType),
                 TAG_PLACE_LIST_FRAGMENT,
                 false,
                 FragmentTransitionType.NONE

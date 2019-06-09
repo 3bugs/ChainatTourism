@@ -10,4 +10,5 @@ public class GetPlaceResponse extends BaseResponse {
 
     @SerializedName("data_list")
     public List<Place> placeList;
+
 }

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Chainat Tourism</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="place_type_tour">แหล่งท่องเที่ยว</string>
+    <string name="place_type_temple">วัด</string>
+    <string name="place_type_restaurant">ร้านอาหาร</string>
+    <string name="place_type_otop">สินค้า OTOP</string>
 </resources>

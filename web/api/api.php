@@ -2,6 +2,11 @@
 session_start();
 require_once 'global.php';
 
+define('PLACE_TYPE_TOUR', 'TOUR');
+define('PLACE_TYPE_TEMPLE', 'TEMPLE');
+define('PLACE_TYPE_RESTAURANT', 'RESTAURANT');
+define('PLACE_TYPE_OTOP', 'OTOP');
+
 error_reporting(E_ERROR | E_PARSE);
 header('Content-type: application/json; charset=utf-8');
 
@@ -49,7 +54,18 @@ function doGetPlace()
 {
     global $db, $response;
 
-    $sql = "SELECT * FROM `chainat_place`";
+    $placeType = $_GET['place_type'];
+    $table = 'chainat_place';
+    switch ($placeType) {
+        case PLACE_TYPE_TOUR:
+            $table = 'chainat_place';
+            break;
+        case PLACE_TYPE_TEMPLE:
+            $table = 'chainat_temple';
+            break;
+    }
+
+    $sql = "SELECT * FROM $table";
     if ($result = $db->query($sql)) {
         $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
         $response[KEY_ERROR_MESSAGE] = 'อ่านข้อมูลฟาร์มสำเร็จ';

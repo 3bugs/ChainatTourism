@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_main"
-    tools:context=".fragment.PlaceListFragment">
+    android:focusableInTouchMode="true"
+    tools:context=".fragment.PlaceListFragment"
+    tools:ignore="HardcodedText">
 
     <TextView
         android:id="@+id/title_bg_text_view"
@@ -37,6 +39,36 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <EditText
+        android:id="@+id/search_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_edit_text"
+        android:drawableEnd="@drawable/ic_search"
+        android:drawableRight="@drawable/ic_search"
+        android:fontFamily="@font/bangna"
+        android:hint="ค้นหาแหล่งท่องเที่ยว"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingBottom="8dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="10dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/place_list_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_bg_text_view"
+        tools:ignore="Autofill,TextFields"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/place_list_recycler_view"
         android:layout_width="0dp"
@@ -44,13 +76,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_bg_text_view"/>
+        app:layout_constraintTop_toBottomOf="@+id/search_edit_text"/>
 
     <LinearLayout
         android:id="@+id/progress_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#80000000"
+        android:background="#00000000"
         android:gravity="center"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
