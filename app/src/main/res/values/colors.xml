@@ -3,6 +3,7 @@
     <color name="colorPrimary">#CC0267</color>
     <color name="colorPrimaryDark">#850043</color>
     <color name="colorAccent">#CC0267</color>
+    <color name="colorAccentDim">#A0CC0267</color>
 
     <color name="bg_main">#FFE7FF</color>
 

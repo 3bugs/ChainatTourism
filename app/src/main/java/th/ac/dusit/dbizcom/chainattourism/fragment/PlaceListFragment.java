@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -265,8 +266,15 @@ public class PlaceListFragment extends Fragment {
             holder.mPlace = place;
             holder.mNameTextView.setText(place.name);
             holder.mDistrictTextView.setText(place.district);
+
+            CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(30f);
+            circularProgressDrawable.start();
+
             Glide.with(mContext)
                     .load(ApiClient.IMAGE_BASE_URL + place.listImage)
+                    .placeholder(circularProgressDrawable)
                     .into(holder.mPlaceImageView);
         }
 

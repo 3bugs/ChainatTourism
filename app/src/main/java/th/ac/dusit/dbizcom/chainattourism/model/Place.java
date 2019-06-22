@@ -35,10 +35,12 @@ public class Place {
     public final String coverImage;
     @SerializedName("recommend")
     public final boolean recommend;
+    @SerializedName("place_type")
+    public final PlaceType placeType;
 
     public Place(int id, String name, String district, String address, String details, String phone,
                  String openingTime, double latitude, double longitude, String listImage, String coverImage,
-                 boolean recommend) {
+                 boolean recommend, PlaceType placeType) {
         this.id = id;
         this.name = name;
         this.district = district;
@@ -51,5 +53,6 @@ public class Place {
         this.listImage = listImage;
         this.coverImage = coverImage;
         this.recommend = recommend;
+        this.placeType = placeType;
     }
 }

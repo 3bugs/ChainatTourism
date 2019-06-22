@@ -54,7 +54,7 @@ function doGetPlace()
 {
     global $db, $response;
 
-    $placeType = $_GET['place_type'];
+    $placeType = strtoupper(trim($_GET['place_type']));
     $table = 'chainat_place';
     switch ($placeType) {
         case PLACE_TYPE_TOUR:
@@ -86,6 +86,7 @@ function doGetPlace()
             $place['image_list'] = $row['image_list'];
             $place['image_cover'] = $row['image_cover'];
             $place['recommend'] = (boolean)$row['recommend'];
+            $place['place_type'] = $placeType;
             array_push($placeList, $place);
         }
         $result->close();

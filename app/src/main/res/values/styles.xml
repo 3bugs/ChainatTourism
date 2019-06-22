@@ -20,6 +20,11 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">80sp</item>
+        <item name="android:fontFamily">@font/bangna</item>
+    </style>
+
     <style name="GlideSliderCardStyle" parent="Base.CardView">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">match_parent</item>
@@ -60,5 +65,9 @@
         <item name="android:textColor">@color/glide_slider_description_color</item>
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
