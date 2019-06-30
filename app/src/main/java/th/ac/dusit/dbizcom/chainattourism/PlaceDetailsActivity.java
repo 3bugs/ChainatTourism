@@ -3,10 +3,7 @@ package th.ac.dusit.dbizcom.chainattourism;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CircularBorderDrawable;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +17,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
+import java.util.Locale;
+
+import th.ac.dusit.dbizcom.chainattourism.etc.Utils;
 import th.ac.dusit.dbizcom.chainattourism.model.Place;
 
 import static th.ac.dusit.dbizcom.chainattourism.net.ApiClient.IMAGE_BASE_URL;
@@ -70,6 +70,7 @@ public class PlaceDetailsActivity extends AppCompatActivity {
         });
 
         populateUi();
+        setupToolbarIcons();
     }
 
     private void populateUi() {
@@ -96,6 +97,34 @@ public class PlaceDetailsActivity extends AppCompatActivity {
 
         TextView detailsTextView = findViewById(R.id.details_text_view);
         detailsTextView.setText(createIndentedText(mPlace.details, 100, 0));
+    }
+
+    private void setupToolbarIcons() {
+        /*ปุ่มย้อนกลับ*/
+        findViewById(R.id.back_image_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        /*ปุ่มแสดงหน้าแผนที่*/
+        findViewById(R.id.marker_image_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.showShortToast(
+                        PlaceDetailsActivity.this,
+                        String.format(
+                                Locale.getDefault(),
+                                "Latitude: %f\nLongitude: %f",
+                                mPlace.latitude, mPlace.longitude
+                        )
+                );
+                Intent intent = new Intent(PlaceDetailsActivity.this, MapsActivity.class);
+                intent.putExtra(KEY_PLACE_JSON, new Gson().toJson(mPlace));
+                startActivity(intent);
+            }
+        });
     }
 
     static SpannableString createIndentedText(String text, int marginFirstLine, int marginNextLines) {

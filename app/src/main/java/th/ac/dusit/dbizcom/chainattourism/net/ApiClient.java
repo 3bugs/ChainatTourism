@@ -12,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     private static final String BASE_URL = "http://5911011802058.msci.dusit.ac.th/chainat_tourism/";
+    //private static final String BASE_URL = "http://192.168.43.204/chainat/";
     private static final String API_BASE_URL = BASE_URL + "api/api.php/";
     public static final String IMAGE_BASE_URL = BASE_URL + "images/";
 
