@@ -39,6 +39,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/place_list_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_bg_text_view"/>
+
     <EditText
         android:id="@+id/search_edit_text"
         android:layout_width="0dp"
@@ -63,20 +72,10 @@
         android:paddingStart="16dp"
         android:paddingTop="10dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/place_list_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_bg_text_view"
         tools:ignore="Autofill,TextFields"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/place_list_recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_edit_text"/>
 
     <LinearLayout
         android:id="@+id/progress_view"

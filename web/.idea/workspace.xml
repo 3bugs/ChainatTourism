@@ -2,32 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3afb251d-c44b-421c-9dfa-5e28220e3e1d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/GalleryActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/ImageFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xhdpi/dam01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xhdpi/dam02.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xhdpi/dam03.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xhdpi/dam04.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xhdpi/dam05.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xhdpi/dam06.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xhdpi/dam07.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xhdpi/dam08.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xhdpi/dam09.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_gallery.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_image.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/layout/item_gallery_image.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/promlert.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/MapsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/MapsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceDetailsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceDetailsActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/PlaceListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/PlaceListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/model/Place.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/model/Place.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/net/ApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/net/ApiClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/activity_place_details_content.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_place_details_content.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/drawable/bg_edit_text.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/drawable/bg_edit_text.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_place_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_place_list.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -147,6 +124,7 @@
       <workItem from="1561953701092" duration="86000" />
       <workItem from="1565411025236" duration="1620000" />
       <workItem from="1565424872046" duration="551000" />
+      <workItem from="1565452259877" duration="363000" />
     </task>
     <servers />
   </component>

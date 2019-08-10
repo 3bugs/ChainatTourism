@@ -327,7 +327,7 @@ public class PlaceListFragment extends Fragment {
 
     public class SpacingDecoration extends RecyclerView.ItemDecoration {
 
-        private final static int MARGIN_TOP_IN_DP = 8;
+        private final static int MARGIN_TOP_IN_DP = 72;
         private final static int MARGIN_BOTTOM_IN_DP = 16;
         private final int mMarginTop, mMarginBottom;
 
@@ -354,8 +354,8 @@ public class PlaceListFragment extends Fragment {
                 return;
             }
             if (itemPosition == 0) {
-                //outRect.top = mMarginTop;
-                outRect.top = 0;
+                outRect.top = mMarginTop;
+                //outRect.top = 0;
             }
             final RecyclerView.Adapter adapter = parent.getAdapter();
             if ((adapter != null) && (itemPosition == adapter.getItemCount() - 1)) {
