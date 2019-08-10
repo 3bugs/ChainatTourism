@@ -265,7 +265,7 @@ public class PlaceListFragment extends Fragment {
 
             holder.mPlace = place;
             holder.mNameTextView.setText(place.name);
-            holder.mDistrictTextView.setText(place.district);
+            holder.mDistrictTextView.setText("อำเภอ".concat(place.district));
 
             CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
             circularProgressDrawable.setStrokeWidth(5f);
@@ -273,7 +273,7 @@ public class PlaceListFragment extends Fragment {
             circularProgressDrawable.start();
 
             Glide.with(mContext)
-                    .load(ApiClient.IMAGE_BASE_URL + place.listImage)
+                    .load(ApiClient.IMAGE_BASE_URL.concat(place.listImage))
                     .placeholder(circularProgressDrawable)
                     .into(holder.mPlaceImageView);
         }

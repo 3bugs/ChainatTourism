@@ -2,6 +2,8 @@ package th.ac.dusit.dbizcom.chainattourism.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Place {
 
     public enum PlaceType {
@@ -37,10 +39,12 @@ public class Place {
     public final boolean recommend;
     @SerializedName("place_type")
     public final PlaceType placeType;
+    @SerializedName("gallery_images")
+    public final List<String> galleryImages;
 
     public Place(int id, String name, String district, String address, String details, String phone,
                  String openingTime, double latitude, double longitude, String listImage, String coverImage,
-                 boolean recommend, PlaceType placeType) {
+                 boolean recommend, PlaceType placeType, List<String> galleryImages) {
         this.id = id;
         this.name = name;
         this.district = district;
@@ -54,5 +58,6 @@ public class Place {
         this.coverImage = coverImage;
         this.recommend = recommend;
         this.placeType = placeType;
+        this.galleryImages = galleryImages;
     }
 }

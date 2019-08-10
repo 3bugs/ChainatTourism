@@ -54,21 +54,26 @@ function doGetPlace()
 {
     global $db, $response;
 
-    $placeType = strtoupper(trim($_GET['place_type']));
-    $table = 'chainat_place';
-    switch ($placeType) {
+    $getPlaceType = strtoupper(trim($_GET['place_type']));
+    switch ($getPlaceType) {
         case PLACE_TYPE_TOUR:
-            $table = 'chainat_place';
+            $placeType = 'ท่องเที่ยว';
             break;
         case PLACE_TYPE_TEMPLE:
-            $table = 'chainat_temple';
+            $placeType = 'วัด';
+            break;
+        case PLACE_TYPE_RESTAURANT:
+            $placeType = 'ร้านอาหาร';
+            break;
+        case PLACE_TYPE_OTOP:
+            $placeType = 'otop';
             break;
     }
 
-    $sql = "SELECT * FROM $table";
+    $sql = "SELECT * FROM chainat_place WHERE place_type = '$placeType'";
     if ($result = $db->query($sql)) {
         $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
-        $response[KEY_ERROR_MESSAGE] = 'อ่านข้อมูลฟาร์มสำเร็จ';
+        $response[KEY_ERROR_MESSAGE] = 'อ่านข้อมูลสำเร็จ';
         $response[KEY_ERROR_MESSAGE_MORE] = '';
 
         $placeList = array();
@@ -87,13 +92,30 @@ function doGetPlace()
             $place['image_cover'] = $row['image_cover'];
             $place['recommend'] = (boolean)$row['recommend'];
             $place['place_type'] = $placeType;
+
+            $place['gallery_images'] = array();
+
+            $sql = "SELECT image_file_name FROM chainat_gallery WHERE place_id = " . $place['id'];
+            if ($galleryResult = $db->query($sql)) {
+                while ($galleryRow = $galleryResult->fetch_assoc()) {
+                    array_push($place['gallery_images'], $galleryRow['image_file_name']);
+                }
+                $galleryResult->close();
+            } else {
+                $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+                $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล';
+                $errMessage = $db->error;
+                $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+                return;
+            }
+
             array_push($placeList, $place);
         }
         $result->close();
         $response[KEY_DATA_LIST] = $placeList;
     } else {
         $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
-        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูลฟาร์ม';
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล';
         $errMessage = $db->error;
         $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
     }

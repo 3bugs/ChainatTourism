@@ -15,6 +15,7 @@ public class ApiClient {
     //private static final String BASE_URL = "http://192.168.43.204/chainat/";
     private static final String API_BASE_URL = BASE_URL + "api/api.php/";
     public static final String IMAGE_BASE_URL = BASE_URL + "images/";
+    public static final String GALLERY_BASE_URL = BASE_URL + "images/gallery/";
 
     private static Retrofit retrofit = null;
 
