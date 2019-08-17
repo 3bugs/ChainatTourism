@@ -72,7 +72,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/place_name_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/place_name_text_view"
-                    app:srcCompat="@drawable/ic_star" />
+                    app:srcCompat="@drawable/ic_star_on" />
 
                 <ImageView
                     android:id="@+id/imageView16"
@@ -83,7 +83,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                     app:layout_constraintStart_toEndOf="@+id/imageView5"
                     app:layout_constraintTop_toTopOf="@+id/imageView5"
-                    app:srcCompat="@drawable/ic_star" />
+                    app:srcCompat="@drawable/ic_star_on" />
 
                 <ImageView
                     android:id="@+id/imageView17"
@@ -94,7 +94,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/imageView16"
                     app:layout_constraintStart_toEndOf="@+id/imageView16"
                     app:layout_constraintTop_toTopOf="@+id/imageView16"
-                    app:srcCompat="@drawable/ic_star" />
+                    app:srcCompat="@drawable/ic_star_on" />
 
                 <ImageView
                     android:id="@+id/imageView18"
@@ -105,7 +105,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/imageView17"
                     app:layout_constraintStart_toEndOf="@+id/imageView17"
                     app:layout_constraintTop_toTopOf="@+id/imageView17"
-                    app:srcCompat="@drawable/ic_star" />
+                    app:srcCompat="@drawable/ic_star_on" />
 
                 <ImageView
                     android:id="@+id/imageView19"
@@ -116,7 +116,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/imageView18"
                     app:layout_constraintStart_toEndOf="@+id/imageView18"
                     app:layout_constraintTop_toTopOf="@+id/imageView18"
-                    app:srcCompat="@drawable/ic_star" />
+                    app:srcCompat="@drawable/ic_star_on" />
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
@@ -146,8 +146,8 @@
                     android:layout_marginRight="8dp"
                     android:background="@drawable/bg_bottom_line"
                     android:fontFamily="@font/bangna"
-                    android:letterSpacing="-0.05"
-                    android:lineSpacingMultiplier="1.3"
+                    android:letterSpacing="0"
+                    android:lineSpacingMultiplier="1.5"
                     android:paddingStart="4dp"
                     android:paddingTop="4dp"
                     android:paddingEnd="4dp"
@@ -166,8 +166,8 @@
                     android:layout_marginTop="4dp"
                     android:background="@drawable/bg_bottom_line"
                     android:fontFamily="@font/bangna"
-                    android:letterSpacing="-0.05"
-                    android:lineSpacingMultiplier="1.3"
+                    android:letterSpacing="0"
+                    android:lineSpacingMultiplier="1.5"
                     android:paddingStart="4dp"
                     android:paddingTop="4dp"
                     android:paddingEnd="4dp"
@@ -188,8 +188,8 @@
                     android:layout_marginBottom="8dp"
                     android:background="@drawable/bg_bottom_line"
                     android:fontFamily="@font/bangna"
-                    android:letterSpacing="-0.05"
-                    android:lineSpacingMultiplier="1.3"
+                    android:letterSpacing="0"
+                    android:lineSpacingMultiplier="1.5"
                     android:paddingStart="4dp"
                     android:paddingTop="4dp"
                     android:paddingEnd="4dp"
@@ -280,7 +280,7 @@
                     android:layout_marginBottom="12dp"
                     android:fontFamily="@font/bangna"
                     android:letterSpacing="0"
-                    android:lineSpacingMultiplier="1.3"
+                    android:lineSpacingMultiplier="1.5"
                     android:textColor="@android:color/black"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -299,7 +299,7 @@
             android:layout_marginTop="8dp"
             app:cardElevation="0dp"
             app:cardUseCompatPadding="false"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -337,7 +337,7 @@
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rating_label_text_view"
-                    app:srcCompat="@drawable/ic_star" />
+                    app:srcCompat="@drawable/ic_star_off" />
 
                 <ImageView
                     android:id="@+id/star_2_image_view"
@@ -350,7 +350,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/star_1_image_view"
                     app:layout_constraintTop_toTopOf="@+id/star_1_image_view"
-                    app:srcCompat="@drawable/ic_star" />
+                    app:srcCompat="@drawable/ic_star_off" />
 
                 <ImageView
                     android:id="@+id/star_3_image_view"
@@ -363,7 +363,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/star_2_image_view"
                     app:layout_constraintTop_toTopOf="@+id/star_2_image_view"
-                    app:srcCompat="@drawable/ic_star" />
+                    app:srcCompat="@drawable/ic_star_off" />
 
                 <ImageView
                     android:id="@+id/star_4_image_view"
@@ -376,7 +376,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/star_3_image_view"
                     app:layout_constraintTop_toTopOf="@+id/star_3_image_view"
-                    app:srcCompat="@drawable/ic_star" />
+                    app:srcCompat="@drawable/ic_star_off" />
 
                 <ImageView
                     android:id="@+id/star_5_image_view"
@@ -391,7 +391,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/star_4_image_view"
                     app:layout_constraintTop_toTopOf="@+id/star_4_image_view"
-                    app:srcCompat="@drawable/ic_star" />
+                    app:srcCompat="@drawable/ic_star_off" />
 
                 <TextView
                     android:id="@+id/star_1_label_text_view"

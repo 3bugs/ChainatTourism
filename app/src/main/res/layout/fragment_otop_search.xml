@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_main"
     android:focusableInTouchMode="true"
-    tools:context=".fragment.PlaceListFragment"
+    tools:context=".fragment.OtopSearchFragment"
     tools:ignore="HardcodedText">
 
     <TextView
@@ -62,7 +62,7 @@
         android:drawableEnd="@drawable/ic_search"
         android:drawableRight="@drawable/ic_search"
         android:fontFamily="@font/bangna"
-        android:hint="ค้นหาแหล่งท่องเที่ยว"
+        android:hint="ค้นหาสินค้า OTOP"
         android:inputType="text"
         android:maxLines="1"
         android:paddingBottom="8dp"
@@ -88,7 +88,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <ProgressBar
             android:layout_width="wrap_content"

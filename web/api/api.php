@@ -39,6 +39,9 @@ switch ($action) {
     case 'get_place':
         doGetPlace();
         break;
+    case 'get_otop_by_district':
+        doGetOtopByDistrict();
+        break;
     default:
         $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
         $response[KEY_ERROR_MESSAGE] = 'No action specified or invalid action.';
@@ -113,6 +116,67 @@ function doGetPlace()
         }
         $result->close();
         $response[KEY_DATA_LIST] = $placeList;
+    } else {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล';
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+    }
+}
+
+function doGetOtopByDistrict()
+{
+    global $db, $response;
+
+    $district = $_GET['district'];
+
+    $sql = "SELECT * FROM chainat_otop WHERE district = '$district' 
+            ORDER BY sub_district, village";
+    if ($result = $db->query($sql)) {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+        $response[KEY_ERROR_MESSAGE] = 'อ่านข้อมูลสำเร็จ';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+
+        $otopList = array();
+        while ($row = $result->fetch_assoc()) {
+            $otop = array();
+            $otop['id'] = (int)$row['id'];
+            $otop['name'] = $row['name'];
+            $otop['district'] = $row['district'];
+            $otop['sub_district'] = $row['sub_district'];
+            $otop['village'] = $row['village'];
+            $otop['address'] = $row['address'];
+            $otop['details'] = $row['details'];
+            $otop['price'] = (int)$row['price'];
+            $otop['contact_url'] = $row['contact_url'];
+            $otop['phone'] = $row['phone'];
+            $otop['opening_time'] = $row['opening_time'];
+            $otop['latitude'] = floatval($row['latitude']);
+            $otop['longitude'] = floatval($row['longitude']);
+            $otop['image_list'] = $row['image_list'];
+            $otop['image_cover'] = $row['image_cover'];
+            $otop['recommend'] = (boolean)$row['recommend'];
+
+            /*$otop['gallery_images'] = array();
+
+            $sql = "SELECT image_file_name FROM chainat_otop_gallery WHERE otop_id = " . $otop['id'];
+            if ($galleryResult = $db->query($sql)) {
+                while ($galleryRow = $galleryResult->fetch_assoc()) {
+                    array_push($otop['gallery_images'], $galleryRow['image_file_name']);
+                }
+                $galleryResult->close();
+            } else {
+                $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+                $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล';
+                $errMessage = $db->error;
+                $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+                return;
+            }*/
+
+            array_push($otopList, $otop);
+        }
+        $result->close();
+        $response[KEY_DATA_LIST] = $otopList;
     } else {
         $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
         $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล';

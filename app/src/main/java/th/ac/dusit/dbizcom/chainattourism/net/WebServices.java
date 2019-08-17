@@ -12,4 +12,9 @@ public interface WebServices {
             @Query("place_type") Place.PlaceType placeType
     );
 
+    @GET("get_otop_by_district")
+    Call<GetOtopResponse> getOtopByDistrict(
+            @Query("district") String districtName
+    );
+
 }

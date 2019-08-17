@@ -26,11 +26,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import th.ac.dusit.dbizcom.chainattourism.etc.Utils;
+import th.ac.dusit.dbizcom.chainattourism.model.Otop;
 import th.ac.dusit.dbizcom.chainattourism.model.Place;
 import th.ac.dusit.dbizcom.chainattourism.net.ApiClient;
 
@@ -40,8 +39,10 @@ public class PlaceDetailsActivity extends AppCompatActivity {
 
     private static final String TAG = PlaceDetailsActivity.class.getName();
     static final String KEY_PLACE_JSON = "place_json";
+    static final String KEY_OTOP_JSON = "otop_json";
 
-    private Place mPlace;
+    private Place mPlace = null;
+    private Otop mOtop = null;
 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
@@ -51,11 +52,18 @@ public class PlaceDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_place_details);
 
         Intent intent = getIntent();
-        mPlace = new Gson().fromJson(intent.getStringExtra(KEY_PLACE_JSON), Place.class);
+
+        String placeJson = intent.getStringExtra(KEY_PLACE_JSON);
+        if (placeJson != null) {
+            mPlace = new Gson().fromJson(placeJson, Place.class);
+        } else {
+            String otopJson = intent.getStringExtra(KEY_OTOP_JSON);
+            mOtop = new Gson().fromJson(otopJson, Otop.class);
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         final TextView titleTextView = toolbar.findViewById(R.id.title_text_view);
-        titleTextView.setText(mPlace.name);
+        titleTextView.setText(mPlace != null ? mPlace.name : mOtop.name);
         titleTextView.setTextColor(getResources().getColor(android.R.color.transparent));
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -93,24 +101,27 @@ public class PlaceDetailsActivity extends AppCompatActivity {
 
         ImageView coverImageView = findViewById(R.id.cover_image_view);
         Glide.with(this)
-                .load(IMAGE_BASE_URL + mPlace.coverImage)
+                .load(IMAGE_BASE_URL + (mPlace != null ? mPlace.coverImage : mOtop.coverImage))
                 .placeholder(circularProgressDrawable)
                 .into(coverImageView);
 
         TextView placeNameTextView = findViewById(R.id.place_name_text_view);
-        placeNameTextView.setText(mPlace.name);
+        placeNameTextView.setText(mPlace != null ? mPlace.name : mOtop.name);
 
         TextView phoneTextView = findViewById(R.id.phone_text_view);
         TextView openingTimeTextView = findViewById(R.id.opening_time_text_view);
         TextView addressTextView = findViewById(R.id.address_text_view);
-        phoneTextView.setText(mPlace.phone);
-        openingTimeTextView.setText(mPlace.openingTime);
-        addressTextView.setText(mPlace.address);
+        phoneTextView.setText(mPlace != null ? mPlace.phone : mOtop.phone);
+        openingTimeTextView.setText(mPlace != null ? mPlace.openingTime : mOtop.openingTime);
+        addressTextView.setText(mPlace != null ? mPlace.address : mOtop.address);
 
         TextView detailsTextView = findViewById(R.id.details_text_view);
-        detailsTextView.setText(createIndentedText(mPlace.details, 100, 0));
+        detailsTextView.setText(createIndentedText(mPlace != null ? mPlace.details: mOtop.details, 100, 0));
 
-        setupGalleryImages();
+        //todo: ************************************************************************************
+        if (mPlace != null) {
+            setupGalleryImages();
+        }
     }
 
     private void setupGalleryImages() {
@@ -145,7 +156,8 @@ public class PlaceDetailsActivity extends AppCompatActivity {
                         String.format(
                                 Locale.getDefault(),
                                 "Latitude: %f\nLongitude: %f",
-                                mPlace.latitude, mPlace.longitude
+                                mPlace != null ? mPlace.latitude : mOtop.latitude,
+                                mPlace != null ? mPlace.longitude : mOtop.longitude
                         )
                 );
                 Intent intent = new Intent(PlaceDetailsActivity.this, MapsActivity.class);
