@@ -190,7 +190,11 @@ public class PlaceDetailsActivity extends AppCompatActivity {
                         )
                 );
                 Intent intent = new Intent(PlaceDetailsActivity.this, MapsActivity.class);
-                intent.putExtra(KEY_PLACE_JSON, new Gson().toJson(mPlace));
+                if (mPlace != null) {
+                    intent.putExtra(KEY_PLACE_JSON, new Gson().toJson(mPlace));
+                } else {
+                    intent.putExtra(KEY_OTOP_JSON, new Gson().toJson(mOtop));
+                }
                 startActivity(intent);
             }
         });
