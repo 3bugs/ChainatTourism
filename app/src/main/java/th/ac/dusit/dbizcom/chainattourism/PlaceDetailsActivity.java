@@ -3,6 +3,7 @@ package th.ac.dusit.dbizcom.chainattourism;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -20,6 +21,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -118,9 +120,22 @@ public class PlaceDetailsActivity extends AppCompatActivity {
         TextView detailsTextView = findViewById(R.id.details_text_view);
         detailsTextView.setText(createIndentedText(mPlace != null ? mPlace.details: mOtop.details, 100, 0));
 
-        //todo: ************************************************************************************
+        Button otopContactButton = findViewById(R.id.otop_contact_button);
+        otopContactButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(mOtop.contactUrl));
+                startActivity(i);
+            }
+        });
+
         if (mPlace != null) {
+            otopContactButton.setVisibility(View.GONE);
             setupGalleryImages();
+        } else if (mOtop != null) {
+            otopContactButton.setVisibility(View.VISIBLE);
+            setupGalleryImagesOtop();
         }
     }
 
@@ -130,6 +145,20 @@ public class PlaceDetailsActivity extends AppCompatActivity {
         GalleryImagesAdapter adapter = new GalleryImagesAdapter(
                 this,
                 mPlace
+        );
+
+        RecyclerView galleryImagesRecyclerView = findViewById(R.id.gallery_images_recycler_view);
+        galleryImagesRecyclerView.setLayoutManager(layoutManager);
+        galleryImagesRecyclerView.addItemDecoration(new SpacingDecoration(this));
+        galleryImagesRecyclerView.setAdapter(adapter);
+    }
+
+    private void setupGalleryImagesOtop() {
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        GalleryImagesOtopAdapter adapter = new GalleryImagesOtopAdapter(
+                this,
+                mOtop
         );
 
         RecyclerView galleryImagesRecyclerView = findViewById(R.id.gallery_images_recycler_view);
@@ -240,6 +269,75 @@ public class PlaceDetailsActivity extends AppCompatActivity {
                         Intent intent = new Intent(mContext, GalleryActivity.class);
                         intent.putExtra("current_index", getAdapterPosition());
                         intent.putExtra("place_json", new Gson().toJson(mPlace));
+                        mContext.startActivity(intent);
+                    }
+                });
+            }
+        }
+    }
+
+    private static class GalleryImagesOtopAdapter extends RecyclerView.Adapter<GalleryImagesOtopAdapter.ViewHolder> {
+
+        private final Context mContext;
+        private final Otop mOtop;
+
+        GalleryImagesOtopAdapter(Context context, Otop otop) {
+            mContext = context;
+            mOtop = otop;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.item_gallery_image, parent, false
+            );
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            final String imageFileName = mOtop.galleryImages.get(position);
+            holder.mImageFileName = imageFileName;
+
+            CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(30f);
+            circularProgressDrawable.start();
+
+            Log.i(TAG, ApiClient.GALLERY_BASE_URL.concat(imageFileName));
+
+            Glide.with(mContext)
+                    .load(ApiClient.GALLERY_BASE_URL.concat(imageFileName))
+                    .placeholder(circularProgressDrawable)
+                    .into(holder.mImageView);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mOtop.galleryImages.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+
+            private final View mRootView;
+            private final ImageView mImageView;
+
+            private String mImageFileName;
+
+            ViewHolder(View itemView) {
+                super(itemView);
+
+                mRootView = itemView;
+                mImageView = itemView.findViewById(R.id.image_view);
+
+                mImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //Utils.showShortToast(mContext, mImageFileName);
+                        Intent intent = new Intent(mContext, GalleryActivity.class);
+                        intent.putExtra("current_index", getAdapterPosition());
+                        intent.putExtra("place_json", new Gson().toJson(mOtop));
                         mContext.startActivity(intent);
                     }
                 });

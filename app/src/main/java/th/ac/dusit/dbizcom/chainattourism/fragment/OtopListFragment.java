@@ -182,7 +182,7 @@ public class OtopListFragment extends Fragment {
             circularProgressDrawable.start();
 
             Glide.with(mContext)
-                    .load(ApiClient.IMAGE_BASE_URL.concat(otop.coverImage))
+                    .load(ApiClient.IMAGE_BASE_URL.concat(otop.listImage))
                     .placeholder(circularProgressDrawable)
                     .into(holder.mOtopImageView);
         }
