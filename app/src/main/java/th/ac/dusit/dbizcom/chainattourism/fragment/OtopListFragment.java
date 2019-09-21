@@ -2,6 +2,7 @@ package th.ac.dusit.dbizcom.chainattourism.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,14 +18,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import th.ac.dusit.dbizcom.chainattourism.R;
+import th.ac.dusit.dbizcom.chainattourism.etc.Utils;
 import th.ac.dusit.dbizcom.chainattourism.model.Otop;
 import th.ac.dusit.dbizcom.chainattourism.net.ApiClient;
 import th.ac.dusit.dbizcom.chainattourism.net.GetOtopResponse;
@@ -102,15 +107,38 @@ public class OtopListFragment extends Fragment {
                     @Override
                     public void onSuccess(GetOtopResponse responseBody) {
                         mOtopList = responseBody.otopList;
+                        mOtopList = insertSubDistrictHeader(mOtopList);
                         setupRecyclerView();
                     }
 
                     @Override
                     public void onError(String errorMessage) {
+                        if (getActivity() != null) {
+                            Utils.showOkDialog(getActivity(), "Error", errorMessage, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
+                                }
+                            });
+                        }
                     }
                 }
         ));
+    }
+
+    private List<Otop> insertSubDistrictHeader(List<Otop> otopList) {
+        List<Otop> newOtopList = new ArrayList<>();
+        String previousSubDistrict = null;
+
+        for (Otop otop : otopList) {
+            if (previousSubDistrict == null || !previousSubDistrict.equals(otop.subDistrict)) {
+                newOtopList.add(new Otop(0, null, mDistrictName, otop.subDistrict, null, null, null, 0, null, null, null, 0, 0, null, null, false, null, 0));
+                previousSubDistrict = otop.subDistrict;
+            }
+            newOtopList.add(otop);
+        }
+
+        return newOtopList;
     }
 
     private void setupRecyclerView() {
@@ -147,7 +175,10 @@ public class OtopListFragment extends Fragment {
         void onClickOtop(Otop otop);
     }
 
-    private static class OtopListAdapter extends RecyclerView.Adapter<OtopListAdapter.ViewHolder> {
+    private static class OtopListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+        private static int TYPE_HEADER = 1;
+        private static int TYPE_NORMAL = 2;
 
         private final Context mContext;
         private final List<Otop> mOtopList;
@@ -159,32 +190,59 @@ public class OtopListFragment extends Fragment {
             mListener = listener;
         }
 
+        @Override
+        public int getItemViewType(int position) {
+            if (mOtopList.get(position).id == 0) {
+                return TYPE_HEADER;
+            } else {
+                return TYPE_NORMAL;
+            }
+        }
+
         @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.item_otop, parent, false
-            );
-            return new ViewHolder(view);
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view;
+
+            if (viewType == TYPE_HEADER) {
+                view = LayoutInflater.from(parent.getContext()).inflate(
+                        R.layout.item_otop_header, parent, false
+                );
+                return new HeaderViewHolder(view);
+            } else {
+                view = LayoutInflater.from(parent.getContext()).inflate(
+                        R.layout.item_otop, parent, false
+                );
+                return new NormalViewHolder(view);
+            }
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             final Otop otop = mOtopList.get(position);
 
-            holder.mOtop = otop;
-            holder.mOtopNameTextView.setText(otop.name);
-            holder.mVillageTextView.setText(otop.village);
+            if (getItemViewType(position) == TYPE_HEADER) {
+                HeaderViewHolder h = (HeaderViewHolder) holder;
+                h.mOtop = otop;
+                h.mSubDistrictTextView.setText("ตำบล".concat(otop.subDistrict));
+            } else {
+                NormalViewHolder h = (NormalViewHolder) holder;
+                h.mOtop = otop;
+                h.mOtopNameTextView.setText(otop.name);
+                h.mVillageTextView.setText(otop.village);
 
-            CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
-            circularProgressDrawable.setStrokeWidth(5f);
-            circularProgressDrawable.setCenterRadius(30f);
-            circularProgressDrawable.start();
+                CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
+                circularProgressDrawable.setStrokeWidth(5f);
+                circularProgressDrawable.setCenterRadius(30f);
+                circularProgressDrawable.start();
 
-            Glide.with(mContext)
-                    .load(ApiClient.IMAGE_BASE_URL.concat(otop.listImage))
-                    .placeholder(circularProgressDrawable)
-                    .into(holder.mOtopImageView);
+                if (otop.listImage != null) {
+                    Glide.with(mContext)
+                            .load(ApiClient.IMAGE_BASE_URL.concat(otop.listImage))
+                            .placeholder(circularProgressDrawable)
+                            .into(h.mOtopImageView);
+                }
+            }
         }
 
         @Override
@@ -192,7 +250,7 @@ public class OtopListFragment extends Fragment {
             return mOtopList.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder {
+        class NormalViewHolder extends RecyclerView.ViewHolder {
 
             private final View mRootView;
             private final TextView mOtopNameTextView;
@@ -201,7 +259,7 @@ public class OtopListFragment extends Fragment {
 
             private Otop mOtop;
 
-            ViewHolder(View itemView) {
+            NormalViewHolder(View itemView) {
                 super(itemView);
 
                 mRootView = itemView;
@@ -213,6 +271,33 @@ public class OtopListFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         mListener.onClickOtop(mOtop);
+                    }
+                });
+            }
+        }
+
+        class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+            private final View mRootView;
+            private final TextView mSubDistrictTextView;
+
+            private Otop mOtop;
+
+            HeaderViewHolder(View itemView) {
+                super(itemView);
+
+                mRootView = itemView;
+                mSubDistrictTextView = itemView.findViewById(R.id.sub_district_text_view);
+
+                mRootView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String msg = String.format(
+                                Locale.getDefault(),
+                                "ต.%s อ.%s จ.ชัยนาท",
+                                mOtop.subDistrict, mOtop.district
+                        );
+                        Toast.makeText(mContext, msg, Toast.LENGTH_LONG).show();
                     }
                 });
             }

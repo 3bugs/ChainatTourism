@@ -14,7 +14,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -74,7 +77,23 @@
                     app:layout_constraintTop_toBottomOf="@+id/place_name_text_view"
                     app:srcCompat="@drawable/ic_star_on" />
 
-                <ImageView
+                <TextView
+                    android:id="@+id/rate_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/bangna"
+                    android:letterSpacing="0"
+                    android:lineSpacingMultiplier="1.5"
+                    android:text="(ไม่มีข้อมูล)"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                    app:layout_constraintStart_toEndOf="@+id/imageView5"
+                    app:layout_constraintTop_toTopOf="@+id/imageView5" />
+                <!--<ImageView
                     android:id="@+id/imageView16"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -116,7 +135,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/imageView18"
                     app:layout_constraintStart_toEndOf="@+id/imageView18"
                     app:layout_constraintTop_toTopOf="@+id/imageView18"
-                    app:srcCompat="@drawable/ic_star_on" />
+                    app:srcCompat="@drawable/ic_star_on" />-->
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
@@ -356,6 +375,8 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:layout_constraintEnd_toStartOf="@+id/star_2_image_view"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -369,6 +390,8 @@
                     android:layout_height="34dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginLeft="24dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:layout_constraintBottom_toBottomOf="@+id/star_1_image_view"
                     app:layout_constraintEnd_toStartOf="@+id/star_3_image_view"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -382,6 +405,8 @@
                     android:layout_height="34dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginLeft="24dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:layout_constraintBottom_toBottomOf="@+id/star_2_image_view"
                     app:layout_constraintEnd_toStartOf="@+id/star_4_image_view"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -395,6 +420,8 @@
                     android:layout_height="34dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginLeft="24dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:layout_constraintBottom_toBottomOf="@+id/star_3_image_view"
                     app:layout_constraintEnd_toStartOf="@+id/star_5_image_view"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -410,6 +437,8 @@
                     android:layout_marginLeft="24dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:layout_constraintBottom_toBottomOf="@+id/star_4_image_view"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -483,6 +512,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/star_5_image_view" />
 
                 <Button
+                    android:id="@+id/submit_rating_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
@@ -496,6 +526,27 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/star_1_label_text_view" />
+
+                <LinearLayout
+                    android:id="@+id/progress_view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="#33000000"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>

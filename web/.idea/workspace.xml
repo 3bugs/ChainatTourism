@@ -2,6 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3afb251d-c44b-421c-9dfa-5e28220e3e1d" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/net/AddRatingResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/res/layout/item_otop_header.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/MapsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/MapsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceDetailsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceDetailsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/OtopListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/OtopListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/net/WebServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/net/WebServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/activity_place_details_content.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_place_details_content.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/item_otop.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/item_otop.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.php" afterDir="false" />
     </list>
@@ -127,7 +135,8 @@
       <workItem from="1566023790553" duration="5574000" />
       <workItem from="1566143808636" duration="598000" />
       <workItem from="1568429334718" duration="76000" />
-      <workItem from="1568429448065" duration="4527000" />
+      <workItem from="1568429448065" duration="5121000" />
+      <workItem from="1569034501159" duration="4445000" />
     </task>
     <servers />
   </component>

@@ -71,7 +71,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         directionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri intentUri = Uri.parse("geo:" + (mPlace != null ? mPlace.latitude : mOtop.latitude) + "," + (mPlace != null ? mPlace.longitude : mOtop.longitude) + "?q=" + (mPlace != null ? mPlace.name : mOtop.name));
+                Uri intentUri = Uri.parse("geo:" + (mPlace != null ? mPlace.latitude : mOtop.latitude) + "," + (mPlace != null ? mPlace.longitude : mOtop.longitude) /*+ "?q=" + (mPlace != null ? mPlace.name : mOtop.name)*/);
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, intentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
                 startActivity(mapIntent);

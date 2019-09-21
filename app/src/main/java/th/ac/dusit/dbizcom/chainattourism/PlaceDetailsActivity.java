@@ -1,6 +1,7 @@
 package th.ac.dusit.dbizcom.chainattourism;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.CircularProgressDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,10 +32,15 @@ import com.google.gson.Gson;
 
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Retrofit;
 import th.ac.dusit.dbizcom.chainattourism.etc.Utils;
 import th.ac.dusit.dbizcom.chainattourism.model.Otop;
 import th.ac.dusit.dbizcom.chainattourism.model.Place;
+import th.ac.dusit.dbizcom.chainattourism.net.AddRatingResponse;
 import th.ac.dusit.dbizcom.chainattourism.net.ApiClient;
+import th.ac.dusit.dbizcom.chainattourism.net.MyRetrofitCallback;
+import th.ac.dusit.dbizcom.chainattourism.net.WebServices;
 
 import static th.ac.dusit.dbizcom.chainattourism.net.ApiClient.IMAGE_BASE_URL;
 
@@ -45,6 +52,9 @@ public class PlaceDetailsActivity extends AppCompatActivity {
 
     private Place mPlace = null;
     private Otop mOtop = null;
+    private int mRate = 0;
+
+    private View mProgressView;
 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
@@ -93,9 +103,12 @@ public class PlaceDetailsActivity extends AppCompatActivity {
 
         populateUi();
         setupToolbarIcons();
+        setupRating();
     }
 
     private void populateUi() {
+        setRate(mPlace != null ? mPlace.averageRate : mOtop.averageRate);
+
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(this);
         circularProgressDrawable.setStrokeWidth(5f);
         circularProgressDrawable.setCenterRadius(30f);
@@ -118,7 +131,7 @@ public class PlaceDetailsActivity extends AppCompatActivity {
         addressTextView.setText(mPlace != null ? mPlace.address : mOtop.address);
 
         TextView detailsTextView = findViewById(R.id.details_text_view);
-        detailsTextView.setText(createIndentedText(mPlace != null ? mPlace.details: mOtop.details, 100, 0));
+        detailsTextView.setText(createIndentedText(mPlace != null ? mPlace.details : mOtop.details, 100, 0));
 
         Button otopContactButton = findViewById(R.id.otop_contact_button);
         otopContactButton.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +149,15 @@ public class PlaceDetailsActivity extends AppCompatActivity {
         } else if (mOtop != null) {
             otopContactButton.setVisibility(View.VISIBLE);
             setupGalleryImagesOtop();
+        }
+    }
+
+    private void setRate(float averageRate) {
+        TextView rateTextView = findViewById(R.id.rate_text_view);
+        if (averageRate != 0) {
+            rateTextView.setText(String.valueOf(averageRate));
+        } else {
+            rateTextView.setText(String.valueOf("ไม่มีข้อมูล"));
         }
     }
 
@@ -198,6 +220,105 @@ public class PlaceDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void setupRating() {
+        mProgressView = findViewById(R.id.progress_view);
+
+        ImageView star1ImageView = findViewById(R.id.star_1_image_view);
+        ImageView star2ImageView = findViewById(R.id.star_2_image_view);
+        ImageView star3ImageView = findViewById(R.id.star_3_image_view);
+        ImageView star4ImageView = findViewById(R.id.star_4_image_view);
+        ImageView star5ImageView = findViewById(R.id.star_5_image_view);
+
+        final ImageView[] starImageViewList = new ImageView[]{
+                star1ImageView, star2ImageView, star3ImageView, star4ImageView, star5ImageView
+        };
+
+        View.OnClickListener starsListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView imageView = (ImageView) v;
+
+                int i = 0;
+                for (; i < starImageViewList.length; i++) {
+                    starImageViewList[i].setImageResource(R.drawable.ic_star_on);
+                    if (starImageViewList[i] == imageView) {
+                        i++;
+                        break;
+                    }
+                }
+                mRate = i;
+                for (int j = i; j < starImageViewList.length; j++) {
+                    starImageViewList[j].setImageResource(R.drawable.ic_star_off);
+                }
+            }
+        };
+
+        star1ImageView.setOnClickListener(starsListener);
+        star2ImageView.setOnClickListener(starsListener);
+        star3ImageView.setOnClickListener(starsListener);
+        star4ImageView.setOnClickListener(starsListener);
+        star5ImageView.setOnClickListener(starsListener);
+
+        findViewById(R.id.submit_rating_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mRate > 0) {
+                    //Toast.makeText(PlaceDetailsActivity.this, mRate + " ดาว", Toast.LENGTH_LONG).show();
+                    new AlertDialog.Builder(PlaceDetailsActivity.this)
+                            .setTitle("ให้คะแนนความพึงพอใจ")
+                            .setMessage("ยืนยันให้คะแนนความพึงพอใจ " + mRate + " ดาว ?")
+                            .setPositiveButton("ให้คะแนน " + mRate + " ดาว", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    doAddRating();
+                                }
+                            })
+                            .setNegativeButton("ยกเลิก", null)
+                            .show();
+                } else {
+                    Utils.showShortToast(PlaceDetailsActivity.this, "กรุณากดดาวเพื่อระบุคะแนนที่จะให้");
+                }
+            }
+        });
+    }
+
+    private void doAddRating() {
+        mProgressView.setVisibility(View.VISIBLE);
+
+        Retrofit retrofit = ApiClient.getClient();
+        WebServices services = retrofit.create(WebServices.class);
+
+        int id = mPlace != null ? mPlace.id : mOtop.id;
+        String type = mPlace != null ? "place" : "otop";
+
+        Call<AddRatingResponse> call = services.addRating(id, type, mRate);
+        call.enqueue(new MyRetrofitCallback<>(
+                PlaceDetailsActivity.this,
+                null,
+                mProgressView,
+                new MyRetrofitCallback.MyRetrofitCallbackListener<AddRatingResponse>() {
+                    @Override
+                    public void onSuccess(AddRatingResponse responseBody) {
+                        float averageRate = responseBody.averageRate;
+                        setRate(averageRate);
+
+                        if (mPlace != null) {
+                            mPlace.setAverageRate(averageRate);
+                        } else if (mOtop != null) {
+                            mOtop.setAverageRate(averageRate);
+                        }
+
+                        Utils.showShortToast(PlaceDetailsActivity.this, responseBody.errorMessage);
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                        Utils.showOkDialog(PlaceDetailsActivity.this, "Error", errorMessage, null);
+                    }
+                }
+        ));
     }
 
     static SpannableString createIndentedText(String text, int marginFirstLine, int marginNextLines) {

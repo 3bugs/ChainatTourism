@@ -42,6 +42,9 @@ switch ($action) {
     case 'get_otop_by_district':
         doGetOtopByDistrict();
         break;
+    case 'add_rating':
+        doAddRating();
+        break;
     default:
         $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
         $response[KEY_ERROR_MESSAGE] = 'No action specified or invalid action.';
@@ -104,9 +107,27 @@ function doGetPlace()
                     array_push($place['gallery_images'], $galleryRow['image_file_name']);
                 }
                 $galleryResult->close();
+
+                $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate FROM chainat_rating 
+                WHERE item_id = {$place['id']} AND item_type = 'place'";
+                if ($ratingResult = $db->query($sql)) {
+                    $ratingRow = $ratingResult->fetch_assoc();
+                    $averageRate = $ratingRow['average_rate'];
+                    if ($averageRate == null) {
+                        $place['average_rate'] = 0;
+                    } else {
+                        $place['average_rate'] = floatval($averageRate);
+                    }
+                } else {
+                    $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+                    $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล (3)';
+                    $errMessage = $db->error;
+                    $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+                    return;
+                }
             } else {
                 $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
-                $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล';
+                $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล (2)';
                 $errMessage = $db->error;
                 $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
                 return;
@@ -118,7 +139,7 @@ function doGetPlace()
         $response[KEY_DATA_LIST] = $placeList;
     } else {
         $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
-        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล';
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล (1)';
         $errMessage = $db->error;
         $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
     }
@@ -165,6 +186,24 @@ function doGetOtopByDistrict()
                     array_push($otop['gallery_images'], $galleryRow['image_file_name']);
                 }
                 $galleryResult->close();
+
+                $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate FROM chainat_rating 
+                WHERE item_id = {$otop['id']} AND item_type = 'otop'";
+                if ($ratingResult = $db->query($sql)) {
+                    $ratingRow = $ratingResult->fetch_assoc();
+                    $averageRate = $ratingRow['average_rate'];
+                    if ($averageRate == null) {
+                        $otop['average_rate'] = 0;
+                    } else {
+                        $otop['average_rate'] = floatval($averageRate);
+                    }
+                } else {
+                    $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+                    $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล (3)';
+                    $errMessage = $db->error;
+                    $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+                    return;
+                }
             } else {
                 $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
                 $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล';
@@ -180,6 +219,42 @@ function doGetOtopByDistrict()
     } else {
         $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
         $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล';
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+    }
+}
+
+function doAddRating()
+{
+    global $db, $response;
+
+    $id = $_POST['id'];
+    $type = $_POST['type'];
+    $rate = $_POST['rate'];
+
+    $sql = "INSERT INTO chainat_rating (item_id, item_type, rate) 
+            VALUES ($id, '$type', $rate)";
+    if ($db->query($sql)) {
+        $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate FROM chainat_rating 
+                WHERE item_id = $id AND item_type = '$type'";
+        if ($result = $db->query($sql)) {
+            $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+            $response[KEY_ERROR_MESSAGE] = 'บันทึกข้อมูลสำเร็จ';
+            $response[KEY_ERROR_MESSAGE_MORE] = '';
+
+            $row = $result->fetch_assoc();
+            $response['average_rate'] = floatval($row['average_rate']);
+
+            $result->close();
+        } else {
+            $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+            $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการบันทึกข้อมูล (2)';
+            $errMessage = $db->error;
+            $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+        }
+    } else {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการบันทึกข้อมูล (1)';
         $errMessage = $db->error;
         $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
     }
