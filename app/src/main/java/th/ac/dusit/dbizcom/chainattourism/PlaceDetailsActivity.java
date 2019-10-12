@@ -28,8 +28,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.glide.slider.library.Animations.DescriptionAnimation;
+import com.glide.slider.library.SliderLayout;
+import com.glide.slider.library.SliderTypes.BaseSliderView;
+import com.glide.slider.library.SliderTypes.DefaultSliderView;
+import com.glide.slider.library.Tricks.ViewPagerEx;
 import com.google.gson.Gson;
 
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -42,9 +49,7 @@ import th.ac.dusit.dbizcom.chainattourism.net.ApiClient;
 import th.ac.dusit.dbizcom.chainattourism.net.MyRetrofitCallback;
 import th.ac.dusit.dbizcom.chainattourism.net.WebServices;
 
-import static th.ac.dusit.dbizcom.chainattourism.net.ApiClient.IMAGE_BASE_URL;
-
-public class PlaceDetailsActivity extends AppCompatActivity {
+public class PlaceDetailsActivity extends AppCompatActivity implements ViewPagerEx.OnPageChangeListener, BaseSliderView.OnSliderClickListener {
 
     private static final String TAG = PlaceDetailsActivity.class.getName();
     static final String KEY_PLACE_JSON = "place_json";
@@ -55,6 +60,7 @@ public class PlaceDetailsActivity extends AppCompatActivity {
     private int mRate = 0;
 
     private View mProgressView;
+    private SliderLayout mSlider;
 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
@@ -103,7 +109,27 @@ public class PlaceDetailsActivity extends AppCompatActivity {
 
         populateUi();
         setupToolbarIcons();
+        setupPlaceTypeIcon();
         setupRating();
+    }
+
+    private void setupPlaceTypeIcon() {
+        ImageView placeTypeIconImageView = findViewById(R.id.place_type_image_view);
+        if (mPlace != null) {
+            switch (mPlace.placeType) {
+                case TOUR:
+                    placeTypeIconImageView.setImageResource(R.drawable.ic_place_type_tour);
+                    break;
+                case TEMPLE:
+                    placeTypeIconImageView.setImageResource(R.drawable.ic_place_type_temple);
+                    break;
+                case RESTAURANT:
+                    placeTypeIconImageView.setImageResource(R.drawable.ic_place_type_restaurant_new);
+                    break;
+            }
+        } else {
+            placeTypeIconImageView.setImageResource(R.drawable.ic_place_type_otop);
+        }
     }
 
     private void populateUi() {
@@ -114,11 +140,14 @@ public class PlaceDetailsActivity extends AppCompatActivity {
         circularProgressDrawable.setCenterRadius(30f);
         circularProgressDrawable.start();
 
-        ImageView coverImageView = findViewById(R.id.cover_image_view);
+        /*ไม่ใช้ cover image แล้ว เปลี่ยนมาเป็น image slider แทน*/
+        /*ImageView coverImageView = findViewById(R.id.cover_image_view);
         Glide.with(this)
                 .load(IMAGE_BASE_URL + (mPlace != null ? mPlace.coverImage : mOtop.coverImage))
                 .placeholder(circularProgressDrawable)
-                .into(coverImageView);
+                .into(coverImageView);*/
+
+        setupCoverImageSlider();
 
         TextView placeNameTextView = findViewById(R.id.place_name_text_view);
         placeNameTextView.setText(mPlace != null ? mPlace.name : mOtop.name);
@@ -145,10 +174,64 @@ public class PlaceDetailsActivity extends AppCompatActivity {
 
         if (mPlace != null) {
             otopContactButton.setVisibility(View.GONE);
-            setupGalleryImages();
+            //setupGalleryImages();
         } else if (mOtop != null) {
             otopContactButton.setVisibility(View.VISIBLE);
-            setupGalleryImagesOtop();
+            //setupGalleryImagesOtop();
+        }
+    }
+
+    private void setupCoverImageSlider() {
+        mSlider = findViewById(R.id.slider);
+
+        /*ArrayList<String> listUrl = new ArrayList<>();
+        listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/โฆษณา.png");
+        listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/สวนนก.png");
+        listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/สวนส้มโอ.png");*/
+
+        RequestOptions requestOptions = new RequestOptions().centerCrop();
+
+        //.diskCacheStrategy(DiskCacheStrategy.NONE)
+        //.placeholder(R.drawable.placeholder)
+        //.error(R.drawable.placeholder);
+
+        List<String> imageFileNameList = mPlace != null ? mPlace.galleryImages : mOtop.galleryImages;
+
+        for (int i = 0; i < imageFileNameList.size(); i++) {
+            DefaultSliderView sliderView = new DefaultSliderView(this);
+            sliderView
+                    .image(ApiClient.GALLERY_BASE_URL.concat(imageFileNameList.get(i)))
+                    .setRequestOption(requestOptions)
+                    //.setBackgroundColor(Color.WHITE)
+                    .setProgressBarVisible(true)
+                    .setOnSliderClickListener(this);
+
+            //add your extra information
+            sliderView.bundle(new Bundle());
+            //sliderView.getBundle().putString("extra", listName.get(i));
+            mSlider.addSlider(sliderView);
+        }
+
+        // set Slider Transition Animation
+        // mSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+        mSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+
+        mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mSlider.setCustomAnimation(new DescriptionAnimation());
+        mSlider.setDuration(3000);
+        mSlider.addOnPageChangeListener(this);
+
+        if (mOtop != null) {
+            mSlider.stopAutoCycle();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mSlider != null && mPlace != null) {
+            mSlider.startAutoCycle();
         }
     }
 
@@ -330,6 +413,29 @@ public class PlaceDetailsActivity extends AppCompatActivity {
                 0
         );
         return result;
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+        Intent intent = new Intent(PlaceDetailsActivity.this, GalleryActivity.class);
+        intent.putExtra("current_index", mSlider.getCurrentPosition());
+        intent.putExtra("place_json", new Gson().toJson(mPlace != null ? mPlace : mOtop));
+        startActivity(intent);
     }
 
     private static class GalleryImagesAdapter extends RecyclerView.Adapter<GalleryImagesAdapter.ViewHolder> {

@@ -191,6 +191,12 @@ public class PlaceListFragment extends Fragment {
                     @Override
                     public void onSuccess(GetPlaceResponse responseBody) {
                         mPlaceList = responseBody.placeList;
+
+                        /*กำหนดประเภทสถานที่ลงใน Place*/
+                        for (Place place : mPlaceList) {
+                            place.placeType = mPlaceType;
+                        }
+
                         setupRecyclerView();
                     }
 

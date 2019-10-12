@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,7 +20,7 @@
         app:fontFamily="@font/cheangkhan"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title_text_view"
@@ -36,22 +35,22 @@
         app:fontFamily="@font/cheangkhan"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.glide.slider.library.SliderLayout
         android:id="@+id/slider"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_bg_text_view"/>
+        app:layout_constraintTop_toBottomOf="@+id/title_bg_text_view" />
 
     <LinearLayout
         android:id="@+id/place_layout"
@@ -64,8 +63,8 @@
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingBottom="2dp"
         android:paddingTop="6dp"
+        android:paddingBottom="2dp"
         app:layout_constraintEnd_toStartOf="@+id/temple_layout"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +74,7 @@
             android:id="@+id/imageView"
             android:layout_width="55dp"
             android:layout_height="32dp"
-            app:srcCompat="@drawable/ic_place"/>
+            app:srcCompat="@drawable/ic_place" />
 
         <TextView
             android:id="@+id/textView2"
@@ -85,7 +84,8 @@
             android:gravity="center_horizontal"
             android:text="แหล่งท่องเที่ยว"
             android:textSize="12sp"
-            app:fontFamily="@font/bangna"/>
+            android:textStyle="bold"
+            app:fontFamily="@font/bangna" />
 
     </LinearLayout>
 
@@ -110,7 +110,7 @@
             android:id="@+id/imageView2"
             android:layout_width="55dp"
             android:layout_height="32dp"
-            app:srcCompat="@drawable/ic_temple"/>
+            app:srcCompat="@drawable/ic_temple" />
 
         <TextView
             android:id="@+id/textView3"
@@ -120,7 +120,8 @@
             android:gravity="center_horizontal"
             android:text="วัด"
             android:textSize="12sp"
-            app:fontFamily="@font/bangna"/>
+            android:textStyle="bold"
+            app:fontFamily="@font/bangna" />
 
     </LinearLayout>
 
@@ -145,7 +146,7 @@
             android:id="@+id/imageView3"
             android:layout_width="55dp"
             android:layout_height="32dp"
-            app:srcCompat="@drawable/ic_restaurant"/>
+            app:srcCompat="@drawable/ic_restaurant" />
 
         <TextView
             android:id="@+id/textView4"
@@ -155,7 +156,8 @@
             android:gravity="center_horizontal"
             android:text="ร้านอาหาร"
             android:textSize="12sp"
-            app:fontFamily="@font/bangna"/>
+            android:textStyle="bold"
+            app:fontFamily="@font/bangna" />
 
     </LinearLayout>
 
@@ -180,7 +182,7 @@
             android:id="@+id/imageView4"
             android:layout_width="55dp"
             android:layout_height="32dp"
-            app:srcCompat="@drawable/ic_otop"/>
+            app:srcCompat="@drawable/ic_otop" />
 
         <TextView
             android:id="@+id/textView5"
@@ -190,7 +192,8 @@
             android:gravity="center_horizontal"
             android:text="สินค้า OTOP"
             android:textSize="12sp"
-            app:fontFamily="@font/bangna"/>
+            android:textStyle="bold"
+            app:fontFamily="@font/bangna" />
 
     </LinearLayout>
 
@@ -201,7 +204,7 @@
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@id/place_layout"
         app:layout_constraintStart_toEndOf="@id/place_layout"
-        app:layout_constraintTop_toTopOf="@id/place_layout"/>
+        app:layout_constraintTop_toTopOf="@id/place_layout" />
 
     <View
         android:id="@+id/divider2"
@@ -210,7 +213,7 @@
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@id/temple_layout"
         app:layout_constraintStart_toEndOf="@id/temple_layout"
-        app:layout_constraintTop_toTopOf="@id/temple_layout"/>
+        app:layout_constraintTop_toTopOf="@id/temple_layout" />
 
     <View
         android:id="@+id/divider3"
@@ -219,6 +222,6 @@
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@id/restaurant_layout"
         app:layout_constraintStart_toEndOf="@id/restaurant_layout"
-        app:layout_constraintTop_toTopOf="@id/restaurant_layout"/>
+        app:layout_constraintTop_toTopOf="@id/restaurant_layout" />
 
 </android.support.constraint.ConstraintLayout>

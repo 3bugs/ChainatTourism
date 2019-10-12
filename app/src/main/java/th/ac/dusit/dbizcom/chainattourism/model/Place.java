@@ -38,7 +38,7 @@ public class Place {
     @SerializedName("recommend")
     public final boolean recommend;
     @SerializedName("place_type")
-    public final PlaceType placeType;
+    public PlaceType placeType;
     @SerializedName("gallery_images")
     public final List<String> galleryImages;
     @SerializedName("average_rate")

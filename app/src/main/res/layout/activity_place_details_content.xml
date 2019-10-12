@@ -35,11 +35,12 @@
                 <ImageView
                     android:id="@+id/place_type_image_view"
                     android:layout_width="50dp"
-                    android:layout_height="36dp"
+                    android:layout_height="40dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginLeft="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:scaleType="centerInside"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -90,9 +91,11 @@
                     android:text="(ไม่มีข้อมูล)"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                     app:layout_constraintStart_toEndOf="@+id/imageView5"
                     app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
                 <!--<ImageView
                     android:id="@+id/imageView16"
                     android:layout_width="20dp"
@@ -173,6 +176,7 @@
                     android:paddingBottom="4dp"
                     android:textColor="#000"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/phone_image_view"
                     app:layout_constraintTop_toTopOf="parent"
@@ -193,6 +197,7 @@
                     android:paddingBottom="4dp"
                     android:textColor="#000"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/phone_text_view"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="@+id/phone_text_view"
@@ -215,6 +220,7 @@
                     android:paddingBottom="4dp"
                     android:textColor="#000"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/phone_text_view"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -301,7 +307,8 @@
                     android:letterSpacing="0"
                     android:lineSpacingMultiplier="1.5"
                     android:textColor="@android:color/black"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/details_label_text_view"
                     app:layout_constraintTop_toBottomOf="@id/details_label_text_view"
@@ -322,11 +329,13 @@
                     android:drawableLeft="@drawable/ic_otop_contact"
                     android:drawablePadding="12dp"
                     android:fontFamily="@font/bangna"
+                    android:gravity="center_vertical"
                     android:letterSpacing="0"
                     android:lineSpacingMultiplier="1.5"
                     android:text="ช่องทางการติดต่อสั่งซื้อสินค้า"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -455,6 +464,7 @@
                     android:text="น้อยมาก"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/star_1_image_view"
                     app:layout_constraintStart_toStartOf="@+id/star_1_image_view"
                     app:layout_constraintTop_toBottomOf="@+id/star_1_image_view" />
@@ -468,6 +478,7 @@
                     android:text="น้อย"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/star_2_image_view"
                     app:layout_constraintStart_toStartOf="@+id/star_2_image_view"
                     app:layout_constraintTop_toBottomOf="@+id/star_2_image_view" />
@@ -481,6 +492,7 @@
                     android:text="ปานกลาง"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/star_3_image_view"
                     app:layout_constraintStart_toStartOf="@+id/star_3_image_view"
                     app:layout_constraintTop_toBottomOf="@+id/star_3_image_view" />
@@ -494,6 +506,7 @@
                     android:text="ดี"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/star_4_image_view"
                     app:layout_constraintStart_toStartOf="@+id/star_4_image_view"
                     app:layout_constraintTop_toBottomOf="@+id/star_4_image_view" />
@@ -507,6 +520,7 @@
                     android:text="ดีมาก"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/star_5_image_view"
                     app:layout_constraintStart_toStartOf="@+id/star_5_image_view"
                     app:layout_constraintTop_toBottomOf="@+id/star_5_image_view" />
@@ -522,6 +536,7 @@
                     android:padding="0dp"
                     android:text="ยืนยัน"
                     android:textColor="@android:color/white"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -556,9 +571,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             app:cardElevation="0dp"
-            app:cardUseCompatPadding="false"
-            tools:visibility="visible">
+            app:cardUseCompatPadding="false">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -596,98 +611,6 @@
                     app:layout_constraintTop_toBottomOf="@id/image_label_text_view"
                     tools:layout_height="100dp" />
 
-                <!--ทำไว้ชั่วคราว, จะเปลี่ยนเป็น RecyclerView ทีหลัง-->
-                <!--<ScrollView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="12dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/image_label_text_view">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/gallery_01_image_view"
-                            android:layout_width="110dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            android:adjustViewBounds="true"
-                            app:srcCompat="@drawable/gallery01" />
-
-                        <ImageView
-                            android:id="@+id/gallery_02_image_view"
-                            android:layout_width="110dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            app:srcCompat="@drawable/gallery02" />
-
-                        <ImageView
-                            android:id="@+id/gallery_03_image_view"
-                            android:layout_width="110dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            app:srcCompat="@drawable/gallery03" />
-
-                        <ImageView
-                            android:id="@+id/gallery_04_image_view"
-                            android:layout_width="110dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            app:srcCompat="@drawable/gallery04" />
-
-                        <ImageView
-                            android:id="@+id/gallery_05_image_view"
-                            android:layout_width="110dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            app:srcCompat="@drawable/gallery05" />
-
-                        <ImageView
-                            android:id="@+id/gallery_06_image_view"
-                            android:layout_width="110dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            app:srcCompat="@drawable/gallery06" />
-
-                        <ImageView
-                            android:id="@+id/gallery_07_image_view"
-                            android:layout_width="110dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            app:srcCompat="@drawable/gallery07" />
-
-                        <ImageView
-                            android:id="@+id/gallery_08_image_view"
-                            android:layout_width="110dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            app:srcCompat="@drawable/gallery08" />
-
-                        <ImageView
-                            android:id="@+id/gallery_09_image_view"
-                            android:layout_width="110dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            app:srcCompat="@drawable/gallery09" />
-
-                    </LinearLayout>
-                </ScrollView>-->
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>
