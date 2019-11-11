@@ -36,6 +36,9 @@ $db->set_charset("utf8");
 //sleep(1); //todo:
 
 switch ($action) {
+    case 'get_recommend':
+        doGetRecommend();
+        break;
     case 'get_place':
         doGetPlace();
         break;
@@ -44,6 +47,24 @@ switch ($action) {
         break;
     case 'add_rating':
         doAddRating();
+        break;
+    case 'add_place':
+        doAddPlace();
+        break;
+    case 'update_place':
+        doUpdatePlace();
+        break;
+    case 'update_place_recommend':
+        doUpdatePlaceRecommend();
+        break;
+    case 'delete_place':
+        doDeletePlace();
+        break;
+    case 'delete_place_asset':
+        doDeletePlaceAsset();
+        break;
+    case 'get_sub_district':
+        doGetSubDistrict();
         break;
     default:
         $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
@@ -55,6 +76,90 @@ switch ($action) {
 $db->close();
 echo json_encode($response);
 exit();
+
+function doGetRecommend()
+{
+    global $db, $response;
+
+    $placeTypeTour = 'ท่องเที่ยว';
+    $placeTypeTemple = 'วัด';
+
+    $sql = "SELECT * FROM ct_place 
+            WHERE ((place_type = '{$placeTypeTour}') OR (place_type = '{$placeTypeTemple}')) AND recommend = 1";
+    if ($result = $db->query($sql)) {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+        $response[KEY_ERROR_MESSAGE] = 'อ่านข้อมูลสำเร็จ';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+        $response['sql'] = $sql;
+        $response['num_rows'] = $result->num_rows;
+
+        $recommendPlaceList = array();
+        $recommendTempleList = array();
+        while ($row = $result->fetch_assoc()) {
+            $place = array();
+            $place['id'] = (int)$row['id'];
+            $place['name'] = $row['name'];
+            $place['district'] = $row['district'];
+            $place['address'] = $row['address'];
+            $place['details'] = $row['details'];
+            $place['phone'] = $row['phone'];
+            $place['opening_time'] = $row['opening_time'];
+            $place['latitude'] = floatval($row['latitude']);
+            $place['longitude'] = floatval($row['longitude']);
+            $place['image_list'] = $row['image_list'];
+            $place['image_cover'] = $row['image_cover'];
+            $place['recommend'] = (boolean)$row['recommend'];
+            $place['place_type'] = $row['place_type'];
+            
+            $place['gallery_images'] = array();
+
+            $sql = "SELECT image_file_name FROM ct_asset WHERE place_id = " . $place['id'];
+            if ($galleryResult = $db->query($sql)) {
+                while ($galleryRow = $galleryResult->fetch_assoc()) {
+                    array_push($place['gallery_images'], $galleryRow['image_file_name']);
+                }
+                $galleryResult->close();
+
+                $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate FROM ct_rating 
+                WHERE item_id = {$place['id']}";
+                if ($ratingResult = $db->query($sql)) {
+                    $ratingRow = $ratingResult->fetch_assoc();
+                    $averageRate = $ratingRow['average_rate'];
+                    if ($averageRate == null) {
+                        $place['average_rate'] = 0;
+                    } else {
+                        $place['average_rate'] = floatval($averageRate);
+                    }
+                } else {
+                    $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+                    $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล (3)';
+                    $errMessage = $db->error;
+                    $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+                    return;
+                }
+            } else {
+                $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+                $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล (2)';
+                $errMessage = $db->error;
+                $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+                return;
+            }
+
+            if ($place['place_type'] === 'ท่องเที่ยว') {
+                array_push($recommendPlaceList, $place);
+            } else if ($place['place_type'] === 'วัด') {
+                array_push($recommendTempleList, $place);
+            }
+        }
+        $response['place_list'] = $recommendPlaceList;
+        $response['temple_list'] = $recommendTempleList;
+    } else {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล (1)';
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+    }
+}
 
 function doGetPlace()
 {
@@ -76,7 +181,7 @@ function doGetPlace()
             break;
     }
 
-    $sql = "SELECT * FROM chainat_place WHERE place_type = '$placeType'";
+    $sql = "SELECT * FROM ct_place WHERE place_type = '$placeType'";
     if ($result = $db->query($sql)) {
         $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
         $response[KEY_ERROR_MESSAGE] = 'อ่านข้อมูลสำเร็จ';
@@ -101,15 +206,15 @@ function doGetPlace()
 
             $place['gallery_images'] = array();
 
-            $sql = "SELECT image_file_name FROM chainat_gallery WHERE place_id = " . $place['id'];
+            $sql = "SELECT image_file_name FROM ct_asset WHERE place_id = " . $place['id'];
             if ($galleryResult = $db->query($sql)) {
                 while ($galleryRow = $galleryResult->fetch_assoc()) {
                     array_push($place['gallery_images'], $galleryRow['image_file_name']);
                 }
                 $galleryResult->close();
 
-                $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate FROM chainat_rating 
-                WHERE item_id = {$place['id']} AND item_type = 'place'";
+                $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate FROM ct_rating 
+                WHERE item_id = {$place['id']}";
                 if ($ratingResult = $db->query($sql)) {
                     $ratingRow = $ratingResult->fetch_assoc();
                     $averageRate = $ratingRow['average_rate'];
@@ -151,7 +256,8 @@ function doGetOtopByDistrict()
 
     $district = $_GET['district'];
 
-    $sql = "SELECT * FROM chainat_otop WHERE district = '$district' 
+    $sql = "SELECT * FROM ct_place 
+            WHERE place_type = 'otop' AND district = '$district' 
             ORDER BY sub_district, village";
     if ($result = $db->query($sql)) {
         $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
@@ -180,15 +286,15 @@ function doGetOtopByDistrict()
 
             $otop['gallery_images'] = array();
 
-            $sql = "SELECT image_file_name FROM chainat_otop_gallery WHERE otop_id = " . $otop['id'];
+            $sql = "SELECT image_file_name FROM ct_asset WHERE place_id = " . $otop['id'];
             if ($galleryResult = $db->query($sql)) {
                 while ($galleryRow = $galleryResult->fetch_assoc()) {
                     array_push($otop['gallery_images'], $galleryRow['image_file_name']);
                 }
                 $galleryResult->close();
 
-                $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate FROM chainat_rating 
-                WHERE item_id = {$otop['id']} AND item_type = 'otop'";
+                $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate FROM ct_rating 
+                WHERE item_id = {$otop['id']}";
                 if ($ratingResult = $db->query($sql)) {
                     $ratingRow = $ratingResult->fetch_assoc();
                     $averageRate = $ratingRow['average_rate'];
@@ -229,14 +335,14 @@ function doAddRating()
     global $db, $response;
 
     $id = $_POST['id'];
-    $type = $_POST['type'];
+    //$type = $_POST['type'];
     $rate = $_POST['rate'];
 
-    $sql = "INSERT INTO chainat_rating (item_id, item_type, rate) 
-            VALUES ($id, '$type', $rate)";
+    $sql = "INSERT INTO ct_rating (item_id, rate) 
+            VALUES ($id, $rate)";
     if ($db->query($sql)) {
-        $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate FROM chainat_rating 
-                WHERE item_id = $id AND item_type = '$type'";
+        $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate FROM ct_rating 
+                WHERE item_id = $id";
         if ($result = $db->query($sql)) {
             $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
             $response[KEY_ERROR_MESSAGE] = 'บันทึกข้อมูลสำเร็จ';
@@ -260,6 +366,345 @@ function doAddRating()
     }
 }
 
+function doAddPlace()
+{
+    global $db, $response;
+
+    $placeType = $db->real_escape_string($_POST['placeType']);
+    $name = trim($db->real_escape_string($_POST['name']));
+    $district = $db->real_escape_string($_POST['district']);
+    $phone = trim($db->real_escape_string($_POST['phone']));
+    $openingTime = trim($db->real_escape_string($_POST['openingTime']));
+    $address = trim($db->real_escape_string($_POST['address']));
+    $latitude = $db->real_escape_string($_POST['latitude']);
+    $longitude = $db->real_escape_string($_POST['longitude']);
+    $details = trim($db->real_escape_string($_POST['details']));
+
+    $subDistrict = $_POST['subDistrict'] ? $db->real_escape_string($_POST['subDistrict']) : null;
+    $village = $_POST['village'] ? $db->real_escape_string($_POST['village']) : null;
+    $price = $_POST['price'] ? $db->real_escape_string($_POST['price']) : null;
+    $contactUrl = $_POST['contactUrl'] ? $db->real_escape_string($_POST['contactUrl']) : null;
+
+    if (!moveUploadedFile('listImageFile', DIR_IMAGES, $listImageFileName)) {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์ (รูปภาพหน้า List)';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+        return;
+    }
+
+    if (!moveUploadedFile('coverImageFile', DIR_IMAGES, $coverImageFileName)) {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์ (รูปภาพ Cover)';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+        return;
+    }
+
+    $db->query('START TRANSACTION');
+
+    $sql = null;
+    if ($subDistrict && $village) {
+        $sql = "INSERT INTO ct_place (name, place_type, district, details, phone, 
+                           opening_time, address, latitude, longitude, image_list, image_cover, 
+                           sub_district, village, price, contact_url) 
+                VALUES ('$name', '$placeType', '$district', '$details', '$phone', 
+                        '$openingTime', '$address', $latitude, $longitude, '$listImageFileName', '$coverImageFileName',
+                        '$subDistrict', '$village', $price, '$contactUrl')";
+    } else {
+        $sql = "INSERT INTO ct_place (name, place_type, district, details, phone, 
+                           opening_time, address, latitude, longitude, image_list, image_cover) 
+                VALUES ('$name', '$placeType', '$district', '$details', '$phone', 
+                        '$openingTime', '$address', $latitude, $longitude, '$listImageFileName', '$coverImageFileName')";
+    }
+    if ($result = $db->query($sql)) {
+        $insertId = $db->insert_id;
+
+        for ($i = 0; $i < sizeof($_FILES[KEY_IMAGE_FILES]['name']); $i++) {
+            if ($_FILES[KEY_IMAGE_FILES]['name'][$i] !== '') {
+                $fileName = null;
+
+                if (!moveUploadedFile(KEY_IMAGE_FILES, DIR_IMAGES_GALLERY, $fileName, $i)) {
+                    $db->query('ROLLBACK');
+
+                    $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+                    $errorValue = $_FILES[KEY_IMAGE_FILES]['error'][$i];
+                    $response[KEY_ERROR_MESSAGE] = "เกิดข้อผิดพลาดในการอัพโหลดรูปภาพ [Error: $errorValue]";
+                    $response[KEY_ERROR_MESSAGE_MORE] = '';
+                    return;
+                }
+
+                $sql = "INSERT INTO ct_asset (place_id, image_file_name) 
+                    VALUES ($insertId, '$fileName')";
+                if (!($insertCourseAssetResult = $db->query($sql))) {
+                    $db->query('ROLLBACK');
+
+                    $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+                    $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการบันทึกข้อมูลรูปภาพ Gallery: ' . $db->error;
+                    $response[KEY_ERROR_MESSAGE_MORE] = '';
+                    return;
+                }
+            }
+        }
+
+        $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+        $response[KEY_ERROR_MESSAGE] = 'เพิ่มข้อมูลสำเร็จ';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+
+        $db->query('COMMIT');
+    } else {
+        $db->query('ROLLBACK');
+
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการเพิ่มข้อมูล: ' . $db->error;
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+    }
+}
+
+function doUpdatePlace()
+{
+    global $db, $response;
+
+    $id = $db->real_escape_string($_POST['placeId']);
+    $name = trim($db->real_escape_string($_POST['name']));
+    $district = $db->real_escape_string($_POST['district']);
+    $phone = trim($db->real_escape_string($_POST['phone']));
+    $openingTime = trim($db->real_escape_string($_POST['openingTime']));
+    $address = trim($db->real_escape_string($_POST['address']));
+    $latitude = $db->real_escape_string($_POST['latitude']);
+    $longitude = $db->real_escape_string($_POST['longitude']);
+    $details = trim($db->real_escape_string($_POST['details']));
+
+    $subDistrict = $_POST['subDistrict'] ? $db->real_escape_string($_POST['subDistrict']) : null;
+    $village = $_POST['village'] ? $db->real_escape_string($_POST['village']) : null;
+    $price = $_POST['price'] ? $db->real_escape_string($_POST['price']) : null;
+    $contactUrl = $_POST['contactUrl'] ? $db->real_escape_string($_POST['contactUrl']) : null;
+
+    $listImageFileName = NULL;
+    if ($_FILES['listImageFile']['name'] !== '') {
+        if (!moveUploadedFile('listImageFile', DIR_IMAGES, $listImageFileName)) {
+            $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+            $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์ (รูปภาพหน้า List)';
+            $response[KEY_ERROR_MESSAGE_MORE] = '';
+            return;
+        }
+    }
+    $setListFileName = $listImageFileName ? "image_list = '$listImageFileName', " : '';
+
+    $coverImageFileName = NULL;
+    if ($_FILES['coverImageFile']['name'] !== '') {
+        if (!moveUploadedFile('coverImageFile', DIR_IMAGES, $coverImageFileName)) {
+            $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+            $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์ (รูปภาพ Cover)';
+            $response[KEY_ERROR_MESSAGE_MORE] = '';
+            return;
+        }
+    }
+    $setCoverFileName = $coverImageFileName ? "image_cover = '$coverImageFileName', " : '';
+
+    $db->query('START TRANSACTION');
+
+    if ($subDistrict && $village) {
+        $sql = "UPDATE ct_place 
+                SET $setListFileName $setCoverFileName 
+                    name = '$name', district = '$district', details = '$details', phone = '$phone', 
+                    opening_time = '$openingTime', address = '$address', latitude = $latitude, longitude = '$longitude',
+                    sub_district = '$subDistrict', village = '$village', price = $price, contact_url = '$contactUrl'
+                WHERE id = $id";
+    } else {
+        $sql = "UPDATE ct_place 
+                SET $setListFileName $setCoverFileName 
+                    name = '$name', district = '$district', details = '$details', phone = '$phone', 
+                    opening_time = '$openingTime', address = '$address', latitude = $latitude, longitude = '$longitude' 
+                WHERE id = $id";
+    }
+    if ($result = $db->query($sql)) {
+        for ($i = 0; $i < sizeof($_FILES[KEY_IMAGE_FILES]['name']); $i++) {
+            if ($_FILES[KEY_IMAGE_FILES]['name'][$i] !== '') {
+                $fileName = null;
+
+                if (!moveUploadedFile(KEY_IMAGE_FILES, DIR_IMAGES_GALLERY, $fileName, $i)) {
+                    $db->query('ROLLBACK');
+
+                    $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+                    $errorValue = $_FILES[KEY_IMAGE_FILES]['error'][$i];
+                    $response[KEY_ERROR_MESSAGE] = "เกิดข้อผิดพลาดในการอัพโหลดรูปภาพ [Error: $errorValue]";
+                    $response[KEY_ERROR_MESSAGE_MORE] = '';
+                    return;
+                }
+
+                $sql = "INSERT INTO ct_asset (place_id, image_file_name) 
+                    VALUES ($id, '$fileName')";
+                if (!($insertCourseAssetResult = $db->query($sql))) {
+                    $db->query('ROLLBACK');
+
+                    $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+                    $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการบันทึกข้อมูลรูปภาพ Gallery: ' . $db->error;
+                    $response[KEY_ERROR_MESSAGE_MORE] = '';
+                    return;
+                }
+            }
+        }
+
+        $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+        $response[KEY_ERROR_MESSAGE] = 'แก้ไขข้อมูลสำเร็จ';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+
+        $db->query('COMMIT');
+    } else {
+        $db->query('ROLLBACK');
+
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการแก้ไขข้อมูล: ' . $db->error;
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+    }
+}
+
+function doDeletePlace()
+{
+    global $db, $response;
+
+    $id = $db->real_escape_string($_POST['id']);
+
+    $deleteNewsSql = "DELETE FROM ct_place WHERE id = $id";
+
+    if ($deleteResult = $db->query($deleteNewsSql)) {
+        $deletePlaceAssetsSql = "DELETE FROM ct_asset WHERE place_id = $id";
+
+        if ($deletePlaceAssetsResult = $db->query($deletePlaceAssetsSql)) {
+            $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+            $response[KEY_ERROR_MESSAGE] = 'ลบข้อมูลสำเร็จ';
+            $response[KEY_ERROR_MESSAGE_MORE] = '';
+        } else {
+            $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+            $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการลบข้อมูล (2): ' . $db->error;
+            $errMessage = $db->error;
+            $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $deletePlaceAssetsSql";
+        }
+    } else {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการลบข้อมูล (1): ' . $db->error;
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $deleteNewsSql";
+    }
+}
+
+function doDeletePlaceAsset()
+{
+    global $db, $response;
+
+    $assetId = $db->real_escape_string($_POST['assetId']);
+
+    $sql = "DELETE FROM ct_asset WHERE id = $assetId";
+    if ($result = $db->query($sql)) {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+        $response[KEY_ERROR_MESSAGE] = 'ลบข้อมูลสำเร็จ';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+    } else {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_SQL_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการลบข้อมูล';
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+    }
+}
+
+function doUpdatePlaceRecommend()
+{
+    global $db, $response;
+
+    $placeId = $db->real_escape_string($_POST['placeId']);
+    $recommend = $db->real_escape_string($_POST['recommend']);
+
+    $sql = "UPDATE ct_place SET recommend = $recommend WHERE id = $placeId";
+    if ($result = $db->query($sql)) {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+        $response[KEY_ERROR_MESSAGE] = 'อัพเดทสถานะปักหมุดข่าวสำเร็จ';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+    } else {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการบันทึกข้อมูล: ' . $db->error;
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+    }
+}
+
+function doGetSubDistrict()
+{
+    global $db, $response;
+
+    $district = $_GET['district'];
+
+    $response[KEY_DATA_LIST] = array();
+    $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+    $response[KEY_ERROR_MESSAGE] = 'อ่านข้อมูลสำเร็จ';
+
+    switch ($district) {
+        case 'เมืองชัยนาท':
+            $subDistrict = array();
+            $subDistrict['key'] = 'ชัยนาท';
+            $subDistrict['name'] = 'ชัยนาท';
+            array_push($response[KEY_DATA_LIST], $subDistrict);
+
+            $subDistrict = array();
+            $subDistrict['key'] = 'ธรรมามูล';
+            $subDistrict['name'] = 'ธรรมามูล';
+            array_push($response[KEY_DATA_LIST], $subDistrict);
+            break;
+        case 'หันคา':
+            $subDistrict = array();
+            $subDistrict['key'] = 'บ้านเชี่ยน';
+            $subDistrict['name'] = 'บ้านเชี่ยน';
+            array_push($response[KEY_DATA_LIST], $subDistrict);
+            break;
+        case 'สรรพยา':
+            $subDistrict = array();
+            $subDistrict['key'] = 'หาดอาสา';
+            $subDistrict['name'] = 'หาดอาสา';
+            array_push($response[KEY_DATA_LIST], $subDistrict);
+            break;
+        case 'เนินขาม':
+            $subDistrict = array();
+            $subDistrict['key'] = 'เนินขาม';
+            $subDistrict['name'] = 'เนินขาม';
+            array_push($response[KEY_DATA_LIST], $subDistrict);
+            break;
+        case 'มโนรมย์':
+            $subDistrict = array();
+            $subDistrict['key'] = 'ศิลาดาน';
+            $subDistrict['name'] = 'ศิลาดาน';
+            array_push($response[KEY_DATA_LIST], $subDistrict);
+            break;
+        case 'สรรคบุรี':
+            $subDistrict = array();
+            $subDistrict['key'] = 'แพรกศรีราชา';
+            $subDistrict['name'] = 'แพรกศรีราชา';
+            array_push($response[KEY_DATA_LIST], $subDistrict);
+
+            $subDistrict = array();
+            $subDistrict['key'] = 'บางขุด';
+            $subDistrict['name'] = 'บางขุด';
+            array_push($response[KEY_DATA_LIST], $subDistrict);
+            break;
+        case 'วัดสิงห์':
+            $subDistrict = array();
+            $subDistrict['key'] = 'มะขามเฒ่า';
+            $subDistrict['name'] = 'มะขามเฒ่า';
+            array_push($response[KEY_DATA_LIST], $subDistrict);
+            break;
+        case 'หนองมะโมง':
+            $subDistrict = array();
+            $subDistrict['key'] = 'กุดจอก';
+            $subDistrict['name'] = 'กุดจอก';
+            array_push($response[KEY_DATA_LIST], $subDistrict);
+
+            $subDistrict = array();
+            $subDistrict['key'] = 'วังตะเคียน';
+            $subDistrict['name'] = 'วังตะเคียน';
+            array_push($response[KEY_DATA_LIST], $subDistrict);
+            break;
+    }
+}
+
 function createRandomString($length)
 {
     $key = '';
@@ -272,7 +717,28 @@ function createRandomString($length)
     return $key;
 }
 
-function moveUploadedFile($key, $dest)
+function moveUploadedFile($key, $dest, &$randomFileName, $index = -1)
+{
+    global $response;
+
+    $clientName = $index === -1 ? $_FILES[$key]['name'] : $_FILES[$key]['name'][$index];
+    $response['name'] = $clientName;
+    $response['type'] = $index === -1 ? $_FILES[$key]['type'] : $_FILES[$key]['type'][$index];
+    $response['size'] = $index === -1 ? $_FILES[$key]['size'] : $_FILES[$key]['size'][$index];
+    $response['tmp_name'] = $index === -1 ? $_FILES[$key]['tmp_name'] : $_FILES[$key]['tmp_name'][$index];
+
+    $src = $index === -1 ? $_FILES[$key]['tmp_name'] : $_FILES[$key]['tmp_name'][$index];
+    $response['upload_src'] = $src;
+    $response['upload_dest'] = $dest;
+
+    //$date = date('Y-m-d H:i:s');
+    //$timestamp = time();
+    $timestamp = round(microtime(true) * 1000);
+    $randomFileName = "{$timestamp}-{$clientName}";
+    return move_uploaded_file($src, "{$dest}{$randomFileName}");
+}
+
+function moveUploadedFile_Old($key, $dest)
 {
     global $response;
 

@@ -16,7 +16,12 @@ define('KEY_SESSION_USER_ROLE', 'session_user_role');
 
 define('ROLE_USER', 'user');
 define('ROLE_ADMIN', 'admin');
+
 //define('ROLE_SUPER_ADMIN', 'super_admin');
+
+define('DIR_IMAGES', '../images/');
+define('DIR_IMAGES_GALLERY', '../images/gallery/');
+define('KEY_IMAGE_FILES', 'imageFiles');
 
 $monthNames = array(
     'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
@@ -50,6 +55,19 @@ function getThaiShortDate($date) {
     $year = substr($yearText, strlen($yearText) - 2);
 
     return "$dayOfMonth $month $year";
+}
+
+function getThaiShortDateWithDayName($date)
+{
+    global $monthShortNames, $dayShortNames;
+
+    $dayOfWeek = $dayShortNames[date_format($date, 'w')];
+    $dayOfMonth = (int)date_format($date, 'd');
+    $month = $monthShortNames[(int)date_format($date, 'm') - 1];
+    $yearText = strval((int)date_format($date, 'Y') + 543);
+    $year = substr($yearText, strlen($yearText) - 2);
+
+    return "$dayOfWeek $dayOfMonth $month $year";
 }
 
 function getThaiIntervalShortDate($beginDate, $endDate) {

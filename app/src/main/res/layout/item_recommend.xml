@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    tools:ignore="UnusedAttribute">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/image_view"
+        android:layout_width="140dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_border_color="#333333"
+        app:riv_border_width="0dp"
+        app:riv_corner_radius="16dp"
+        app:riv_mutate_background="true"
+        app:riv_oval="false"
+        app:srcCompat="@drawable/gallery01" />
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:gravity="start"
+        android:paddingTop="4dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/bangna"
+        app:layout_constraintEnd_toEndOf="@+id/image_view"
+        app:layout_constraintStart_toStartOf="@+id/image_view"
+        app:layout_constraintTop_toBottomOf="@+id/image_view"
+        tools:text="TextView" />
+
+</android.support.constraint.ConstraintLayout>

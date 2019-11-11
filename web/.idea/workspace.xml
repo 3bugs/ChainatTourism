@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2980b396-8a91-45e1-971e-ebc812e171e6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/net/GetRecommendResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/res/layout/item_recommend.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/promlert.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/Flot/.bower.json" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/Flot/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/Flot/.travis.yml" afterDir="false" />
@@ -6818,6 +6821,8 @@
       <change afterPath="$PROJECT_DIR$/bower_components/select2/tests/vendor/qunit-1.23.1.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/select2/tests/vendor/qunit-1.23.1.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/select2/vendor/jquery-2.1.0.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/ct_asset.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/ct_place.sql" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/dist/css/AdminLTE.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/dist/css/AdminLTE.min.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/dist/css/adminlte.css.map" afterDir="false" />
@@ -6885,18 +6890,39 @@
       <change afterPath="$PROJECT_DIR$/dist/js/adminlte.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/dist/js/adminlte.min.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/dist/js/demo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/js/jquery.form.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/dist/js/pages/dashboard.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/dist/js/pages/dashboard2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/lightbox/css/lightbox.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/lightbox/css/lightbox.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/lightbox/images/close.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/lightbox/images/loading.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/lightbox/images/next.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/lightbox/images/prev.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/lightbox/js/lightbox-plus-jquery.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/lightbox/js/lightbox-plus-jquery.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/lightbox/js/lightbox-plus-jquery.min.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/lightbox/js/lightbox.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/lightbox/js/lightbox.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/lightbox/js/lightbox.min.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/id.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/images/cover_โรงพักเก่า.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/ic_loading4.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/ic_no_image.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/ic_no_image_2.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/images/list_place02.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/include/db_config.inc" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/include/foot.inc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/include/foot_php.inc" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/include/footer.inc" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/include/head.inc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/include/head_php.inc" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/include/header.inc" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/include/sidebar.inc" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/place.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/place_add_edit.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/plugins/bootstrap-slider/bootstrap-slider.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/plugins/bootstrap-slider/slider.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js" afterDir="false" />
@@ -7041,11 +7067,17 @@
       <change afterPath="$PROJECT_DIR$/plugins/timepicker/bootstrap-timepicker.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/plugins/timepicker/bootstrap-timepicker.min.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/plugins/timepicker/bootstrap-timepicker.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/promlert.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceDetailsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceDetailsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/net/WebServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/net/WebServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/activity_place_details_content.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_place_details_content.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/global.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/global.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -7062,11 +7094,30 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1S5KEsHcv9gwhyJlaaZ3DVgFb1V" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/images" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/images" />
+      <recent name="$PROJECT_DIR$/dist/js" />
+      <recent name="$PROJECT_DIR$/pages" />
+      <recent name="$PROJECT_DIR$/dist" />
+      <recent name="$PROJECT_DIR$/include" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -7091,6 +7142,15 @@
       <option name="presentableId" value="Default" />
       <updated>1570847907857</updated>
       <workItem from="1570847911377" duration="688000" />
+      <workItem from="1571106320512" duration="25000" />
+      <workItem from="1571457172887" duration="717000" />
+      <workItem from="1572074878353" duration="1302000" />
+      <workItem from="1572511821089" duration="15023000" />
+      <workItem from="1572575733839" duration="2873000" />
+      <workItem from="1572619000891" duration="21868000" />
+      <workItem from="1572878148876" duration="7894000" />
+      <workItem from="1572924037752" duration="13691000" />
+      <workItem from="1573440880490" duration="2561000" />
     </task>
     <servers />
   </component>
@@ -7102,7 +7162,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

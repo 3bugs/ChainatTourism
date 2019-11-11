@@ -12,6 +12,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -36,6 +37,7 @@ import com.glide.slider.library.SliderTypes.DefaultSliderView;
 import com.glide.slider.library.Tricks.ViewPagerEx;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -172,12 +174,15 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
             }
         });
 
+        CardView galleryCardView = findViewById(R.id.gallery_card_view);
         if (mPlace != null) {
             otopContactButton.setVisibility(View.GONE);
-            //setupGalleryImages();
+            setupGalleryImages();
+            galleryCardView.setVisibility(View.VISIBLE);
         } else if (mOtop != null) {
             otopContactButton.setVisibility(View.VISIBLE);
             //setupGalleryImagesOtop();
+            galleryCardView.setVisibility(View.GONE);
         }
     }
 
@@ -196,6 +201,15 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
         //.error(R.drawable.placeholder);
 
         List<String> imageFileNameList = mPlace != null ? mPlace.galleryImages : mOtop.galleryImages;
+
+        // ท่องเที่ยว, วัด, ร้านอาหาร จะแสดงภาพ cover ไม่เกิน 3 รูป
+        if (mPlace != null) {
+            List<String> tempList = new ArrayList<>();
+            for (int i = 0; (i < imageFileNameList.size()) && (i < 3); i++) {
+                tempList.add(imageFileNameList.get(i));
+            }
+            imageFileNameList = tempList;
+        }
 
         for (int i = 0; i < imageFileNameList.size(); i++) {
             DefaultSliderView sliderView = new DefaultSliderView(this);
@@ -374,9 +388,9 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
         WebServices services = retrofit.create(WebServices.class);
 
         int id = mPlace != null ? mPlace.id : mOtop.id;
-        String type = mPlace != null ? "place" : "otop";
+        //String type = mPlace != null ? "place" : "otop";
 
-        Call<AddRatingResponse> call = services.addRating(id, type, mRate);
+        Call<AddRatingResponse> call = services.addRating(id, mRate);
         call.enqueue(new MyRetrofitCallback<>(
                 PlaceDetailsActivity.this,
                 null,

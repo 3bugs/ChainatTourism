@@ -65,7 +65,7 @@ public class PlaceActivity extends BaseActivity implements
                 "%s\nอำเภอ: %s\nเบอร์โทร: %s\nพิกัด %.6f, %.6f\nType: %s",
                 place.name, place.district, place.phone, place.latitude, place.longitude, place.placeType
         );
-        Utils.showShortToast(this, msg);
+        //Utils.showShortToast(this, msg);
 
         Intent intent = new Intent(PlaceActivity.this, PlaceDetailsActivity.class);
         intent.putExtra(KEY_PLACE_JSON, new Gson().toJson(place));

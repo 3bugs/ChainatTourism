@@ -15,6 +15,10 @@ public interface WebServices {
             @Query("place_type") Place.PlaceType placeType
     );
 
+    @GET("get_recommend")
+    Call<GetRecommendResponse> getRecommend(
+    );
+
     @GET("get_otop_by_district")
     Call<GetOtopResponse> getOtopByDistrict(
             @Query("district") String districtName
@@ -24,7 +28,7 @@ public interface WebServices {
     @POST("add_rating")
     Call<AddRatingResponse> addRating(
             @Field("id") int itemId,
-            @Field("type") String itemType,
+            //@Field("type") String itemType,
             @Field("rate") int rate
     );
 
