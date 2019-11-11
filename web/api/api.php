@@ -84,8 +84,7 @@ function doGetRecommend()
     $placeTypeTour = 'ท่องเที่ยว';
     $placeTypeTemple = 'วัด';
 
-    $sql = "SELECT * FROM ct_place 
-            WHERE ((place_type = '{$placeTypeTour}') OR (place_type = '{$placeTypeTemple}')) AND recommend = 1";
+    $sql = "SELECT * FROM ct_place WHERE recommend = 1";
     if ($result = $db->query($sql)) {
         $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
         $response[KEY_ERROR_MESSAGE] = 'อ่านข้อมูลสำเร็จ';
@@ -95,6 +94,9 @@ function doGetRecommend()
 
         $recommendPlaceList = array();
         $recommendTempleList = array();
+        $recommendRestaurantList = array();
+        $recommendOtopList = array();
+
         while ($row = $result->fetch_assoc()) {
             $place = array();
             $place['id'] = (int)$row['id'];
@@ -110,7 +112,7 @@ function doGetRecommend()
             $place['image_cover'] = $row['image_cover'];
             $place['recommend'] = (boolean)$row['recommend'];
             $place['place_type'] = $row['place_type'];
-            
+
             $place['gallery_images'] = array();
 
             $sql = "SELECT image_file_name FROM ct_asset WHERE place_id = " . $place['id'];
@@ -149,10 +151,16 @@ function doGetRecommend()
                 array_push($recommendPlaceList, $place);
             } else if ($place['place_type'] === 'วัด') {
                 array_push($recommendTempleList, $place);
+            } else if ($place['place_type'] === 'ร้านอาหาร') {
+                array_push($recommendRestaurantList, $place);
+            } else if ($place['place_type'] === 'otop') {
+                array_push($recommendOtopList, $place);
             }
         }
         $response['place_list'] = $recommendPlaceList;
         $response['temple_list'] = $recommendTempleList;
+        $response['restaurant_list'] = $recommendRestaurantList;
+        $response['otop_list'] = $recommendOtopList;
     } else {
         $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
         $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล (1)';

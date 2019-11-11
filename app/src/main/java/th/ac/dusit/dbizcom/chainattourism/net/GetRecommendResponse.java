@@ -10,8 +10,11 @@ public class GetRecommendResponse extends BaseResponse {
 
     @SerializedName("place_list")
     public List<Place> placeList;
-
     @SerializedName("temple_list")
     public List<Place> templeList;
+    @SerializedName("restaurant_list")
+    public List<Place> restaurantList;
+    @SerializedName("otop_list")
+    public List<Place> otopList;
 
 }

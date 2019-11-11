@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -45,7 +46,9 @@ public class MainActivity extends BaseActivity implements
 
     private SliderLayout mSlider;
     private RecyclerView mRecommendedPlacesRecyclerView, mRecommendedTemplesRecyclerView;
+    private RecyclerView mRecommendedRestaurantsRecyclerView, mRecommendedOtopRecyclerView;
     private List<Place> mRecommendedPlaceList, mRecommendedTempleList;
+    private List<Place> mRecommendedRestaurantList, mRecommendedOtopList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +119,18 @@ public class MainActivity extends BaseActivity implements
                     public void onSuccess(GetRecommendResponse responseBody) {
                         mRecommendedPlaceList = responseBody.placeList;
                         mRecommendedTempleList = responseBody.templeList;
+                        mRecommendedRestaurantList = responseBody.restaurantList;
+                        mRecommendedOtopList = responseBody.otopList;
+
+                        String msg = String.format(
+                                Locale.getDefault(),
+                                "Place: %d\nTemple: %d\nRestaurant: %d\nOTOP: %d",
+                                mRecommendedPlaceList.size(),
+                                mRecommendedTempleList.size(),
+                                mRecommendedRestaurantList.size(),
+                                mRecommendedOtopList.size()
+                        );
+                        //Utils.showLongToast(MainActivity.this, msg);
 
                         /*กำหนดประเภทสถานที่ลงใน Place*/
                         for (Place place : mRecommendedPlaceList) {
@@ -124,40 +139,57 @@ public class MainActivity extends BaseActivity implements
                         for (Place place : mRecommendedTempleList) {
                             place.placeType = Place.PlaceType.TEMPLE;
                         }
+                        for (Place place : mRecommendedRestaurantList) {
+                            place.placeType = Place.PlaceType.RESTAURANT;
+                        }
+                        for (Place place : mRecommendedOtopList) {
+                            place.placeType = Place.PlaceType.OTOP;
+                        }
 
                         setupRecyclerView();
                     }
 
                     @Override
                     public void onError(String errorMessage) {
-
                     }
                 }
         ));
     }
 
     private void setupRecyclerView() {
-        LinearLayoutManager recommendedPlacesLayoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        RecommendAdapter recommendPlacesAdapter = new RecommendAdapter(
-                this,
-                mRecommendedPlaceList
+        doSetupRecyclerView(
+                (RecyclerView) findViewById(R.id.recommended_places_recycler_view),
+                mRecommendedPlaceList,
+                R.layout.item_recommend
         );
-        RecyclerView recommendedPlacesRecyclerView = findViewById(R.id.recommended_places_recycler_view);
-        recommendedPlacesRecyclerView.setLayoutManager(recommendedPlacesLayoutManager);
-        recommendedPlacesRecyclerView.addItemDecoration(new SpacingDecoration(this));
-        recommendedPlacesRecyclerView.setAdapter(recommendPlacesAdapter);
+        doSetupRecyclerView(
+                (RecyclerView) findViewById(R.id.recommended_temples_recycler_view),
+                mRecommendedTempleList,
+                R.layout.item_recommend
+        );
+        doSetupRecyclerView(
+                (RecyclerView) findViewById(R.id.recommended_restaurants_recycler_view),
+                mRecommendedRestaurantList,
+                R.layout.item_recommend
+        );
+        doSetupRecyclerView(
+                (RecyclerView) findViewById(R.id.recommended_otop_recycler_view),
+                mRecommendedOtopList,
+                R.layout.item_recommend_otop
+        );
+    }
 
-        LinearLayoutManager recommendedTemplesLayoutManager
+    private void doSetupRecyclerView(RecyclerView recyclerView, List<Place> placeList, int layoutResId) {
+        LinearLayoutManager lm
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        RecommendAdapter recommendTemplesAdapter = new RecommendAdapter(
+        RecommendAdapter adapter = new RecommendAdapter(
                 this,
-                mRecommendedTempleList
+                placeList,
+                layoutResId
         );
-        RecyclerView recommendedTemplesRecyclerView = findViewById(R.id.recommended_temples_recycler_view);
-        recommendedTemplesRecyclerView.setLayoutManager(recommendedTemplesLayoutManager);
-        recommendedTemplesRecyclerView.addItemDecoration(new SpacingDecoration(this));
-        recommendedTemplesRecyclerView.setAdapter(recommendTemplesAdapter);
+        recyclerView.setLayoutManager(lm);
+        recyclerView.addItemDecoration(new SpacingDecoration(this));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -214,17 +246,19 @@ public class MainActivity extends BaseActivity implements
 
         private final Context mContext;
         private final List<Place> mPlaceList;
+        private final int mLayoutResId;
 
-        RecommendAdapter(Context context, List<Place> placeList) {
+        RecommendAdapter(Context context, List<Place> placeList, int layoutResId) {
             mContext = context;
             mPlaceList = placeList;
+            mLayoutResId = layoutResId;
         }
 
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.item_recommend, parent, false
+                    mLayoutResId, parent, false
             );
             return new ViewHolder(view);
         }
