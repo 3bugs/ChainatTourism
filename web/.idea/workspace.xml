@@ -7043,10 +7043,12 @@
       <change afterPath="$PROJECT_DIR$/plugins/timepicker/bootstrap-timepicker.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/plugins/timepicker/bootstrap-timepicker.min.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/plugins/timepicker/bootstrap-timepicker.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/activity_maps.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_maps.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/header.inc" beforeDir="false" afterPath="$PROJECT_DIR$/include/header.inc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/place.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/place.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/place_add_edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/place_add_edit.php" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -7064,10 +7066,16 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/images" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../EnglishForMom/web" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -7086,15 +7094,15 @@
       <recent name="$PROJECT_DIR$/include" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
+  <component name="ServiceViewManager">
+    <option name="viewStates">
       <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
       </list>
     </option>
   </component>
@@ -7117,7 +7125,11 @@
       <workItem from="1572619000891" duration="21868000" />
       <workItem from="1572878148876" duration="7894000" />
       <workItem from="1572924037752" duration="13691000" />
-      <workItem from="1573440880490" duration="4878000" />
+      <workItem from="1573440880490" duration="4894000" />
+      <workItem from="1573552297307" duration="5346000" />
+      <workItem from="1573629764749" duration="482000" />
+      <workItem from="1574957305536" duration="961000" />
+      <workItem from="1575560877367" duration="747000" />
     </task>
     <servers />
   </component>
