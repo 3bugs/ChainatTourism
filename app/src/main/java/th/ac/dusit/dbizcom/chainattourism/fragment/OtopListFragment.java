@@ -39,8 +39,10 @@ import th.ac.dusit.dbizcom.chainattourism.net.WebServices;
 public class OtopListFragment extends Fragment {
 
     private static final String ARG_DISTRICT_NAME = "district_name";
+    private static final String ARG_SEARCH_TERM = "search_term";
 
     private String mDistrictName;
+    private String mSearchTerm;
     private List<Otop> mOtopList = null;
 
     private OtopListFragmentListener mListener;
@@ -52,10 +54,14 @@ public class OtopListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static OtopListFragment newInstance(String districtName) {
+    public static OtopListFragment newInstance(String param, boolean isSearch) {
         OtopListFragment fragment = new OtopListFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_DISTRICT_NAME, districtName);
+        if (isSearch) {
+            args.putString(ARG_SEARCH_TERM, param);
+        } else {
+            args.putString(ARG_DISTRICT_NAME, param);
+        }
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,6 +71,7 @@ public class OtopListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mDistrictName = getArguments().getString(ARG_DISTRICT_NAME);
+            mSearchTerm = getArguments().getString(ARG_SEARCH_TERM);
         }
     }
 
@@ -80,7 +87,11 @@ public class OtopListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         TextView titleTextView = view.findViewById(R.id.title_text_view);
-        titleTextView.setText("สินค้า OTOP");
+        if (mDistrictName != null) {
+            titleTextView.setText("สินค้า OTOP");
+        } else {
+            titleTextView.setText("ผลการค้นหาสินค้า OTOP");
+        }
 
         mOtopListRecyclerView = view.findViewById(R.id.otop_list_recycler_view);
         mProgressView = view.findViewById(R.id.progress_view);
@@ -98,7 +109,12 @@ public class OtopListFragment extends Fragment {
         Retrofit retrofit = ApiClient.getClient();
         WebServices services = retrofit.create(WebServices.class);
 
-        Call<GetOtopResponse> call = services.getOtopByDistrict(mDistrictName);
+        Call<GetOtopResponse> call;
+        if (mDistrictName != null) {
+            call = services.getOtopByDistrict(mDistrictName);
+        } else {
+            call = services.searchOtop(mSearchTerm);
+        }
         call.enqueue(new MyRetrofitCallback<>(
                 getActivity(),
                 null,
@@ -107,7 +123,9 @@ public class OtopListFragment extends Fragment {
                     @Override
                     public void onSuccess(GetOtopResponse responseBody) {
                         mOtopList = responseBody.otopList;
-                        mOtopList = insertSubDistrictHeader(mOtopList);
+                        if (mDistrictName != null) {
+                            mOtopList = insertSubDistrictHeader(mOtopList);
+                        }
                         setupRecyclerView();
                     }
 
@@ -132,7 +150,7 @@ public class OtopListFragment extends Fragment {
 
         for (Otop otop : otopList) {
             if (previousSubDistrict == null || !previousSubDistrict.equals(otop.subDistrict)) {
-                newOtopList.add(new Otop(0, null, mDistrictName, otop.subDistrict, null, null, null, 0, null, null, null, 0, 0, null, null, false, null, 0));
+                newOtopList.add(new Otop(0, null, mDistrictName, otop.subDistrict, null, null, null, 0, null, null, null, 0, 0, null, null, false, null, 0, 0));
                 previousSubDistrict = otop.subDistrict;
             }
             newOtopList.add(otop);

@@ -42,11 +42,13 @@ public class Otop {
     public final List<String> galleryImages;
     @SerializedName("average_rate")
     public float averageRate;
+    @SerializedName("count_rate")
+    public int countRate;
 
     public Otop(int id, String name, String district, String subDistrict, String village,
                 String address, String details, int price, String contactUrl, String phone,
                 String openingTime, double latitude, double longitude, String listImage, String coverImage,
-                boolean recommend, List<String> galleryImages, float averageRate) {
+                boolean recommend, List<String> galleryImages, float averageRate, int countRate) {
         this.id = id;
         this.name = name;
         this.district = district;
@@ -65,6 +67,7 @@ public class Otop {
         this.recommend = recommend;
         this.galleryImages = galleryImages;
         this.averageRate = averageRate;
+        this.countRate = countRate;
     }
 
     public void setAverageRate(float averageRate) {

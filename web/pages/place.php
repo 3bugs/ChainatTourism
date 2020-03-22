@@ -3,7 +3,7 @@ require_once '../include/head_php.inc';
 
 $placeType = $_GET['place_type'];
 $placeTypeList = array(
-    'tour', 'temple', 'restaurant', 'otop'
+    'tour', 'temple', 'restaurant', 'hotel', 'otop'
 );
 if (!isset($placeType) || !in_array($placeType, $placeTypeList)) {
     echo "Invalid place type '$placeType' - ระบุประเภทสถานที่ไม่ถูกต้อง";
@@ -14,11 +14,13 @@ if (!isset($placeType) || !in_array($placeType, $placeTypeList)) {
 $pageTitles['tour'] = 'สถานที่ท่องเที่ยว';
 $pageTitles['temple'] = 'วัด';
 $pageTitles['restaurant'] = 'ร้านอาหาร';
+$pageTitles['hotel'] = 'ที่พัก';
 $pageTitles['otop'] = 'สินค้า OTOP';
 
 $placeTypeKeys['tour'] = 'ท่องเที่ยว';
 $placeTypeKeys['temple'] = 'วัด';
 $placeTypeKeys['restaurant'] = 'ร้านอาหาร';
+$placeTypeKeys['hotel'] = 'ที่พัก';
 $placeTypeKeys['otop'] = 'otop';
 
 $pageTitle = $pageTitles[$placeType];

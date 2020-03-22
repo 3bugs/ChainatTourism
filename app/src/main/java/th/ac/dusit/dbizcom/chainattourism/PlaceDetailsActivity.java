@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -54,6 +55,7 @@ import th.ac.dusit.dbizcom.chainattourism.net.WebServices;
 public class PlaceDetailsActivity extends AppCompatActivity implements ViewPagerEx.OnPageChangeListener, BaseSliderView.OnSliderClickListener {
 
     private static final String TAG = PlaceDetailsActivity.class.getName();
+    private static final int STAR_SIZE = 18;
     static final String KEY_PLACE_JSON = "place_json";
     static final String KEY_OTOP_JSON = "otop_json";
 
@@ -135,7 +137,7 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
     }
 
     private void populateUi() {
-        setRate(mPlace != null ? mPlace.averageRate : mOtop.averageRate);
+        setRate();
 
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(this);
         circularProgressDrawable.setStrokeWidth(5f);
@@ -175,10 +177,17 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
         });
 
         CardView galleryCardView = findViewById(R.id.gallery_card_view);
+        CardView facilityCardView = findViewById(R.id.facility_card_view);
         if (mPlace != null) {
             otopContactButton.setVisibility(View.GONE);
             setupGalleryImages();
             galleryCardView.setVisibility(View.VISIBLE);
+
+            if (mPlace.placeType == Place.PlaceType.HOTEL) {
+                facilityCardView.setVisibility(View.VISIBLE);
+            } else {
+                facilityCardView.setVisibility(View.GONE);
+            }
         } else if (mOtop != null) {
             otopContactButton.setVisibility(View.VISIBLE);
             //setupGalleryImagesOtop();
@@ -249,12 +258,33 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
         }
     }
 
-    private void setRate(float averageRate) {
-        TextView rateTextView = findViewById(R.id.rate_text_view);
-        if (averageRate != 0) {
-            rateTextView.setText(String.valueOf(averageRate));
+    private void setRate() {
+        LinearLayout starLayout = findViewById(R.id.star_layout);
+        TextView rateCountTextView = findViewById(R.id.rate_count_text_view);
+
+        int countRate = mPlace != null ? mPlace.countRate : mOtop.countRate;
+        float averageRate = mPlace != null ? mPlace.averageRate : mOtop.averageRate;
+
+        if (countRate > 0) {
+            starLayout.setVisibility(View.VISIBLE);
+            //holder.mRateCountTextView.setVisibility(View.VISIBLE);
+
+            int numStarOn = (int) averageRate;
+            for (int i = 0; i < numStarOn; i++) {
+                MainActivity.addStar(this, starLayout, R.drawable.ic_star_on, STAR_SIZE);
+            }
+            double remain = averageRate - numStarOn;
+            if (remain >= 0.8) {
+                MainActivity.addStar(this, starLayout, R.drawable.ic_star_on, STAR_SIZE);
+            } else if (remain > 0.3 && remain < 0.8) {
+                MainActivity.addStar(this, starLayout, R.drawable.ic_star_half, STAR_SIZE / 2);
+            }
+
+            rateCountTextView.setText(String.valueOf(countRate).concat(" รีวิว"));
         } else {
-            rateTextView.setText(String.valueOf("ไม่มีข้อมูล"));
+            starLayout.setVisibility(View.GONE);
+            rateCountTextView.setVisibility(View.GONE);
+            rateCountTextView.setText("ยังไม่มีรีวิว");
         }
     }
 
@@ -399,7 +429,7 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
                     @Override
                     public void onSuccess(AddRatingResponse responseBody) {
                         float averageRate = responseBody.averageRate;
-                        setRate(averageRate);
+                        setRate();
 
                         if (mPlace != null) {
                             mPlace.setAverageRate(averageRate);

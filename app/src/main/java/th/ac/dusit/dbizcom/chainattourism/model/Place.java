@@ -10,6 +10,7 @@ public class Place {
         TOUR,
         TEMPLE,
         RESTAURANT,
+        HOTEL,
         OTOP
     }
 
@@ -43,10 +44,12 @@ public class Place {
     public final List<String> galleryImages;
     @SerializedName("average_rate")
     public float averageRate;
+    @SerializedName("count_rate")
+    public int countRate;
 
     public Place(int id, String name, String district, String address, String details, String phone,
                  String openingTime, double latitude, double longitude, String listImage, String coverImage,
-                 boolean recommend, PlaceType placeType, List<String> galleryImages, float averageRate) {
+                 boolean recommend, PlaceType placeType, List<String> galleryImages, float averageRate, int countRate) {
         this.id = id;
         this.name = name;
         this.district = district;
@@ -62,6 +65,7 @@ public class Place {
         this.placeType = placeType;
         this.galleryImages = galleryImages;
         this.averageRate = averageRate;
+        this.countRate = countRate;
     }
 
     public void setAverageRate(float averageRate) {

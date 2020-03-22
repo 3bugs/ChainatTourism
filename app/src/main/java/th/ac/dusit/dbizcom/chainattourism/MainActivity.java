@@ -9,11 +9,13 @@ import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +33,7 @@ import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
+import th.ac.dusit.dbizcom.chainattourism.etc.Utils;
 import th.ac.dusit.dbizcom.chainattourism.model.Place;
 import th.ac.dusit.dbizcom.chainattourism.net.ApiClient;
 import th.ac.dusit.dbizcom.chainattourism.net.GetRecommendResponse;
@@ -44,11 +47,14 @@ public class MainActivity extends BaseActivity implements
         BaseSliderView.OnSliderClickListener,
         ViewPagerEx.OnPageChangeListener, View.OnClickListener {
 
+    private static final String TAG = MainActivity.class.getName();
+    private static final int STAR_SIZE = 18;
+
     private SliderLayout mSlider;
     private RecyclerView mRecommendedPlacesRecyclerView, mRecommendedTemplesRecyclerView;
     private RecyclerView mRecommendedRestaurantsRecyclerView, mRecommendedOtopRecyclerView;
     private List<Place> mRecommendedPlaceList, mRecommendedTempleList;
-    private List<Place> mRecommendedRestaurantList, mRecommendedOtopList;
+    private List<Place> mRecommendedRestaurantList, mRecommendedHotelList, mRecommendedOtopList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,7 @@ public class MainActivity extends BaseActivity implements
         findViewById(R.id.place_layout).setOnClickListener(this);
         findViewById(R.id.temple_layout).setOnClickListener(this);
         findViewById(R.id.restaurant_layout).setOnClickListener(this);
+        findViewById(R.id.hotel_layout).setOnClickListener(this);
         findViewById(R.id.otop_layout).setOnClickListener(this);
 
         doGetRecommend();
@@ -72,7 +79,8 @@ public class MainActivity extends BaseActivity implements
         listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/banner02.png");
         listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/banner03.png");
 
-        RequestOptions requestOptions = new RequestOptions().fitCenter();
+        //RequestOptions requestOptions = new RequestOptions().fitCenter();
+        RequestOptions requestOptions = new RequestOptions().centerCrop();
 
         //.diskCacheStrategy(DiskCacheStrategy.NONE)
         //.placeholder(R.drawable.placeholder)
@@ -120,6 +128,7 @@ public class MainActivity extends BaseActivity implements
                         mRecommendedPlaceList = responseBody.placeList;
                         mRecommendedTempleList = responseBody.templeList;
                         mRecommendedRestaurantList = responseBody.restaurantList;
+                        mRecommendedHotelList = responseBody.hotelList;
                         mRecommendedOtopList = responseBody.otopList;
 
                         String msg = String.format(
@@ -141,6 +150,9 @@ public class MainActivity extends BaseActivity implements
                         }
                         for (Place place : mRecommendedRestaurantList) {
                             place.placeType = Place.PlaceType.RESTAURANT;
+                        }
+                        for (Place place : mRecommendedHotelList) {
+                            place.placeType = Place.PlaceType.HOTEL;
                         }
                         for (Place place : mRecommendedOtopList) {
                             place.placeType = Place.PlaceType.OTOP;
@@ -173,9 +185,14 @@ public class MainActivity extends BaseActivity implements
                 R.layout.item_recommend
         );
         doSetupRecyclerView(
+                (RecyclerView) findViewById(R.id.recommended_hotels_recycler_view),
+                mRecommendedHotelList,
+                R.layout.item_recommend
+        );
+        doSetupRecyclerView(
                 (RecyclerView) findViewById(R.id.recommended_otop_recycler_view),
                 mRecommendedOtopList,
-                R.layout.item_recommend_otop
+                R.layout.item_recommend
         );
     }
 
@@ -211,6 +228,10 @@ public class MainActivity extends BaseActivity implements
                 break;
             case R.id.restaurant_layout:
                 placeType = Place.PlaceType.RESTAURANT;
+                Log.i(TAG, "restaurant_layout");
+                break;
+            case R.id.hotel_layout:
+                placeType = Place.PlaceType.HOTEL;
                 break;
             case R.id.otop_layout:
                 placeType = Place.PlaceType.OTOP;
@@ -240,6 +261,17 @@ public class MainActivity extends BaseActivity implements
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    public static void addStar(Context context, LinearLayout layout, int imageRes, int width) {
+        ImageView imageView = new ImageView(context);
+        imageView.setImageResource(imageRes);
+
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(
+                Math.round(Utils.convertDpToPixel(width, context)),
+                Math.round(Utils.convertDpToPixel(STAR_SIZE, context))
+        ));
+        layout.addView(imageView);
     }
 
     private static class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.ViewHolder> {
@@ -274,11 +306,41 @@ public class MainActivity extends BaseActivity implements
             circularProgressDrawable.start();
 
             Glide.with(mContext)
-                    .load(ApiClient.IMAGE_BASE_URL.concat(place.listImage))
+                    .load(ApiClient.IMAGE_BASE_URL.concat(
+                            place.placeType == Place.PlaceType.OTOP
+                                    ? place.coverImage
+                                    : place.listImage
+                            )
+                    )
                     .placeholder(circularProgressDrawable)
                     .into(holder.mImageView);
 
             holder.mTextView.setText(place.name);
+
+            holder.mStarLayout.removeAllViews();
+
+            if (place.countRate > 0) {
+                holder.mStarLayout.setVisibility(View.VISIBLE);
+                //holder.mRateCountTextView.setVisibility(View.VISIBLE);
+
+                int numStarOn = (int) place.averageRate;
+                for (int i = 0; i < numStarOn; i++) {
+                    addStar(mContext, holder.mStarLayout, R.drawable.ic_star_on, STAR_SIZE);
+                }
+                double remain = place.averageRate - numStarOn;
+                if (remain >= 0.8) {
+                    addStar(mContext, holder.mStarLayout, R.drawable.ic_star_on, STAR_SIZE);
+                } else if (remain > 0.3 && remain < 0.8) {
+                    addStar(mContext, holder.mStarLayout, R.drawable.ic_star_half, STAR_SIZE / 2);
+                }
+
+                holder.mRateCountTextView.setText(String.valueOf(place.countRate).concat(" รีวิว"));
+            } else {
+                //addStar(mContext, holder.mStarLayout, R.drawable.ic_star_on, STAR_SIZE);
+                holder.mStarLayout.setVisibility(View.INVISIBLE);
+                //holder.mRateCountTextView.setVisibility(View.INVISIBLE);
+                holder.mRateCountTextView.setText("ยังไม่มีรีวิว");
+            }
         }
 
         @Override
@@ -291,6 +353,8 @@ public class MainActivity extends BaseActivity implements
             private final View mRootView;
             private final ImageView mImageView;
             private final TextView mTextView;
+            private final LinearLayout mStarLayout;
+            private final TextView mRateCountTextView;
 
             private Place mPlace;
 
@@ -300,6 +364,8 @@ public class MainActivity extends BaseActivity implements
                 mRootView = itemView;
                 mImageView = itemView.findViewById(R.id.image_view);
                 mTextView = itemView.findViewById(R.id.text_view);
+                mStarLayout = itemView.findViewById(R.id.star_layout);
+                mRateCountTextView = itemView.findViewById(R.id.rate_count_text_view);
 
                 mRootView.setOnClickListener(new View.OnClickListener() {
                     @Override

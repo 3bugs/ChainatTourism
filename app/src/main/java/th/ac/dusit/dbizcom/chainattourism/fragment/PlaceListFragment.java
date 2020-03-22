@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
+import th.ac.dusit.dbizcom.chainattourism.MainActivity;
 import th.ac.dusit.dbizcom.chainattourism.R;
 import th.ac.dusit.dbizcom.chainattourism.etc.Utils;
 import th.ac.dusit.dbizcom.chainattourism.model.Place;
@@ -95,6 +97,8 @@ public class PlaceListFragment extends Fragment {
             placeTypeText = view.getResources().getString(R.string.place_type_temple);
         } else if (mPlaceType == Place.PlaceType.RESTAURANT) {
             placeTypeText = view.getResources().getString(R.string.place_type_restaurant);
+        } else if (mPlaceType == Place.PlaceType.HOTEL) {
+            placeTypeText = view.getResources().getString(R.string.place_type_hotel);
         } else if (mPlaceType == Place.PlaceType.OTOP) {
             placeTypeText = view.getResources().getString(R.string.place_type_otop);
         }
@@ -244,6 +248,8 @@ public class PlaceListFragment extends Fragment {
 
     private static class PlaceListAdapter extends RecyclerView.Adapter<PlaceListFragment.PlaceListAdapter.PlaceViewHolder> {
 
+        private static final int STAR_SIZE = 18;
+
         private final Context mContext;
         private final List<Place> mOriginalPlaceList = new ArrayList<>();
         private final List<Place> mPlaceList;
@@ -282,6 +288,31 @@ public class PlaceListFragment extends Fragment {
                     .load(ApiClient.IMAGE_BASE_URL.concat(place.listImage))
                     .placeholder(circularProgressDrawable)
                     .into(holder.mPlaceImageView);
+
+            holder.mStarLayout.removeAllViews();
+
+            if (place.countRate > 0) {
+                holder.mStarLayout.setVisibility(View.VISIBLE);
+                //holder.mRateCountTextView.setVisibility(View.VISIBLE);
+
+                int numStarOn = (int) place.averageRate;
+                for (int i = 0; i < numStarOn; i++) {
+                    MainActivity.addStar(mContext, holder.mStarLayout, R.drawable.ic_star_on, STAR_SIZE);
+                }
+                double remain = place.averageRate - numStarOn;
+                if (remain >= 0.8) {
+                    MainActivity.addStar(mContext, holder.mStarLayout, R.drawable.ic_star_on, STAR_SIZE);
+                } else if (remain > 0.3 && remain < 0.8) {
+                    MainActivity.addStar(mContext, holder.mStarLayout, R.drawable.ic_star_half, STAR_SIZE / 2);
+                }
+
+                holder.mRateCountTextView.setText(String.valueOf(place.countRate).concat(" รีวิว"));
+            } else {
+                //MainActivity.addStar(mContext, holder.mStarLayout, R.drawable.ic_star_on, STAR_SIZE);
+                holder.mStarLayout.setVisibility(View.INVISIBLE);
+                holder.mRateCountTextView.setVisibility(View.INVISIBLE);
+                holder.mRateCountTextView.setText("ยังไม่มีรีวิว");
+            }
         }
 
         @Override
@@ -289,7 +320,7 @@ public class PlaceListFragment extends Fragment {
             return mPlaceList.size();
         }
 
-        public void search(String searchText) {
+        void search(String searchText) {
             List<Place> placeList = new ArrayList<>();
 
             for (Place place : mOriginalPlaceList) {
@@ -310,6 +341,8 @@ public class PlaceListFragment extends Fragment {
             private final TextView mNameTextView;
             private final TextView mDistrictTextView;
             private final ImageView mPlaceImageView;
+            private final LinearLayout mStarLayout;
+            private final TextView mRateCountTextView;
 
             private Place mPlace;
 
@@ -320,6 +353,8 @@ public class PlaceListFragment extends Fragment {
                 mNameTextView = itemView.findViewById(R.id.place_name_text_view);
                 mDistrictTextView = itemView.findViewById(R.id.district_text_view);
                 mPlaceImageView = itemView.findViewById(R.id.place_image_view);
+                mStarLayout = itemView.findViewById(R.id.star_layout);
+                mRateCountTextView = itemView.findViewById(R.id.rate_count_text_view);
 
                 mPlaceImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -333,7 +368,7 @@ public class PlaceListFragment extends Fragment {
 
     public class SpacingDecoration extends RecyclerView.ItemDecoration {
 
-        private final static int MARGIN_TOP_IN_DP = 72;
+        private final static int MARGIN_TOP_IN_DP = 8; //72;
         private final static int MARGIN_BOTTOM_IN_DP = 16;
         private final int mMarginTop, mMarginBottom;
 

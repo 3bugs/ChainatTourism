@@ -20,6 +20,11 @@
                 </a>
             </li>
             <li>
+                <a href="place.php?place_type=hotel">
+                    <i class="fa fa-hotel"></i> <span>ที่พัก</span>
+                </a>
+            </li>
+            <li>
                 <a href="place.php?place_type=otop">
                     <i class="fa fa-star"></i> <span>สินค้า OTOP</span>
                 </a>

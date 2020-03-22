@@ -43,10 +43,10 @@ public class PlaceActivity extends BaseActivity implements
         String tag = null;
         if (mPlaceType == Place.PlaceType.OTOP) {
             fragment = new OtopSearchFragment();
-            tag = TAG_PLACE_LIST_FRAGMENT;
+            tag = TAG_OTOP_SEARCH_FRAGMENT;
         } else {
             fragment = PlaceListFragment.newInstance(mPlaceType);
-            tag = TAG_OTOP_SEARCH_FRAGMENT;
+            tag = TAG_PLACE_LIST_FRAGMENT;
         }
 
         loadFragment(
@@ -75,8 +75,20 @@ public class PlaceActivity extends BaseActivity implements
     /*หน้าค้นหาสินค้า OTOP*/
     @Override
     public void onClickDistrict(District district) {
+        Utils.hideKeyboard(this);
         loadFragment(
-                OtopListFragment.newInstance(district.name),
+                OtopListFragment.newInstance(district.name, false),
+                TAG_OTOP_LIST_FRAGMENT,
+                true,
+                FragmentTransitionType.SLIDE
+        );
+    }
+
+    @Override
+    public void onSearchOtop(String searchTerm) {
+        Utils.hideKeyboard(this);
+        loadFragment(
+                OtopListFragment.newInstance(searchTerm, true),
                 TAG_OTOP_LIST_FRAGMENT,
                 true,
                 FragmentTransitionType.SLIDE

@@ -5,7 +5,7 @@ $placeId = $_GET['place_id'];
 
 $placeType = $_GET['place_type'];
 $placeTypeList = array(
-    'tour', 'temple', 'restaurant', 'otop'
+    'tour', 'temple', 'restaurant','hotel', 'otop'
 );
 if (!isset($placeType) || !in_array($placeType, $placeTypeList)) {
     echo "Invalid place type '$placeType' - ระบุประเภทสถานที่ไม่ถูกต้อง";
@@ -16,11 +16,13 @@ if (!isset($placeType) || !in_array($placeType, $placeTypeList)) {
 $pageTitles['tour'] = 'สถานที่ท่องเที่ยว';
 $pageTitles['temple'] = 'วัด';
 $pageTitles['restaurant'] = 'ร้านอาหาร';
+$pageTitles['hotel'] = 'ที่พัก';
 $pageTitles['otop'] = 'สินค้า OTOP';
 
 $placeTypeKeys['tour'] = 'ท่องเที่ยว';
 $placeTypeKeys['temple'] = 'วัด';
 $placeTypeKeys['restaurant'] = 'ร้านอาหาร';
+$placeTypeKeys['hotel'] = 'ที่พัก';
 $placeTypeKeys['otop'] = 'otop';
 
 $pageTitle = $pageTitles[$placeType];
@@ -478,7 +480,7 @@ if (isset($placeId)) {
                             </div>
                             <!-- /.box -->
 
-                            <!--content editor-->
+                            <!--รายละเอียด-->
                             <div class="box box-warning">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">รายละเอียด
@@ -504,6 +506,61 @@ if (isset($placeId)) {
                                 </div>
                             </div>
                             <!-- /.box -->
+
+                            <?php
+                            if ($placeType === 'hotel') {
+                                ?>
+                                <!--สิ่งอำนวยความสะดวก (กรณีที่พัก)-->
+                                <div class="box box-warning">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">สิ่งอำนวยความสะดวก
+                                            <small>&nbsp;</small>
+                                        </h3>
+                                        <!-- tools box -->
+                                        <div class="pull-right box-tools">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"
+                                                    data-toggle="tooltip" title="ย่อ">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /. tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body pad">
+                                        <div class="form-group">
+                                            <label for="textAreaFacilityInternet">บริการอินเทอร์เน็ต:</label><br>
+                                            <textarea id="textAreaFacilityInternet" rows="5" cols="120"
+                                                      name="facilityInternet"
+                                                      placeholder=""
+                                                      style="padding: 6px 10px"><?= (!empty($place) ? $place['facility_internet'] : ''); ?></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="textAreaFacilityRecreation">กิจกรรมผ่อนคลาย:</label><br>
+                                            <textarea id="textAreaFacilityRecreation" rows="5" cols="120"
+                                                      name="facilityRecreation"
+                                                      placeholder=""
+                                                      style="padding: 6px 10px"><?= (!empty($place) ? $place['facility_recreation'] : ''); ?></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="textAreaFacilityFood">อาหาร เครื่องดื่ม ของว่าง:</label><br>
+                                            <textarea id="textAreaFacilityFood" rows="5" cols="120"
+                                                      name="facilityFood"
+                                                      placeholder=""
+                                                      style="padding: 6px 10px"><?= (!empty($place) ? $place['facility_food'] : ''); ?></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="textAreaFacilityService">บริการและสิ่งอำนวยความสะดวก:</label><br>
+                                            <textarea id="textAreaFacilityService" rows="5" cols="120"
+                                                      name="facilityService"
+                                                      placeholder=""
+                                                      style="padding: 6px 10px"><?= (!empty($place) ? $place['facility_service'] : ''); ?></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.box -->
+                                <?php
+                            }
+                            ?>
 
                             <!--รูปภาพหน้า List-->
                             <div class="box box-warning">

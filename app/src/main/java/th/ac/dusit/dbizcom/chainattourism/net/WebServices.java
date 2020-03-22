@@ -24,6 +24,11 @@ public interface WebServices {
             @Query("district") String districtName
     );
 
+    @GET("search_otop")
+    Call<GetOtopResponse> searchOtop(
+            @Query("search_term") String searchTerm
+    );
+
     @FormUrlEncoded
     @POST("add_rating")
     Call<AddRatingResponse> addRating(

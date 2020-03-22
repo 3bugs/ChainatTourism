@@ -14,6 +14,8 @@ public class GetRecommendResponse extends BaseResponse {
     public List<Place> templeList;
     @SerializedName("restaurant_list")
     public List<Place> restaurantList;
+    @SerializedName("hotel_list")
+    public List<Place> hotelList;
     @SerializedName("otop_list")
     public List<Place> otopList;
 

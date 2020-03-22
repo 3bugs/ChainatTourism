@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -20,13 +21,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import th.ac.dusit.dbizcom.chainattourism.R;
+import th.ac.dusit.dbizcom.chainattourism.etc.Utils;
 import th.ac.dusit.dbizcom.chainattourism.model.District;
-import th.ac.dusit.dbizcom.chainattourism.model.Place;
-import th.ac.dusit.dbizcom.chainattourism.net.ApiClient;
 
 public class OtopSearchFragment extends Fragment {
 
@@ -64,10 +61,43 @@ public class OtopSearchFragment extends Fragment {
         titleTextView.setText("สินค้า OTOP");
 
         final EditText searchEditText = view.findViewById(R.id.search_edit_text);
+        setupSearchEditText(searchEditText);
+
         titleTextView.setText("ค้นหาสินค้า OTOP");
 
         mProgressView = view.findViewById(R.id.progress_view);
         setupRecyclerView(view);
+    }
+
+    private void setupSearchEditText(final EditText searchEditText) {
+        searchEditText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (searchEditText.getRight() - (searchEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width() + Utils.convertDpToPixel(16, getContext())))) {
+                        //searchEditText.setText("");
+
+                        String searchText = searchEditText.getText().toString().trim();
+                        //Utils.showOkDialog(getActivity(), "Test", searchText, null);
+                        if (!searchText.trim().isEmpty()) {
+                            if (mListener != null) {
+                                mListener.onSearchOtop(searchText);
+                            }
+                        } else {
+                            searchEditText.setText(searchText.trim());
+                            Utils.showOkDialog(getActivity(), "ผิดพลาด", "กรอกคำที่ต้องการค้นหา", null);
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     private void setupRecyclerView(View view) {
@@ -102,6 +132,7 @@ public class OtopSearchFragment extends Fragment {
 
     public interface OtopSearchFragmentListener {
         void onClickDistrict(District district);
+        void onSearchOtop(String searchTerm);
     }
 
     private static class DistrictListAdapter extends RecyclerView.Adapter<DistrictListAdapter.ViewHolder> {

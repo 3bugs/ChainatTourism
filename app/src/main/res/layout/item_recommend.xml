@@ -7,12 +7,12 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    tools:ignore="UnusedAttribute">
+    tools:ignore="UnusedAttribute,HardcodedText,ContentDescription">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/image_view"
-        android:layout_width="140dp"
-        android:layout_height="80dp"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
         android:adjustViewBounds="true"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:riv_border_color="#333333"
         app:riv_border_width="0dp"
-        app:riv_corner_radius="16dp"
+        app:riv_corner_radius="20dp"
         app:riv_mutate_background="true"
         app:riv_oval="false"
         app:srcCompat="@drawable/gallery01" />
@@ -32,14 +32,50 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
         android:gravity="start"
+        android:maxLines="1"
         android:paddingTop="4dp"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:fontFamily="@font/bangna"
         app:layout_constraintEnd_toEndOf="@+id/image_view"
         app:layout_constraintStart_toStartOf="@+id/image_view"
         app:layout_constraintTop_toBottomOf="@+id/image_view"
         tools:text="TextView" />
+
+    <LinearLayout
+        android:id="@+id/star_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/text_view"
+        app:layout_constraintTop_toBottomOf="@+id/text_view">
+
+        <!--<ImageView
+            android:id="@+id/star_image_view"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:srcCompat="@drawable/ic_star_on" />-->
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/rate_count_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:text="10 รีวิว"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/bangna"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/star_layout"
+        app:layout_constraintTop_toBottomOf="@id/text_view" />
 
 </android.support.constraint.ConstraintLayout>

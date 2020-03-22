@@ -2,6 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2980b396-8a91-45e1-971e-ebc812e171e6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/model/Facility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xhdpi/ic_hotel.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xhdpi/ic_star_half.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xxhdpi/ic_cup_w200.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xxhdpi/ic_facility_w200.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xxhdpi/ic_heart_w200.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable-xxhdpi/ic_wifi_w200.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../keystore.jks" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/export.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/Flot/.bower.json" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/Flot/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/Flot/.travis.yml" afterDir="false" />
@@ -6817,6 +6826,7 @@
       <change afterPath="$PROJECT_DIR$/bower_components/select2/tests/vendor/qunit-1.23.1.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/select2/tests/vendor/qunit-1.23.1.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/select2/vendor/jquery-2.1.0.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/5911011802058_mydb.sql" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/dist/css/AdminLTE.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/dist/css/AdminLTE.min.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/dist/css/adminlte.css.map" afterDir="false" />
@@ -6899,6 +6909,7 @@
       <change afterPath="$PROJECT_DIR$/dist/lightbox/js/lightbox.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/dist/lightbox/js/lightbox.min.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/dist/lightbox/js/lightbox.min.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/phpinfo.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/plugins/bootstrap-slider/bootstrap-slider.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/plugins/bootstrap-slider/slider.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js" afterDir="false" />
@@ -7043,9 +7054,28 @@
       <change afterPath="$PROJECT_DIR$/plugins/timepicker/bootstrap-timepicker.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/plugins/timepicker/bootstrap-timepicker.min.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/plugins/timepicker/bootstrap-timepicker.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/activity_maps.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_maps.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceDetailsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceDetailsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/OtopListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/OtopListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/OtopSearchFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/OtopSearchFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/PlaceListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/PlaceListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/model/Place.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/model/Place.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/net/GetRecommendResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/net/GetRecommendResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/activity_place.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_place.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/activity_place_details_content.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_place_details_content.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_otop_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_otop_search.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_place_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_place_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/item_district.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/item_district.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/item_place.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/item_place.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/item_recommend.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/item_recommend.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/item_recommend_otop.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/item_recommend_otop.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/header.inc" beforeDir="false" afterPath="$PROJECT_DIR$/include/header.inc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/db_config.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/db_config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/sidebar.inc" beforeDir="false" afterPath="$PROJECT_DIR$/include/sidebar.inc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/place.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/place.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/place_add_edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/place_add_edit.php" afterDir="false" />
     </list>
@@ -7093,6 +7123,11 @@
       <recent name="$PROJECT_DIR$/dist" />
       <recent name="$PROJECT_DIR$/include" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/db" />
+      <recent name="$PROJECT_DIR$/api" />
+      <recent name="$PROJECT_DIR$/pages" />
+    </key>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -7130,6 +7165,20 @@
       <workItem from="1573629764749" duration="482000" />
       <workItem from="1574957305536" duration="961000" />
       <workItem from="1575560877367" duration="747000" />
+      <workItem from="1576605560141" duration="2905000" />
+      <workItem from="1576680390186" duration="117000" />
+      <workItem from="1576742459996" duration="3549000" />
+      <workItem from="1576913484682" duration="7078000" />
+      <workItem from="1578200449975" duration="1404000" />
+      <workItem from="1578276499103" duration="599000" />
+      <workItem from="1579106616767" duration="1193000" />
+      <workItem from="1579190767745" duration="8123000" />
+      <workItem from="1579533815161" duration="3637000" />
+      <workItem from="1579573957085" duration="4784000" />
+      <workItem from="1579682099719" duration="71000" />
+      <workItem from="1581521862635" duration="670000" />
+      <workItem from="1582885008706" duration="733000" />
+      <workItem from="1584861732352" duration="5063000" />
     </task>
     <servers />
   </component>
@@ -7148,5 +7197,12 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2440" y="639" key="NewPhpFileDialog" timestamp="1579575571444">
+      <screen x="1366" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2440" y="639" key="NewPhpFileDialog/1366.0.1920.1080/65.24.1301.744@1366.0.1920.1080" timestamp="1579575571444" />
+    <state x="793" y="464" key="NewPhpFileDialog/1366.0.1920.1080/65.24.1301.744@65.24.1301.744" timestamp="1579538459412" />
   </component>
 </project>

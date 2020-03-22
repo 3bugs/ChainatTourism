@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:ignore="HardcodedText">
 
     <!--<ImageView
         android:id="@+id/place_image_view"
@@ -31,12 +32,12 @@
         android:id="@+id/place_image_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="6dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
@@ -92,5 +93,38 @@
         app:layout_constraintTop_toTopOf="@+id/place_image_view"
         app:srcCompat="@drawable/ic_marker"
         tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:id="@+id/star_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/place_image_view"
+        app:layout_constraintStart_toStartOf="@+id/place_name_text_view">
+
+        <!--<ImageView
+            android:id="@+id/star_image_view"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:srcCompat="@drawable/ic_star_on" />-->
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/rate_count_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:text="10 รีวิว"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/bangna"
+        app:layout_constraintBottom_toBottomOf="@+id/star_layout"
+        app:layout_constraintStart_toEndOf="@+id/star_layout"
+        app:layout_constraintTop_toTopOf="@+id/star_layout" />
 
 </android.support.constraint.ConstraintLayout>

@@ -5,6 +5,7 @@ require_once 'global.php';
 define('PLACE_TYPE_TOUR', 'TOUR');
 define('PLACE_TYPE_TEMPLE', 'TEMPLE');
 define('PLACE_TYPE_RESTAURANT', 'RESTAURANT');
+define('PLACE_TYPE_HOTEL', 'HOTEL');
 define('PLACE_TYPE_OTOP', 'OTOP');
 
 error_reporting(E_ERROR | E_PARSE);
@@ -43,7 +44,8 @@ switch ($action) {
         doGetPlace();
         break;
     case 'get_otop_by_district':
-        doGetOtopByDistrict();
+    case 'search_otop':
+        doGetOtop();
         break;
     case 'add_rating':
         doAddRating();
@@ -95,6 +97,7 @@ function doGetRecommend()
         $recommendPlaceList = array();
         $recommendTempleList = array();
         $recommendRestaurantList = array();
+        $recommendHotelList = array();
         $recommendOtopList = array();
 
         while ($row = $result->fetch_assoc()) {
@@ -122,8 +125,9 @@ function doGetRecommend()
                 }
                 $galleryResult->close();
 
-                $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate FROM ct_rating 
-                WHERE item_id = {$place['id']}";
+                $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate, COUNT(id) AS count_rate 
+                        FROM ct_rating 
+                        WHERE item_id = {$place['id']}";
                 if ($ratingResult = $db->query($sql)) {
                     $ratingRow = $ratingResult->fetch_assoc();
                     $averageRate = $ratingRow['average_rate'];
@@ -132,6 +136,7 @@ function doGetRecommend()
                     } else {
                         $place['average_rate'] = floatval($averageRate);
                     }
+                    $place['count_rate'] = (int)$ratingRow['count_rate'];
                 } else {
                     $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
                     $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล (3)';
@@ -153,19 +158,42 @@ function doGetRecommend()
                 array_push($recommendTempleList, $place);
             } else if ($place['place_type'] === 'ร้านอาหาร') {
                 array_push($recommendRestaurantList, $place);
+            } else if ($place['place_type'] === 'ที่พัก') {
+                array_push($recommendHotelList, $place);
             } else if ($place['place_type'] === 'otop') {
                 array_push($recommendOtopList, $place);
             }
         }
+
+        sortPlaceByRating($recommendPlaceList);
+        sortPlaceByRating($recommendTempleList);
+        sortPlaceByRating($recommendRestaurantList);
+        sortPlaceByRating($recommendHotelList);
+        sortPlaceByRating($recommendOtopList);
+
         $response['place_list'] = $recommendPlaceList;
         $response['temple_list'] = $recommendTempleList;
         $response['restaurant_list'] = $recommendRestaurantList;
+        $response['hotel_list'] = $recommendHotelList;
         $response['otop_list'] = $recommendOtopList;
     } else {
         $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
         $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล (1)';
         $errMessage = $db->error;
         $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+    }
+}
+
+function sortPlaceByRating(&$placeList)
+{
+    for ($i = 0; $i < count($placeList) - 1; $i++) {
+        for ($j = $i + 1; $j < count($placeList); $j++) {
+            if ($placeList[$i]['average_rate'] < $placeList[$j]['average_rate']) {
+                $temp = $placeList[$i];
+                $placeList[$i] = $placeList[$j];
+                $placeList[$j] = $temp;
+            }
+        }
     }
 }
 
@@ -183,6 +211,9 @@ function doGetPlace()
             break;
         case PLACE_TYPE_RESTAURANT:
             $placeType = 'ร้านอาหาร';
+            break;
+        case PLACE_TYPE_HOTEL:
+            $placeType = 'ที่พัก';
             break;
         case PLACE_TYPE_OTOP:
             $placeType = 'otop';
@@ -210,6 +241,10 @@ function doGetPlace()
             $place['image_list'] = $row['image_list'];
             $place['image_cover'] = $row['image_cover'];
             $place['recommend'] = (boolean)$row['recommend'];
+            $place['facility_internet'] = (!$row['facility_internet'] || trim($row['facility_internet']) === '') ? null : trim($row['facility_internet']);
+            $place['facility_recreation'] = (!$row['facility_recreation'] || trim($row['facility_recreation']) === '') ? null : trim($row['facility_recreation']);
+            $place['facility_food'] = (!$row['facility_food'] || trim($row['facility_food']) === '') ? null : trim($row['facility_food']);
+            $place['facility_service'] = (!$row['facility_service'] || trim($row['facility_service']) === '') ? null : trim($row['facility_service']);
             $place['place_type'] = $placeType;
 
             $place['gallery_images'] = array();
@@ -221,8 +256,9 @@ function doGetPlace()
                 }
                 $galleryResult->close();
 
-                $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate FROM ct_rating 
-                WHERE item_id = {$place['id']}";
+                $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate, COUNT(id) AS count_rate 
+                        FROM ct_rating
+                        WHERE item_id = {$place['id']}";
                 if ($ratingResult = $db->query($sql)) {
                     $ratingRow = $ratingResult->fetch_assoc();
                     $averageRate = $ratingRow['average_rate'];
@@ -231,6 +267,7 @@ function doGetPlace()
                     } else {
                         $place['average_rate'] = floatval($averageRate);
                     }
+                    $place['count_rate'] = (int)$ratingRow['count_rate'];
                 } else {
                     $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
                     $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล (3)';
@@ -249,6 +286,8 @@ function doGetPlace()
             array_push($placeList, $place);
         }
         $result->close();
+
+        sortPlaceByRating($placeList);
         $response[KEY_DATA_LIST] = $placeList;
     } else {
         $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
@@ -258,15 +297,22 @@ function doGetPlace()
     }
 }
 
-function doGetOtopByDistrict()
+function doGetOtop()
 {
     global $db, $response;
 
     $district = $_GET['district'];
+    $searchTerm = $_GET['search_term'];
 
-    $sql = "SELECT * FROM ct_place 
+    if (isset($district)) {
+        $sql = "SELECT * FROM ct_place 
             WHERE place_type = 'otop' AND district = '$district' 
             ORDER BY sub_district, village";
+    } else if (isset($searchTerm)) {
+        $sql = "SELECT * FROM ct_place 
+            WHERE place_type = 'otop' AND name LIKE '%{$searchTerm}%' 
+            ORDER BY district, sub_district, village";
+    }
     if ($result = $db->query($sql)) {
         $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
         $response[KEY_ERROR_MESSAGE] = 'อ่านข้อมูลสำเร็จ';
@@ -301,8 +347,9 @@ function doGetOtopByDistrict()
                 }
                 $galleryResult->close();
 
-                $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate FROM ct_rating 
-                WHERE item_id = {$otop['id']}";
+                $sql = "SELECT FORMAT(AVG(rate), 1) AS average_rate, COUNT(id) AS count_rate 
+                        FROM ct_rating 
+                        WHERE item_id = {$otop['id']}";
                 if ($ratingResult = $db->query($sql)) {
                     $ratingRow = $ratingResult->fetch_assoc();
                     $averageRate = $ratingRow['average_rate'];
@@ -311,6 +358,7 @@ function doGetOtopByDistrict()
                     } else {
                         $otop['average_rate'] = floatval($averageRate);
                     }
+                    $otop['count_rate'] = (int)$ratingRow['count_rate'];
                 } else {
                     $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
                     $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล (3)';
@@ -393,6 +441,11 @@ function doAddPlace()
     $price = $_POST['price'] ? $db->real_escape_string($_POST['price']) : null;
     $contactUrl = $_POST['contactUrl'] ? $db->real_escape_string($_POST['contactUrl']) : null;
 
+    $facilityInternet = trim($db->real_escape_string($_POST['facility_internet']));
+    $facilityRecreation = trim($db->real_escape_string($_POST['facility_recreation']));
+    $facilityFood = trim($db->real_escape_string($_POST['facility_food']));
+    $facilityService = trim($db->real_escape_string($_POST['facility_service']));
+
     if (!moveUploadedFile('listImageFile', DIR_IMAGES, $listImageFileName)) {
         $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
         $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์ (รูปภาพหน้า List)';
@@ -419,9 +472,11 @@ function doAddPlace()
                         '$subDistrict', '$village', $price, '$contactUrl')";
     } else {
         $sql = "INSERT INTO ct_place (name, place_type, district, details, phone, 
-                           opening_time, address, latitude, longitude, image_list, image_cover) 
+                            opening_time, address, latitude, longitude, image_list, image_cover, 
+                            facility_internet, facility_recreation, facility_food, facility_service) 
                 VALUES ('$name', '$placeType', '$district', '$details', '$phone', 
-                        '$openingTime', '$address', $latitude, $longitude, '$listImageFileName', '$coverImageFileName')";
+                        '$openingTime', '$address', $latitude, $longitude, '$listImageFileName', '$coverImageFileName',
+                        '$facilityInternet', '$facilityRecreation', '$facilityFood', '$facilityService')";
     }
     if ($result = $db->query($sql)) {
         $insertId = $db->insert_id;
@@ -487,6 +542,11 @@ function doUpdatePlace()
     $price = $_POST['price'] ? $db->real_escape_string($_POST['price']) : null;
     $contactUrl = $_POST['contactUrl'] ? $db->real_escape_string($_POST['contactUrl']) : null;
 
+    $facilityInternet = trim($db->real_escape_string($_POST['facility_internet']));
+    $facilityRecreation = trim($db->real_escape_string($_POST['facility_recreation']));
+    $facilityFood = trim($db->real_escape_string($_POST['facility_food']));
+    $facilityService = trim($db->real_escape_string($_POST['facility_service']));
+
     $listImageFileName = NULL;
     if ($_FILES['listImageFile']['name'] !== '') {
         if (!moveUploadedFile('listImageFile', DIR_IMAGES, $listImageFileName)) {
@@ -522,7 +582,9 @@ function doUpdatePlace()
         $sql = "UPDATE ct_place 
                 SET $setListFileName $setCoverFileName 
                     name = '$name', district = '$district', details = '$details', phone = '$phone', 
-                    opening_time = '$openingTime', address = '$address', latitude = $latitude, longitude = '$longitude' 
+                    opening_time = '$openingTime', address = '$address', latitude = $latitude, longitude = '$longitude',
+                    facility_internet = '$facilityInternet', facility_recreation = '$facilityRecreation', 
+                    facility_food = '$facilityFood', facility_service = '$facilityService' 
                 WHERE id = $id";
     }
     if ($result = $db->query($sql)) {
