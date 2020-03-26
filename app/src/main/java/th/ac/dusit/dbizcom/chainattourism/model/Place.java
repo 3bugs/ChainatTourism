@@ -38,6 +38,14 @@ public class Place {
     public final String coverImage;
     @SerializedName("recommend")
     public final boolean recommend;
+    @SerializedName("facility_internet")
+    public final String facilityInternet;
+    @SerializedName("facility_recreation")
+    public final String facilityRecreation;
+    @SerializedName("facility_food")
+    public final String facilityFood;
+    @SerializedName("facility_service")
+    public final String facilityService;
     @SerializedName("place_type")
     public PlaceType placeType;
     @SerializedName("gallery_images")
@@ -47,9 +55,10 @@ public class Place {
     @SerializedName("count_rate")
     public int countRate;
 
-    public Place(int id, String name, String district, String address, String details, String phone,
-                 String openingTime, double latitude, double longitude, String listImage, String coverImage,
-                 boolean recommend, PlaceType placeType, List<String> galleryImages, float averageRate, int countRate) {
+    public Place(int id, String name, String district, String address, String details, String phone, String openingTime,
+                 double latitude, double longitude, String listImage, String coverImage, boolean recommend,
+                 String facilityInternet, String facilityRecreation, String facilityFood, String facilityService,
+                 PlaceType placeType, List<String> galleryImages, float averageRate, int countRate) {
         this.id = id;
         this.name = name;
         this.district = district;
@@ -61,6 +70,10 @@ public class Place {
         this.longitude = longitude;
         this.listImage = listImage;
         this.coverImage = coverImage;
+        this.facilityInternet = facilityInternet;
+        this.facilityRecreation = facilityRecreation;
+        this.facilityFood = facilityFood;
+        this.facilityService = facilityService;
         this.recommend = recommend;
         this.placeType = placeType;
         this.galleryImages = galleryImages;

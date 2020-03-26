@@ -441,10 +441,10 @@ function doAddPlace()
     $price = $_POST['price'] ? $db->real_escape_string($_POST['price']) : null;
     $contactUrl = $_POST['contactUrl'] ? $db->real_escape_string($_POST['contactUrl']) : null;
 
-    $facilityInternet = trim($db->real_escape_string($_POST['facility_internet']));
-    $facilityRecreation = trim($db->real_escape_string($_POST['facility_recreation']));
-    $facilityFood = trim($db->real_escape_string($_POST['facility_food']));
-    $facilityService = trim($db->real_escape_string($_POST['facility_service']));
+    $facilityInternet = trim($db->real_escape_string($_POST['facilityInternet']));
+    $facilityRecreation = trim($db->real_escape_string($_POST['facilityRecreation']));
+    $facilityFood = trim($db->real_escape_string($_POST['facilityFood']));
+    $facilityService = trim($db->real_escape_string($_POST['facilityService']));
 
     if (!moveUploadedFile('listImageFile', DIR_IMAGES, $listImageFileName)) {
         $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
@@ -542,10 +542,10 @@ function doUpdatePlace()
     $price = $_POST['price'] ? $db->real_escape_string($_POST['price']) : null;
     $contactUrl = $_POST['contactUrl'] ? $db->real_escape_string($_POST['contactUrl']) : null;
 
-    $facilityInternet = trim($db->real_escape_string($_POST['facility_internet']));
-    $facilityRecreation = trim($db->real_escape_string($_POST['facility_recreation']));
-    $facilityFood = trim($db->real_escape_string($_POST['facility_food']));
-    $facilityService = trim($db->real_escape_string($_POST['facility_service']));
+    $facilityInternet = trim($db->real_escape_string($_POST['facilityInternet']));
+    $facilityRecreation = trim($db->real_escape_string($_POST['facilityRecreation']));
+    $facilityFood = trim($db->real_escape_string($_POST['facilityFood']));
+    $facilityService = trim($db->real_escape_string($_POST['facilityService']));
 
     $listImageFileName = NULL;
     if ($_FILES['listImageFile']['name'] !== '') {

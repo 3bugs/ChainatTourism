@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.CircularProgressDrawable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -115,6 +116,13 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
         setupToolbarIcons();
         setupPlaceTypeIcon();
         setupRating();
+
+        final NestedScrollView sv = findViewById(R.id.scroll);
+        sv.post(new Runnable() {
+            public void run() {
+                sv.fullScroll(NestedScrollView.FOCUS_UP);
+            }
+        });
     }
 
     private void setupPlaceTypeIcon() {
@@ -185,6 +193,7 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
 
             if (mPlace.placeType == Place.PlaceType.HOTEL) {
                 facilityCardView.setVisibility(View.VISIBLE);
+                setupFacility();
             } else {
                 facilityCardView.setVisibility(View.GONE);
             }
@@ -192,6 +201,7 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
             otopContactButton.setVisibility(View.VISIBLE);
             //setupGalleryImagesOtop();
             galleryCardView.setVisibility(View.GONE);
+            facilityCardView.setVisibility(View.GONE);
         }
     }
 
@@ -314,6 +324,20 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
         galleryImagesRecyclerView.setLayoutManager(layoutManager);
         galleryImagesRecyclerView.addItemDecoration(new SpacingDecoration(this));
         galleryImagesRecyclerView.setAdapter(adapter);
+    }
+
+    private void setupFacility() {
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        FacilityAdapter adapter = new FacilityAdapter(
+                this,
+                mPlace
+        );
+
+        RecyclerView facilityRecyclerView = findViewById(R.id.facility_recycler_view);
+        facilityRecyclerView.setLayoutManager(layoutManager);
+        facilityRecyclerView.addItemDecoration(new SpacingDecoration(this));
+        facilityRecyclerView.setAdapter(adapter);
     }
 
     private void setupToolbarIcons() {
@@ -616,6 +640,106 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
                         mContext.startActivity(intent);
                     }
                 });
+            }
+        }
+    }
+
+    private static class FacilityAdapter extends RecyclerView.Adapter<FacilityAdapter.ViewHolder> {
+
+        private final Context mContext;
+        private final List<Facility> mFacilityList = new ArrayList<>();
+
+        private class Facility {
+
+            final String name;
+            final int iconRes;
+            final String[] list;
+
+            private Facility(String name, int iconRes, String text) {
+                this.name = name;
+                this.iconRes = iconRes;
+                this.list = text.split("\n");
+            }
+        }
+
+        FacilityAdapter(Context context, Place place) {
+            mContext = context;
+
+            if (place.facilityInternet != null && place.facilityInternet.trim().length() > 1) {
+                mFacilityList.add(new Facility(
+                        "บริการอินเทอร์เน็ต",
+                        R.drawable.ic_wifi_w200,
+                        place.facilityInternet
+                ));
+            }
+            if (place.facilityRecreation != null && place.facilityRecreation.trim().length() > 1) {
+                mFacilityList.add(new Facility(
+                        "กิจกรรมผ่อนคลาย",
+                        R.drawable.ic_heart_w200,
+                        place.facilityRecreation
+                ));
+            }
+            if (place.facilityFood != null && place.facilityFood.trim().length() > 1) {
+                mFacilityList.add(new Facility(
+                        "อาหาร เครื่องดื่ม ของว่าง",
+                        R.drawable.ic_cup_w200,
+                        place.facilityFood
+                ));
+            }
+            if (place.facilityService != null && place.facilityService.trim().length() > 1) {
+                mFacilityList.add(new Facility(
+                        "บริการและสิ่งอำนวยความสะดวก",
+                        R.drawable.ic_facility_w200,
+                        place.facilityService
+                ));
+            }
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.item_facility, parent, false
+            );
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            Facility facility = mFacilityList.get(position);
+
+            holder.iconImageView.setImageResource(facility.iconRes);
+            holder.nameTextView.setText(facility.name);
+
+            String listText = "";
+            for (String listItem : facility.list) {
+                listText = listText
+                        .concat("".equals(listText) ? "" : "\n")
+                        .concat("• ")
+                        .concat(listItem);
+            }
+            holder.listTextView.setText(listText);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mFacilityList.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+
+            private final View mRootView;
+            private final ImageView iconImageView;
+            private final TextView nameTextView;
+            private final TextView listTextView;
+
+            ViewHolder(View itemView) {
+                super(itemView);
+
+                mRootView = itemView;
+                iconImageView = itemView.findViewById(R.id.icon_image_view);
+                nameTextView = itemView.findViewById(R.id.name_text_view);
+                listTextView = itemView.findViewById(R.id.list_text_view);
             }
         }
     }
