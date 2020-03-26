@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
+
+import java.util.Locale;
 
 import th.ac.dusit.dbizcom.chainattourism.model.Otop;
 import th.ac.dusit.dbizcom.chainattourism.model.Place;
@@ -71,10 +74,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         directionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri intentUri = Uri.parse("geo:" + (mPlace != null ? mPlace.latitude : mOtop.latitude) + "," + (mPlace != null ? mPlace.longitude : mOtop.longitude) /*+ "?q=" + (mPlace != null ? mPlace.name : mOtop.name)*/);
+                //geo:0,0?q=${latLng}(${label})
+                String urlString = String.format(
+                        Locale.getDefault(),
+                        "geo:0,0?q=%f,%f(%s)",
+                        (mPlace != null ? mPlace.latitude : mOtop.latitude),
+                        (mPlace != null ? mPlace.longitude : mOtop.longitude),
+                        (mPlace != null ? mPlace.name : mOtop.name)
+                );
+                Uri intentUri = Uri.parse(urlString);
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, intentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
                 startActivity(mapIntent);
+                Log.i(TAG, "URL: " + urlString);
             }
         });
     }
