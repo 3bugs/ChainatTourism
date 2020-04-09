@@ -68,6 +68,21 @@ switch ($action) {
     case 'get_sub_district':
         doGetSubDistrict();
         break;
+    case 'get_news':
+        doGetNews();
+        break;
+    case 'add_news':
+        doAddNews();
+        break;
+    case 'update_news':
+        doUpdateNews();
+        break;
+    case 'update_news_active':
+        doUpdateNewsActive();
+        break;
+    case 'delete_news':
+        doDeleteNews();
+        break;
     default:
         $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
         $response[KEY_ERROR_MESSAGE] = 'No action specified or invalid action.';
@@ -772,6 +787,152 @@ function doGetSubDistrict()
             $subDistrict['name'] = 'วังตะเคียน';
             array_push($response[KEY_DATA_LIST], $subDistrict);
             break;
+    }
+}
+
+function doGetNews()
+{
+    global $db, $response;
+
+    $sql = "SELECT * FROM ct_news WHERE active = 1";
+    if ($result = $db->query($sql)) {
+        $newsList = array();
+        while ($row = $result->fetch_assoc()) {
+            $news = array();
+            $news['id'] = (int)$row['id'];
+            $news['title'] = $row['title'];
+            $news['image'] = $row['image'];
+
+            array_push($newsList, $news);
+        }
+        $result->close();
+
+        $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+        $response[KEY_ERROR_MESSAGE] = 'อ่านข้อมูลสำเร็จ';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+        $response[KEY_DATA_LIST] = $newsList;
+    } else {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอ่านข้อมูล';
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+    }
+}
+
+function doAddNews()
+{
+    global $db, $response;
+
+    $title = trim($db->real_escape_string($_POST['title']));
+
+    if (!moveUploadedFile('imageFile', DIR_IMAGES, $imageFileName)) {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดรูปภาพข่าว)';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+        return;
+    }
+
+    $db->query('START TRANSACTION');
+
+    $sql = "INSERT INTO ct_news (title, image, active) 
+            VALUES ('$title', '$imageFileName', 1)";
+
+    if ($result = $db->query($sql)) {
+        $insertId = $db->insert_id;
+
+        $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+        $response[KEY_ERROR_MESSAGE] = 'เพิ่มข้อมูลสำเร็จ';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+
+        $db->query('COMMIT');
+    } else {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการเพิ่มข้อมูล: ' . $db->error;
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+
+        $db->query('ROLLBACK');
+    }
+}
+
+function doUpdateNews()
+{
+    global $db, $response;
+
+    $id = $db->real_escape_string($_POST['newsId']);
+    $title = trim($db->real_escape_string($_POST['title']));
+
+    $imageFileName = NULL;
+    if ($_FILES['imageFile']['name'] !== '') {
+        if (!moveUploadedFile('imageFile', DIR_IMAGES, $imageFileName)) {
+            $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+            $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดรูปภาพข่าว)';
+            $response[KEY_ERROR_MESSAGE_MORE] = '';
+            return;
+        }
+    }
+    $setImageFileName = $imageFileName ? "image = '$imageFileName', " : '';
+
+    $db->query('START TRANSACTION');
+
+    $sql = "UPDATE ct_news 
+            SET $setImageFileName 
+                title = '$title'
+            WHERE id = $id";
+
+    if ($result = $db->query($sql)) {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+        $response[KEY_ERROR_MESSAGE] = 'แก้ไขข้อมูลสำเร็จ';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+
+        $db->query('COMMIT');
+    } else {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการแก้ไขข้อมูล: ' . $db->error;
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+
+        $db->query('ROLLBACK');
+    }
+}
+
+function doUpdateNewsActive()
+{
+    global $db, $response;
+
+    $id = $db->real_escape_string($_POST['newsId']);
+    $active = $db->real_escape_string($_POST['active']);
+
+    $sql = "UPDATE ct_news SET active = $active WHERE id = $id";
+    if ($result = $db->query($sql)) {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+        $response[KEY_ERROR_MESSAGE] = 'อัพเดทสถานะการแสดงข่าวสำเร็จ';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+    } else {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการบันทึกข้อมูล: ' . $db->error;
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+    }
+}
+
+function doDeleteNews()
+{
+    global $db, $response;
+
+    $id = $db->real_escape_string($_POST['id']);
+
+    $deleteNewsSql = "DELETE FROM ct_news WHERE id = $id";
+
+    if ($deleteResult = $db->query($deleteNewsSql)) {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+        $response[KEY_ERROR_MESSAGE] = 'ลบข้อมูลสำเร็จ';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+    } else {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการลบข้อมูล' . $db->error;
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $deleteNewsSql";
     }
 }
 

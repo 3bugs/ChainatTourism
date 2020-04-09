@@ -29,6 +29,12 @@
                     <i class="fa fa-star"></i> <span>สินค้า OTOP</span>
                 </a>
             </li>
+            <li class="header">ข่าวประชาสัมพันธ์</li>
+            <li>
+                <a href="news.php">
+                    <i class="fa fa-newspaper-o"></i> <span>ข่าวประชาสัมพันธ์</span>
+                </a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->
