@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 09, 2020 at 04:39 PM
+-- Generation Time: Apr 10, 2020 at 12:20 AM
 -- Server version: 5.5.62
 -- PHP Version: 5.6.40
 
@@ -909,14 +909,17 @@ CREATE TABLE IF NOT EXISTS `ct_news` (
   `active` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `ct_news`
 --
 
 INSERT INTO `ct_news` (`id`, `title`, `image`, `active`, `created_at`) VALUES
-(2, 'bbb', '1586416796304-cartoon-pooh-600x600.jpg', 1, '2020-04-09 07:18:46');
+(2, 'ทดสอบข่าว', '1586416796304-cartoon-pooh-600x600.jpg', 0, '2020-04-09 07:18:46'),
+(3, 'มหกรรมหุ่นฟางนก', '1586428597695-banner01.png', 1, '2020-04-09 10:36:37'),
+(4, 'ของดีชัยนาท', '1586428628451-banner02.png', 1, '2020-04-09 10:37:08'),
+(5, 'ตลาดกรีนดี', '1586428663310-banner03.png', 1, '2020-04-09 10:37:43');
 
 -- --------------------------------------------------------
 
@@ -1126,7 +1129,7 @@ CREATE TABLE IF NOT EXISTS `ct_rating` (
   `rate` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=63 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=80 ;
 
 --
 -- Dumping data for table `ct_rating`
@@ -1194,7 +1197,24 @@ INSERT INTO `ct_rating` (`id`, `item_id`, `item_type`, `rate`, `created_at`) VAL
 (59, 18, 'place', 4, '2020-01-21 04:21:38'),
 (60, 49, 'place', 3, '2020-02-12 15:41:06'),
 (61, 6, 'place', 3, '2020-02-14 02:07:40'),
-(62, 67, 'place', 3, '2020-02-19 05:15:57');
+(62, 67, 'place', 3, '2020-02-19 05:15:57'),
+(63, 50, 'place', 2, '2020-04-09 13:25:33'),
+(64, 50, 'place', 3, '2020-04-09 13:25:52'),
+(65, 65, 'place', 3, '2020-04-09 13:28:18'),
+(66, 49, 'place', 5, '2020-04-09 13:28:37'),
+(67, 33, 'place', 3, '2020-04-09 13:33:50'),
+(68, 4, 'place', 3, '2020-04-09 13:36:28'),
+(69, 7, 'place', 3, '2020-04-09 13:37:24'),
+(70, 15, 'place', 2, '2020-04-09 13:37:59'),
+(71, 15, 'place', 3, '2020-04-09 13:38:57'),
+(72, 8, 'place', 2, '2020-04-09 13:39:13'),
+(73, 26, 'place', 3, '2020-04-09 13:39:19'),
+(74, 29, 'place', 2, '2020-04-09 13:39:25'),
+(75, 51, 'place', 3, '2020-04-09 13:39:47'),
+(76, 52, 'place', 2, '2020-04-09 13:39:54'),
+(77, 59, 'place', 3, '2020-04-09 14:30:19'),
+(78, 58, 'place', 1, '2020-04-09 14:31:31'),
+(79, 21, 'place', 2, '2020-04-09 14:33:10');
 
 -- --------------------------------------------------------
 
@@ -1210,7 +1230,16 @@ CREATE TABLE IF NOT EXISTS `ct_user` (
   `image` varchar(100) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `ct_user`
+--
+
+INSERT INTO `ct_user` (`id`, `username`, `password`, `display_name`, `image`, `created_at`) VALUES
+(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'Administrator', 'logo.png', '2020-04-09 09:42:18'),
+(2, 'Kam', 'b5229f74f986a54fe73872001675eb65', 'ประกายบุญ ม่วงทอง', 'Kam.png', '2020-04-09 12:05:07'),
+(3, 'Nuch', '298063d3dfebbdaefddf2f71f805d3e5', 'นิรัชพร มิ่งสกุล', 'Nuch.png', '2020-04-09 12:06:08');
 
 -- --------------------------------------------------------
 

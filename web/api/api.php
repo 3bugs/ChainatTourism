@@ -114,6 +114,7 @@ function doLogin()
             $_SESSION[KEY_SESSION_USER_ID] = (int)$row['id'];
             $_SESSION[KEY_SESSION_USER_USERNAME] = $row['username'];
             $_SESSION[KEY_SESSION_USER_DISPLAY_NAME] = $row['display_name'];
+            $_SESSION[KEY_SESSION_USER_IMAGE] = $row['image'];
 
             $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
             $response[KEY_ERROR_MESSAGE] = 'เข้าสู่ระบบสำเร็จ';

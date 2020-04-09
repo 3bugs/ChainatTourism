@@ -17,6 +17,7 @@
         if (isset($_SESSION[KEY_SESSION_USER_ID])) {
             $username = $_SESSION[KEY_SESSION_USER_USERNAME];
             $displayName = $_SESSION[KEY_SESSION_USER_DISPLAY_NAME];
+            $image = $_SESSION[KEY_SESSION_USER_IMAGE];
             switch ($_SESSION[KEY_SESSION_USER_ROLE]) {
                 case ROLE_USER:
                     $role = 'User';
@@ -31,13 +32,13 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <img alt="User Image" class="user-image" src="../images/logo.png">
+                            <img alt="User Image" class="user-image" src="../images/<?= $image; ?>">
                             <span class="hidden-xs"><?php echo $displayName; ?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img alt="User Image" class="img-circle" src="../images/logo.png">
+                                <img alt="User Image" class="img-circle" src="../images/<?= $image; ?>">
                                 <p>
                                     <?php echo $displayName; ?>
                                     <small>(<?= $username; ?>)</small>

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2980b396-8a91-45e1-971e-ebc812e171e6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/model/News.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/net/GetNewsResponse.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/Flot/.bower.json" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/Flot/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/Flot/.travis.yml" afterDir="false" />
@@ -6819,149 +6817,13 @@
       <change afterPath="$PROJECT_DIR$/bower_components/select2/tests/vendor/qunit-1.23.1.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/select2/tests/vendor/qunit-1.23.1.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/select2/vendor/jquery-2.1.0.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/bg_login.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/css/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/css/util.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/HELP-US-OUT.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/css/font-awesome.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/css/font-awesome.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/fonts/FontAwesome.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/animated.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/bordered-pulled.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/core.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/fixed-width.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/font-awesome.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/icons.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/larger.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/list.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/mixins.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/path.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/rotated-flipped.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/screen-reader.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/stacked.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/less/variables.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/_animated.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/_bordered-pulled.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/_core.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/_fixed-width.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/_icons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/_larger.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/_list.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/_mixins.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/_path.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/_rotated-flipped.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/_screen-reader.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/_stacked.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/_variables.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/font-awesome-4.7.0/scss/font-awesome.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-Black.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-BlackItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-BoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-ExtraBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-ExtraBoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-ExtraLight.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-ExtraLightItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-Italic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-LightItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-Medium.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-MediumItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-SemiBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-SemiBoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-Thin.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/Montserrat-ThinItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/montserrat/OFL.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-Black.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-BlackItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-BoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-ExtraBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-ExtraBoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-ExtraLight.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-ExtraLightItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-Italic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-LightItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-Medium.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-MediumItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-SemiBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-SemiBoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-Thin.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/poppins/Poppins-ThinItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/OFL.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-Black.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-BlackItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-BoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-ExtraBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-ExtraBoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-ExtraLight.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-ExtraLightItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-Italic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-LightItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-Medium.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-MediumItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-SemiBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-SemiBoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-Thin.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/fonts/raleway/Raleway-ThinItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/images/icons/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/images/icons/icon-google.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/images/img-01.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/js/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/login.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/animate/animate.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/css/bootstrap-grid.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/css/bootstrap-grid.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/css/bootstrap-grid.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/css/bootstrap-grid.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/css/bootstrap-reboot.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/css/bootstrap-reboot.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/css/bootstrap-reboot.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/css/bootstrap-reboot.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/css/bootstrap.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/css/bootstrap.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/css/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/css/bootstrap.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/js/bootstrap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/js/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/js/popper.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/js/popper.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/bootstrap/js/tooltip.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/css-hamburgers/hamburgers.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/css-hamburgers/hamburgers.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/jquery/jquery-3.2.1.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/select2/select2.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/select2/select2.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/select2/select2.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/vendor/select2/select2.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/net/WebServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/net/WebServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/Kam.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/Nuch.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/global.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/global.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/5911011802058_mydb.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db/5911011802058_mydb.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/head_php.inc" beforeDir="false" afterPath="$PROJECT_DIR$/include/head_php.inc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/footer.inc" beforeDir="false" afterPath="$PROJECT_DIR$/include/footer.inc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/header.inc" beforeDir="false" afterPath="$PROJECT_DIR$/include/header.inc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/news_add_edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/news_add_edit.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -7000,17 +6862,17 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/db" />
-      <recent name="$PROJECT_DIR$/api" />
-      <recent name="$PROJECT_DIR$/pages" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/images" />
       <recent name="$PROJECT_DIR$/pages" />
       <recent name="$PROJECT_DIR$/dist/js" />
       <recent name="$PROJECT_DIR$/dist" />
       <recent name="$PROJECT_DIR$/include" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/db" />
+      <recent name="$PROJECT_DIR$/api" />
+      <recent name="$PROJECT_DIR$/pages" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -7064,7 +6926,8 @@
       <workItem from="1582885008706" duration="733000" />
       <workItem from="1584861732352" duration="8114000" />
       <workItem from="1584934530990" duration="22000" />
-      <workItem from="1586405724172" duration="20521000" />
+      <workItem from="1586405724172" duration="21991000" />
+      <workItem from="1586434000034" duration="1519000" />
     </task>
     <servers />
   </component>
