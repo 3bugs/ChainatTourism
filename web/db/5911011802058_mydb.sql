@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 09, 2020 at 12:13 PM
+-- Generation Time: Apr 09, 2020 at 04:39 PM
 -- Server version: 5.5.62
 -- PHP Version: 5.6.40
 
@@ -909,7 +909,14 @@ CREATE TABLE IF NOT EXISTS `ct_news` (
   `active` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `ct_news`
+--
+
+INSERT INTO `ct_news` (`id`, `title`, `image`, `active`, `created_at`) VALUES
+(2, 'bbb', '1586416796304-cartoon-pooh-600x600.jpg', 1, '2020-04-09 07:18:46');
 
 -- --------------------------------------------------------
 
@@ -1188,6 +1195,22 @@ INSERT INTO `ct_rating` (`id`, `item_id`, `item_type`, `rate`, `created_at`) VAL
 (60, 49, 'place', 3, '2020-02-12 15:41:06'),
 (61, 6, 'place', 3, '2020-02-14 02:07:40'),
 (62, 67, 'place', 3, '2020-02-19 05:15:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_user`
+--
+
+CREATE TABLE IF NOT EXISTS `ct_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `display_name` varchar(200) NOT NULL,
+  `image` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

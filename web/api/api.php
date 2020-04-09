@@ -37,6 +37,12 @@ $db->set_charset("utf8");
 //sleep(1); //todo:
 
 switch ($action) {
+    case 'login':
+        doLogin();
+        break;
+    case 'logout':
+        doLogout();
+        break;
     case 'get_recommend':
         doGetRecommend();
         break;
@@ -93,6 +99,47 @@ switch ($action) {
 $db->close();
 echo json_encode($response);
 exit();
+
+function doLogin()
+{
+    global $db, $response;
+
+    $username = trim($db->real_escape_string($_POST['username']));
+    $password = $db->real_escape_string($_POST['password']);
+
+    $sql = "SELECT * FROM ct_user WHERE username = '$username' AND password = MD5('$password')";
+    if ($result = $db->query($sql)) {
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $_SESSION[KEY_SESSION_USER_ID] = (int)$row['id'];
+            $_SESSION[KEY_SESSION_USER_USERNAME] = $row['username'];
+            $_SESSION[KEY_SESSION_USER_DISPLAY_NAME] = $row['display_name'];
+
+            $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+            $response[KEY_ERROR_MESSAGE] = 'เข้าสู่ระบบสำเร็จ';
+            $response[KEY_ERROR_MESSAGE_MORE] = '';
+        } else {
+            $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+            $response[KEY_ERROR_MESSAGE] = 'Username หรือ Password ไม่ถูกต้อง';
+            $response[KEY_ERROR_MESSAGE_MORE] = '';
+        }
+    } else {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE] = "เกิดข้อผิดพลาดในการตรวจสอบข้อมูลผู้ใช้งาน: $errMessage";
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+    }
+}
+
+function doLogout()
+{
+    global $response;
+
+    session_destroy();
+    $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+    $response[KEY_ERROR_MESSAGE] = 'ออกจากระบบสำเร็จ';
+    $response[KEY_ERROR_MESSAGE_MORE] = '';
+}
 
 function doGetRecommend()
 {

@@ -11,6 +11,7 @@ define('KEY_LOGIN_SUCCESS', 'login_success');
 
 define('KEY_SESSION_USER_ID', 'session_user_id');
 define('KEY_SESSION_USER_USERNAME', 'session_user_username');
+define('KEY_SESSION_USER_DISPLAY_NAME', 'session_user_display_name');
 define('KEY_SESSION_USER_EMAIL', 'session_user_email');
 define('KEY_SESSION_USER_ROLE', 'session_user_role');
 

@@ -37,4 +37,7 @@ public interface WebServices {
             @Field("rate") int rate
     );
 
+    @GET("get_news")
+    Call<GetNewsResponse> getNews(
+    );
 }

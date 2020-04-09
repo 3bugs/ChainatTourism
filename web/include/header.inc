@@ -16,8 +16,7 @@
         <?php
         if (isset($_SESSION[KEY_SESSION_USER_ID])) {
             $username = $_SESSION[KEY_SESSION_USER_USERNAME];
-            $email = $_SESSION[KEY_SESSION_USER_EMAIL];
-            $displayName = "$username ($email)";
+            $displayName = $_SESSION[KEY_SESSION_USER_DISPLAY_NAME];
             switch ($_SESSION[KEY_SESSION_USER_ROLE]) {
                 case ROLE_USER:
                     $role = 'User';
@@ -32,16 +31,16 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <img alt="User Image" class="user-image" src="images/avatar.png">
+                            <img alt="User Image" class="user-image" src="../images/logo.png">
                             <span class="hidden-xs"><?php echo $displayName; ?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img alt="User Image" class="img-circle" src="images/avatar.png">
+                                <img alt="User Image" class="img-circle" src="../images/logo.png">
                                 <p>
                                     <?php echo $displayName; ?>
-                                    <small><?php echo $role; ?></small>
+                                    <small>(<?= $username; ?>)</small>
                                 </p>
                             </li>
                             <!-- Menu Footer-->
@@ -68,10 +67,10 @@
 <script>
     function doLogout() {
         $.post(
-            'api/api.php/logout'
+            '../api/api.php/logout'
         ).done(function (data) {
             if (data.error_code === 0) {
-                window.location.href = "index.php";
+                window.location.href = "login.php";
             } else {
                 BootstrapDialog.show({
                     title: 'Logout',

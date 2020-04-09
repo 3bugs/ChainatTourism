@@ -27,15 +27,16 @@ import com.glide.slider.library.SliderTypes.DefaultSliderView;
 import com.glide.slider.library.Tricks.ViewPagerEx;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import th.ac.dusit.dbizcom.chainattourism.etc.Utils;
+import th.ac.dusit.dbizcom.chainattourism.model.News;
 import th.ac.dusit.dbizcom.chainattourism.model.Place;
 import th.ac.dusit.dbizcom.chainattourism.net.ApiClient;
+import th.ac.dusit.dbizcom.chainattourism.net.GetNewsResponse;
 import th.ac.dusit.dbizcom.chainattourism.net.GetRecommendResponse;
 import th.ac.dusit.dbizcom.chainattourism.net.MyRetrofitCallback;
 import th.ac.dusit.dbizcom.chainattourism.net.WebServices;
@@ -55,13 +56,14 @@ public class MainActivity extends BaseActivity implements
     private RecyclerView mRecommendedRestaurantsRecyclerView, mRecommendedOtopRecyclerView;
     private List<Place> mRecommendedPlaceList, mRecommendedTempleList;
     private List<Place> mRecommendedRestaurantList, mRecommendedHotelList, mRecommendedOtopList;
+    private List<News> mNewsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setupImageSlider();
+        //setupImageSlider();
         findViewById(R.id.place_layout).setOnClickListener(this);
         findViewById(R.id.temple_layout).setOnClickListener(this);
         findViewById(R.id.restaurant_layout).setOnClickListener(this);
@@ -69,15 +71,16 @@ public class MainActivity extends BaseActivity implements
         findViewById(R.id.otop_layout).setOnClickListener(this);
 
         doGetRecommend();
+        doGetNews();
     }
 
     private void setupImageSlider() {
         mSlider = findViewById(R.id.slider);
 
-        ArrayList<String> listUrl = new ArrayList<>();
+        /*ArrayList<String> listUrl = new ArrayList<>();
         listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/banner01.png");
         listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/banner02.png");
-        listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/banner03.png");
+        listUrl.add("http://5911011802058.msci.dusit.ac.th/chainat_tourism/images/banner03.png");*/
 
         //RequestOptions requestOptions = new RequestOptions().fitCenter();
         RequestOptions requestOptions = new RequestOptions().centerCrop();
@@ -86,10 +89,10 @@ public class MainActivity extends BaseActivity implements
         //.placeholder(R.drawable.placeholder)
         //.error(R.drawable.placeholder);
 
-        for (int i = 0; i < listUrl.size(); i++) {
+        for (int i = 0; i < mNewsList.size(); i++) {
             DefaultSliderView sliderView = new DefaultSliderView(this);
             sliderView
-                    .image(listUrl.get(i))
+                    .image(ApiClient.IMAGE_BASE_URL + mNewsList.get(i).image)
                     .setRequestOption(requestOptions)
                     //.setBackgroundColor(Color.WHITE)
                     .setProgressBarVisible(true)
@@ -112,7 +115,8 @@ public class MainActivity extends BaseActivity implements
     }
 
     private void doGetRecommend() {
-        //mProgressView.setVisibility(View.VISIBLE);
+        View recommendProgressView = findViewById(R.id.recommend_progress_view);
+        recommendProgressView.setVisibility(View.VISIBLE);
 
         Retrofit retrofit = ApiClient.getClient();
         WebServices services = retrofit.create(WebServices.class);
@@ -121,7 +125,7 @@ public class MainActivity extends BaseActivity implements
         call.enqueue(new MyRetrofitCallback<>(
                 MainActivity.this,
                 null,
-                null, //mProgressView,
+                recommendProgressView,
                 new MyRetrofitCallback.MyRetrofitCallbackListener<GetRecommendResponse>() {
                     @Override
                     public void onSuccess(GetRecommendResponse responseBody) {
@@ -159,6 +163,32 @@ public class MainActivity extends BaseActivity implements
                         }
 
                         setupRecyclerView();
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                    }
+                }
+        ));
+    }
+
+    private void doGetNews() {
+        View sliderProgressView = findViewById(R.id.slider_progress_view);
+        sliderProgressView.setVisibility(View.VISIBLE);
+
+        Retrofit retrofit = ApiClient.getClient();
+        WebServices services = retrofit.create(WebServices.class);
+
+        Call<GetNewsResponse> call = services.getNews();
+        call.enqueue(new MyRetrofitCallback<>(
+                MainActivity.this,
+                null,
+                sliderProgressView,
+                new MyRetrofitCallback.MyRetrofitCallbackListener<GetNewsResponse>() {
+                    @Override
+                    public void onSuccess(GetNewsResponse responseBody) {
+                        mNewsList = responseBody.newsList;
+                        setupImageSlider();
                     }
 
                     @Override
