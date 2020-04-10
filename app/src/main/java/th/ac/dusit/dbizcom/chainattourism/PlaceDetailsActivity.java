@@ -39,6 +39,7 @@ import com.glide.slider.library.SliderTypes.DefaultSliderView;
 import com.glide.slider.library.Tricks.ViewPagerEx;
 import com.google.gson.Gson;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -94,6 +95,13 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
         /*mCollapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
         mCollapsingToolbarLayout.setTitle(itemTitle);
         mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));*/
+
+        if (mOtop != null) {
+            DecimalFormat formatter = new DecimalFormat("#,### บาท");
+            TextView priceTextView = findViewById(R.id.price_text_view);
+            priceTextView.setText(formatter.format(mOtop.price));
+            priceTextView.setVisibility(View.VISIBLE);
+        }
 
         AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {

@@ -101,6 +101,23 @@
                     app:layout_constraintStart_toEndOf="@+id/star_layout"
                     app:layout_constraintTop_toTopOf="@+id/star_layout" />
 
+                <TextView
+                    android:id="@+id/price_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:fontFamily="@font/bangna"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="800 บาท"
+                    tools:visibility="visible" />
+
                 <!--<ImageView
                     android:id="@+id/imageView5"
                     android:layout_width="20dp"
@@ -266,7 +283,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginLeft="24dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/phone_text_view"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/phone_text_view"
                     app:srcCompat="@drawable/ic_details_item_phone" />
@@ -275,7 +291,6 @@
                     android:id="@+id/opening_time_image_view"
                     android:layout_width="18dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="@+id/opening_time_text_view"
                     app:layout_constraintStart_toStartOf="@+id/phone_image_view"
                     app:layout_constraintTop_toTopOf="@+id/opening_time_text_view"
                     app:srcCompat="@drawable/ic_details_item_opening_time" />
@@ -284,7 +299,6 @@
                     android:id="@+id/address_image_view"
                     android:layout_width="18dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="@+id/address_text_view"
                     app:layout_constraintStart_toStartOf="@+id/opening_time_image_view"
                     app:layout_constraintTop_toTopOf="@+id/address_text_view"
                     app:srcCompat="@drawable/ic_details_item_address" />

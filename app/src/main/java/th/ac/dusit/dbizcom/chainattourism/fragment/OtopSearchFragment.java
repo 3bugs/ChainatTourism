@@ -57,6 +57,16 @@ public class OtopSearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ImageView backImageView = view.findViewById(R.id.back_image_view);
+        backImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onClickBack();
+                }
+            }
+        });
+
         TextView titleTextView = view.findViewById(R.id.title_text_view);
         titleTextView.setText("สินค้า OTOP");
 
@@ -133,6 +143,7 @@ public class OtopSearchFragment extends Fragment {
     public interface OtopSearchFragmentListener {
         void onClickDistrict(District district);
         void onSearchOtop(String searchTerm);
+        void onClickBack();
     }
 
     private static class DistrictListAdapter extends RecyclerView.Adapter<DistrictListAdapter.ViewHolder> {

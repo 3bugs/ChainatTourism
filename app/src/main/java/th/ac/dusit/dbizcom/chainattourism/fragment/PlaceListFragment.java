@@ -86,6 +86,16 @@ public class PlaceListFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ImageView backImageView = view.findViewById(R.id.back_image_view);
+        backImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onClickBack();
+                }
+            }
+        });
+
         TextView titleTextView = view.findViewById(R.id.title_text_view);
         final EditText searchEditText = view.findViewById(R.id.search_edit_text);
 
@@ -244,6 +254,7 @@ public class PlaceListFragment extends Fragment {
 
     public interface PlaceListFragmentListener {
         void onClickPlace(Place place);
+        void onClickBack();
     }
 
     private static class PlaceListAdapter extends RecyclerView.Adapter<PlaceListFragment.PlaceListAdapter.PlaceViewHolder> {

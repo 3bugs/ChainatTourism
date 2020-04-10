@@ -109,4 +109,9 @@ public class PlaceActivity extends BaseActivity implements
         intent.putExtra(KEY_OTOP_JSON, new Gson().toJson(otop));
         startActivity(intent);
     }
+
+    @Override
+    public void onClickBack() {
+        finish();
+    }
 }

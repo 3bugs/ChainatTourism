@@ -198,7 +198,7 @@ iframe {
   z-index: 1;
 }
 
-.container-login100::before {
+/*.container-login100::before {
   content: "";
   display: block;
   position: absolute;
@@ -211,11 +211,11 @@ iframe {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-}
+}*/
 
 .wrap-login100 {
   width: 450px;
-  background: #fff;
+  background: rgba(255, 255, 255, 1);
   border-radius: 3px;
   overflow: hidden;
 }
