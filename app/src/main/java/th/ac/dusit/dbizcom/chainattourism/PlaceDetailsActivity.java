@@ -54,7 +54,9 @@ import th.ac.dusit.dbizcom.chainattourism.net.ApiClient;
 import th.ac.dusit.dbizcom.chainattourism.net.MyRetrofitCallback;
 import th.ac.dusit.dbizcom.chainattourism.net.WebServices;
 
-public class PlaceDetailsActivity extends AppCompatActivity implements ViewPagerEx.OnPageChangeListener, BaseSliderView.OnSliderClickListener {
+public class PlaceDetailsActivity extends AppCompatActivity implements
+        ViewPagerEx.OnPageChangeListener,
+        BaseSliderView.OnSliderClickListener {
 
     private static final String TAG = PlaceDetailsActivity.class.getName();
     private static final int STAR_SIZE = 18;
@@ -227,7 +229,21 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
         //.placeholder(R.drawable.placeholder)
         //.error(R.drawable.placeholder);
 
-        List<String> imageFileNameList = mPlace != null ? mPlace.galleryImages : mOtop.galleryImages;
+        List<String> imageFileNameList;
+        if (mPlace != null) {
+            imageFileNameList = new ArrayList<>();
+            imageFileNameList.add(mPlace.coverImage);
+            if (mPlace.coverImage2 != null) {
+                imageFileNameList.add(mPlace.coverImage2);
+            }
+            if (mPlace.coverImage3 != null) {
+                imageFileNameList.add(mPlace.coverImage3);
+            }
+        } else {
+            imageFileNameList = mOtop.galleryImages;
+        }
+
+        //List<String> imageFileNameList = mPlace != null ? mPlace.galleryImages : mOtop.galleryImages;
 
         // ท่องเที่ยว, วัด, ร้านอาหาร จะแสดงภาพ cover ไม่เกิน 3 รูป
         if (mPlace != null) {
@@ -240,8 +256,9 @@ public class PlaceDetailsActivity extends AppCompatActivity implements ViewPager
 
         for (int i = 0; i < imageFileNameList.size(); i++) {
             DefaultSliderView sliderView = new DefaultSliderView(this);
+            final String DIR = mPlace != null ? ApiClient.IMAGE_BASE_URL : ApiClient.GALLERY_BASE_URL;
             sliderView
-                    .image(ApiClient.GALLERY_BASE_URL.concat(imageFileNameList.get(i)))
+                    .image(DIR.concat(imageFileNameList.get(i)))
                     .setRequestOption(requestOptions)
                     //.setBackgroundColor(Color.WHITE)
                     .setProgressBarVisible(true)

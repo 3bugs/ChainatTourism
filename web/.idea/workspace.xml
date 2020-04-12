@@ -6817,15 +6817,14 @@
       <change afterPath="$PROJECT_DIR$/bower_components/select2/tests/vendor/qunit-1.23.1.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/select2/tests/vendor/qunit-1.23.1.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bower_components/select2/vendor/jquery-2.1.0.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/5911011802058_mydb_old.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceDetailsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/PlaceDetailsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/OtopSearchFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/OtopSearchFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/PlaceListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/fragment/PlaceListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/activity_place_details_content.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_place_details_content.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_otop_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_otop_search.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_place_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_place_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/model/Place.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/th/ac/dusit/dbizcom/chainattourism/model/Place.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/pages/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/5911011802058_mydb.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db/5911011802058_mydb.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/place.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/place.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/place_add_edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/place_add_edit.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -6853,7 +6852,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/images" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../3bugs/CoreUI-Vue" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -6929,7 +6928,8 @@
       <workItem from="1584861732352" duration="8114000" />
       <workItem from="1584934530990" duration="22000" />
       <workItem from="1586405724172" duration="21991000" />
-      <workItem from="1586434000034" duration="5450000" />
+      <workItem from="1586434000034" duration="18472000" />
+      <workItem from="1586696967413" duration="660000" />
     </task>
     <servers />
   </component>
@@ -6950,10 +6950,18 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="780" y="297" key="FileChooserDialogImpl" timestamp="1586586888385">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state x="780" y="297" key="FileChooserDialogImpl/65.24.1855.1056/1920.0.1366.768@65.24.1855.1056" timestamp="1586586888385" />
     <state x="2440" y="639" key="NewPhpFileDialog" timestamp="1579575571444">
       <screen x="1366" y="0" width="1920" height="1080" />
     </state>
     <state x="2440" y="639" key="NewPhpFileDialog/1366.0.1920.1080/65.24.1301.744@1366.0.1920.1080" timestamp="1579575571444" />
     <state x="793" y="464" key="NewPhpFileDialog/1366.0.1920.1080/65.24.1301.744@65.24.1301.744" timestamp="1579538459412" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1586685201224">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/65.24.1855.1056/1920.0.1366.768@65.24.1855.1056" timestamp="1586685201224" />
   </component>
 </project>

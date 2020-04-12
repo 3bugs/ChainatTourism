@@ -8,7 +8,7 @@
     android:background="@color/bg_main"
     android:focusableInTouchMode="true"
     tools:context=".fragment.OtopListFragment"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText,NewApi,UnusedAttribute,ContentDescription">
 
     <TextView
         android:id="@+id/title_bg_text_view"
@@ -31,13 +31,27 @@
         android:layout_marginTop="4dp"
         android:gravity="center"
         android:padding="0dp"
-        android:text="แหล่งท่องเที่ยว"
+        android:text="สินค้า OTOP"
         android:textColor="@android:color/white"
         android:textSize="34sp"
         app:fontFamily="@font/cheangkhan"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/back_image_view"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        app:layout_constraintBottom_toBottomOf="@id/title_text_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrow_left" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/otop_list_recycler_view"

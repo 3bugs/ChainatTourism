@@ -86,6 +86,16 @@ public class OtopListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ImageView backImageView = view.findViewById(R.id.back_image_view);
+        backImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onClickBackOtop();
+                }
+            }
+        });
+
         TextView titleTextView = view.findViewById(R.id.title_text_view);
         if (mDistrictName != null) {
             titleTextView.setText("สินค้า OTOP");
@@ -191,6 +201,7 @@ public class OtopListFragment extends Fragment {
 
     public interface OtopListFragmentListener {
         void onClickOtop(Otop otop);
+        void onClickBackOtop();
     }
 
     private static class OtopListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

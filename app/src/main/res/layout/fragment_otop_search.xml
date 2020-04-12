@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
     tools:context=".fragment.OtopSearchFragment"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText,NewApi,UnusedAttribute,ContentDescription">
 
     <TextView
         android:id="@+id/title_bg_text_view"
@@ -29,7 +29,7 @@
         android:layout_marginTop="4dp"
         android:gravity="center"
         android:padding="0dp"
-        android:text="แหล่งท่องเที่ยว"
+        android:text="ค้นหาสินค้า OTOP"
         android:textColor="@android:color/white"
         android:textSize="34sp"
         app:fontFamily="@font/cheangkhan"

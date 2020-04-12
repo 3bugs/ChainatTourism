@@ -114,4 +114,9 @@ public class PlaceActivity extends BaseActivity implements
     public void onClickBack() {
         finish();
     }
+
+    @Override
+    public void onClickBackOtop() {
+        popBackStack();
+    }
 }

@@ -71,6 +71,9 @@ switch ($action) {
     case 'delete_place_asset':
         doDeletePlaceAsset();
         break;
+    case 'delete_place_cover_image':
+        doDeletePlaceCoverImage();
+        break;
     case 'get_sub_district':
         doGetSubDistrict();
         break;
@@ -176,6 +179,8 @@ function doGetRecommend()
             $place['longitude'] = floatval($row['longitude']);
             $place['image_list'] = $row['image_list'];
             $place['image_cover'] = $row['image_cover'];
+            $place['image_cover_2'] = $row['image_cover_2'];
+            $place['image_cover_3'] = $row['image_cover_3'];
             $place['recommend'] = (boolean)$row['recommend'];
             $place['place_type'] = $row['place_type'];
 
@@ -303,6 +308,8 @@ function doGetPlace()
             $place['longitude'] = floatval($row['longitude']);
             $place['image_list'] = $row['image_list'];
             $place['image_cover'] = $row['image_cover'];
+            $place['image_cover_2'] = $row['image_cover_2'];
+            $place['image_cover_3'] = $row['image_cover_3'];
             $place['recommend'] = (boolean)$row['recommend'];
             $place['facility_internet'] = (!$row['facility_internet'] || trim($row['facility_internet']) === '') ? null : trim($row['facility_internet']);
             $place['facility_recreation'] = (!$row['facility_recreation'] || trim($row['facility_recreation']) === '') ? null : trim($row['facility_recreation']);
@@ -516,11 +523,37 @@ function doAddPlace()
         return;
     }
 
-    if (!moveUploadedFile('coverImageFile', DIR_IMAGES, $coverImageFileName)) {
-        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
-        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์ (รูปภาพ Cover)';
-        $response[KEY_ERROR_MESSAGE_MORE] = '';
-        return;
+    $coverFieldNameList = '';
+    $coverFieldValueList = '';
+    if ($_FILES['coverImageFile1']['name'] !== '') {
+        if (!moveUploadedFile('coverImageFile1', DIR_IMAGES, $coverImageFileName1)) {
+            $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+            $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์ (รูปภาพ Cover 1): ' . $_FILES['coverImageFile1']['error'];
+            $response[KEY_ERROR_MESSAGE_MORE] = '';
+            return;
+        }
+        $coverFieldNameList .= 'image_cover, ';
+        $coverFieldValueList .= "'{$coverImageFileName1}', ";
+    }
+    if ($_FILES['coverImageFile2']['name'] !== '') {
+        if (!moveUploadedFile('coverImageFile2', DIR_IMAGES, $coverImageFileName2)) {
+            $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+            $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์ (รูปภาพ Cover 2): ' . $_FILES['coverImageFile2']['error'];
+            $response[KEY_ERROR_MESSAGE_MORE] = '';
+            return;
+        }
+        $coverFieldNameList .= 'image_cover_2, ';
+        $coverFieldValueList .= "'{$coverImageFileName2}', ";
+    }
+    if ($_FILES['coverImageFile3']['name'] !== '') {
+        if (!moveUploadedFile('coverImageFile3', DIR_IMAGES, $coverImageFileName3)) {
+            $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+            $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์ (รูปภาพ Cover 3): ' . $_FILES['coverImageFile3']['error'];
+            $response[KEY_ERROR_MESSAGE_MORE] = '';
+            return;
+        }
+        $coverFieldNameList .= 'image_cover_3, ';
+        $coverFieldValueList .= "'{$coverImageFileName3}', ";
     }
 
     $db->query('START TRANSACTION');
@@ -528,17 +561,17 @@ function doAddPlace()
     $sql = null;
     if ($subDistrict && $village) {
         $sql = "INSERT INTO ct_place (name, place_type, district, details, phone, 
-                           opening_time, address, latitude, longitude, image_list, image_cover, 
+                           opening_time, address, latitude, longitude, image_list,  
                            sub_district, village, price, contact_url) 
                 VALUES ('$name', '$placeType', '$district', '$details', '$phone', 
-                        '$openingTime', '$address', $latitude, $longitude, '$listImageFileName', '$coverImageFileName',
+                        '$openingTime', '$address', $latitude, $longitude, '$listImageFileName', 
                         '$subDistrict', '$village', $price, '$contactUrl')";
     } else {
         $sql = "INSERT INTO ct_place (name, place_type, district, details, phone, 
-                            opening_time, address, latitude, longitude, image_list, image_cover, 
+                            opening_time, address, latitude, longitude, image_list, $coverFieldNameList 
                             facility_internet, facility_recreation, facility_food, facility_service) 
                 VALUES ('$name', '$placeType', '$district', '$details', '$phone', 
-                        '$openingTime', '$address', $latitude, $longitude, '$listImageFileName', '$coverImageFileName',
+                        '$openingTime', '$address', $latitude, $longitude, '$listImageFileName', $coverFieldValueList
                         '$facilityInternet', '$facilityRecreation', '$facilityFood', '$facilityService')";
     }
     if ($result = $db->query($sql)) {
@@ -622,15 +655,37 @@ function doUpdatePlace()
     $setListFileName = $listImageFileName ? "image_list = '$listImageFileName', " : '';
 
     $coverImageFileName = NULL;
-    if ($_FILES['coverImageFile']['name'] !== '') {
-        if (!moveUploadedFile('coverImageFile', DIR_IMAGES, $coverImageFileName)) {
+    if ($_FILES['coverImageFile1']['name'] !== '') {
+        if (!moveUploadedFile('coverImageFile1', DIR_IMAGES, $coverImageFileName)) {
             $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
-            $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์ (รูปภาพ Cover)';
+            $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์ (รูปภาพ Cover 1)';
             $response[KEY_ERROR_MESSAGE_MORE] = '';
             return;
         }
     }
     $setCoverFileName = $coverImageFileName ? "image_cover = '$coverImageFileName', " : '';
+
+    $coverImageFileName = NULL;
+    if ($_FILES['coverImageFile2']['name'] !== '') {
+        if (!moveUploadedFile('coverImageFile2', DIR_IMAGES, $coverImageFileName)) {
+            $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+            $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์ (รูปภาพ Cover 2)';
+            $response[KEY_ERROR_MESSAGE_MORE] = '';
+            return;
+        }
+    }
+    $setCoverFileName .= ($coverImageFileName ? "image_cover_2 = '$coverImageFileName', " : '');
+
+    $coverImageFileName = NULL;
+    if ($_FILES['coverImageFile3']['name'] !== '') {
+        if (!moveUploadedFile('coverImageFile3', DIR_IMAGES, $coverImageFileName)) {
+            $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+            $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์ (รูปภาพ Cover 2)';
+            $response[KEY_ERROR_MESSAGE_MORE] = '';
+            return;
+        }
+    }
+    $setCoverFileName .= ($coverImageFileName ? "image_cover_3 = '$coverImageFileName', " : '');
 
     $db->query('START TRANSACTION');
 
@@ -734,7 +789,29 @@ function doDeletePlaceAsset()
         $response[KEY_ERROR_MESSAGE] = 'ลบข้อมูลสำเร็จ';
         $response[KEY_ERROR_MESSAGE_MORE] = '';
     } else {
-        $response[KEY_ERROR_CODE] = ERROR_CODE_SQL_ERROR;
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
+        $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการลบข้อมูล';
+        $errMessage = $db->error;
+        $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";
+    }
+}
+
+function doDeletePlaceCoverImage()
+{
+    global $db, $response;
+
+    $placeId = $db->real_escape_string($_POST['placeId']);
+    $imageNumber = $db->real_escape_string($_POST['imageNumber']);
+
+    $sql = "UPDATE ct_place 
+            SET image_cover_{$imageNumber} = null 
+            WHERE id = $placeId";
+    if ($result = $db->query($sql)) {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
+        $response[KEY_ERROR_MESSAGE] = 'ลบข้อมูลสำเร็จ';
+        $response[KEY_ERROR_MESSAGE_MORE] = '';
+    } else {
+        $response[KEY_ERROR_CODE] = ERROR_CODE_ERROR;
         $response[KEY_ERROR_MESSAGE] = 'เกิดข้อผิดพลาดในการลบข้อมูล';
         $errMessage = $db->error;
         $response[KEY_ERROR_MESSAGE_MORE] = "$errMessage\nSQL: $sql";

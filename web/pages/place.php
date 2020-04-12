@@ -101,12 +101,12 @@ $userHasPermission = true;
                                         <?php
                                         if ($placeType === 'otop') {
                                             ?>
-                                            <th style="text-align: center; width: 21%;">ชื่อสินค้า</th>
-                                            <th style="text-align: center; width: 13%;">อำเภอ</th>
-                                            <th style="text-align: center; width: 13%;">ตำบล</th>
-                                            <th style="text-align: center; width: 13%;">หมู่บ้าน</th>
-                                            <th style="text-align: center; width: 20%;">รูปภาพหน้า List</th>
-                                            <th style="text-align: center; width: 20%;">รูปภาพ Cover</th>
+                                            <th style="text-align: center; width: 27%;">ชื่อสินค้า</th>
+                                            <th style="text-align: center; width: 17%;">อำเภอ</th>
+                                            <th style="text-align: center; width: 17%;">ตำบล</th>
+                                            <th style="text-align: center; width: 17%;">หมู่บ้าน</th>
+                                            <th style="text-align: center; width: 22%;">รูปภาพหน้า List</th>
+                                            <!--<th style="text-align: center; width: 20%;">รูปภาพ Cover</th>-->
                                             <?php
                                         } else {
                                             ?>
@@ -160,14 +160,20 @@ $userHasPermission = true;
                                                     </a>
                                                 </td>
 
-                                                <!--ภาพ Cover-->
-                                                <td style="text-align: center; cursor: pointer">
-                                                    <a href="<?= (DIR_IMAGES . ($place['image_cover'] ? $place['image_cover'] : 'ic_no_image_2.png')); ?>"
-                                                       data-lightbox="coverImage" data-title="รูปภาพ Cover '<?= $place['name']; ?>'">
-                                                        <img src="<?= (DIR_IMAGES . ($place['image_cover'] ? $place['image_cover'] : 'ic_no_image_2.png')); ?>"
-                                                             height="60px">
-                                                    </a>
-                                                </td>
+                                                <?php
+                                                if ($placeType !== 'otop') {
+                                                    ?>
+                                                    <!--ภาพ Cover-->
+                                                    <td style="text-align: center; cursor: pointer">
+                                                        <a href="<?= (DIR_IMAGES . ($place['image_cover'] ? $place['image_cover'] : 'ic_no_image_2.png')); ?>"
+                                                           data-lightbox="coverImage" data-title="รูปภาพ Cover '<?= $place['name']; ?>'">
+                                                            <img src="<?= (DIR_IMAGES . ($place['image_cover'] ? $place['image_cover'] : 'ic_no_image_2.png')); ?>"
+                                                                 height="60px">
+                                                        </a>
+                                                    </td>
+                                                    <?php
+                                                }
+                                                ?>
 
                                                 <!--แนะนำ-->
                                                 <td style="text-align: center; vertical-align: top">
